@@ -18,6 +18,8 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\View\PanelsRenderHook;
+use Illuminate\Support\Facades\Blade;
 
 class UserPanelProvider extends PanelProvider
 {
@@ -28,6 +30,19 @@ class UserPanelProvider extends PanelProvider
             ->path('customer')
             ->login()
             ->registration()
+            ->renderHook(
+                PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
+                fn(): string => Blade::render('
+                    <div class="mt-4 text-center">
+                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                            Pengelola Rental? 
+                            <a href="/admin/login" class="font-semibold text-primary-600 hover:text-primary-500 hover:underline">
+                                Masuk sebagai Admin
+                            </a>
+                        </p>
+                    </div>
+                ')
+            )
             ->profile()
             ->colors([
                 'primary' => Color::Amber,
