@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Products\Schemas;
+namespace App\Filament\Resources\Admin\Products\Schemas;
 
 use Dom\Text;
 use Filament\Schemas\Schema;

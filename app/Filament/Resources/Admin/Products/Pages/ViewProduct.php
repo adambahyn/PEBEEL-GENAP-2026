@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\Products\Pages;
+namespace App\Filament\Resources\Admin\Products\Pages;
 
-use App\Filament\Resources\Products\ProductResource;
+use App\Filament\Resources\Admin\Products\ProductResource;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 
