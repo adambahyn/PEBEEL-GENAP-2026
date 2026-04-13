@@ -48,6 +48,12 @@ class ProductsTable
                     ->searchable()
                     ->sortable(),
 
+                TextColumn::make('type')
+                    ->label('Tipe'),
+
+                TextColumn::make('location')
+                    ->label('Lokasi'),
+
                 ImageColumn::make('image')
                     ->disk('public'),
 
