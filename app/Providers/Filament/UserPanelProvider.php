@@ -28,6 +28,7 @@ class UserPanelProvider extends PanelProvider
             ->path('customer')
             ->login()
             ->registration()
+            ->profile()
             ->colors([
                 'primary' => Color::Amber,
             ])
