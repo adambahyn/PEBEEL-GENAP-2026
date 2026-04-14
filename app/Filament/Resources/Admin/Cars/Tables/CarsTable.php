@@ -9,15 +9,7 @@ use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ImageColumn;
 
-// Actions
-use Filament\Tables\Actions\Actions;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\ActionGroup;
-
-// Bulk Actions
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
+use Filament\Actions;
 
 class CarsTable
 {
@@ -78,15 +70,16 @@ class CarsTable
             ])
             ->actions([
                 // Menambahkan tombol aksi di setiap baris
-                ActionGroup::make([
-                    ViewAction::make(),
-                    EditAction::make(),
+                Actions\ActionGroup::make([
+                    Actions\ViewAction::make(),
+                    Actions\EditAction::make(),
+                    Actions\DeleteAction::make(),
                 ])->icon('heroicon-m-ellipsis-vertical')
                 ->tooltip('Aksi'),
             ])
             ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
