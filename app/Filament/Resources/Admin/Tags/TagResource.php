@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Filament\Resources\Tags;
+// ✅ FIX: Namespace harus sesuai lokasi folder Admin/Tags
+namespace App\Filament\Resources\Admin\Tags;
 
-use App\Filament\Resources\Tags\Pages\CreateTag;
-use App\Filament\Resources\Tags\Pages\EditTag;
-use App\Filament\Resources\Tags\Pages\ListTags;
-use App\Filament\Resources\Tags\Schemas\TagForm;
-use App\Filament\Resources\Tags\Tables\TagsTable;
+use App\Filament\Resources\Admin\Tags\Pages\CreateTag;
+use App\Filament\Resources\Admin\Tags\Pages\EditTag;
+use App\Filament\Resources\Admin\Tags\Pages\ListTags;
+use App\Filament\Resources\Admin\Tags\Schemas\TagForm;
+use App\Filament\Resources\Admin\Tags\Tables\TagsTable;
 use App\Models\Tag;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -19,6 +20,8 @@ class TagResource extends Resource
     protected static ?string $model = Tag::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+
+    protected static ?string $navigationLabel = 'Tag';
 
     protected static ?string $recordTitleAttribute = 'name';
 
@@ -34,17 +37,15 @@ class TagResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => ListTags::route('/'),
+            'index'  => ListTags::route('/'),
             'create' => CreateTag::route('/create'),
-            'edit' => EditTag::route('/{record}/edit'),
+            'edit'   => EditTag::route('/{record}/edit'),
         ];
     }
 }

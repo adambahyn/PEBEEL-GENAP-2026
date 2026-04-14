@@ -1,25 +1,28 @@
 <?php
 
-namespace App\Filament\Resources\Categories;
+// ✅ FIX: Namespace harus sesuai dengan lokasi folder (Admin/Categories)
+namespace App\Filament\Resources\Admin\Categories;
 
-use App\Filament\Resources\Categories\Pages\CreateCategory;
-use App\Filament\Resources\Categories\Pages\EditCategory;
-use App\Filament\Resources\Categories\Pages\ListCategories;
-use App\Filament\Resources\Categories\Schemas\CategoryForm;
-use App\Filament\Resources\Categories\Tables\CategoriesTable;
+use App\Filament\Resources\Admin\Categories\Pages\CreateCategory;
+use App\Filament\Resources\Admin\Categories\Pages\EditCategory;
+use App\Filament\Resources\Admin\Categories\Pages\ListCategories;
+use App\Filament\Resources\Admin\Categories\Schemas\CategoryForm;
+use App\Filament\Resources\Admin\Categories\Tables\CategoriesTable;
+use App\Filament\Resources\Admin\Categories\RelationManagers\PostsRelationManager;
 use App\Models\Category;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
-use App\Filament\Resources\Categories\RelationManagers\PostsRelationManager;
 
 class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+
+    protected static ?string $navigationLabel = 'Kategori';
 
     protected static ?string $recordTitleAttribute = 'name';
 
@@ -43,9 +46,9 @@ class CategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListCategories::route('/'),
+            'index'  => ListCategories::route('/'),
             'create' => CreateCategory::route('/create'),
-            'edit' => EditCategory::route('/{record}/edit'),
+            'edit'   => EditCategory::route('/{record}/edit'),
         ];
     }
 }

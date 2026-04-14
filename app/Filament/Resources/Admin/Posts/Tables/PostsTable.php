@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Posts\Tables;
+namespace App\Filament\Resources\Admin\Posts\Tables;
 
 use Dom\Text;
 use Filament\Actions\BulkActionGroup;
