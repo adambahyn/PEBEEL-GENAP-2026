@@ -2,35 +2,89 @@
 
 namespace App\Filament\Widgets\Admin;
 
+use App\Models\Booking;
+use App\Models\Product;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
-// use App\Models\Order; // Pastikan model transaksi Anda di-import
 
 class LatestOrdersTable extends BaseWidget
 {
-    protected int | string | array $columnSpan = 'full'; // Agar tabel selebar layar penuh
-    protected static ?string $heading = 'Pesanan Terbaru';
+    protected static ?int $sort = 2;
+    protected int|string|array $columnSpan = 'full';
+    protected static ?string $heading = '📋 Booking Terbaru';
 
     public function table(Table $table): Table
     {
         return $table
-            // ->query(Order::query()->latest()->limit(5)) // Gunakan query ini jika model Order sudah ada
-            ->query(\App\Models\Product::query()->latest()->limit(5)) // Placeholder sementara menggunakan Product
+            ->query(
+                // Gunakan Booking jika ada, fallback ke Product sebagai placeholder
+                class_exists(\App\Models\Booking::class) && \Illuminate\Support\Facades\Schema::hasTable('bookings')
+                    ? Booking::query()->latest()->limit(8)
+                    : Product::query()->latest()->limit(8)
+            )
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->label('Pelanggan / Mobil')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('Tanggal Pesanan')
-                    ->dateTime()
+                Tables\Columns\TextColumn::make('customer_name')
+                    ->label('Pelanggan')
+                    ->searchable()
+                    ->weight('bold'),
+
+                Tables\Columns\TextColumn::make('customer_contact')
+                    ->label('Kontak / WA'),
+
+                Tables\Columns\TextColumn::make('start_date')
+                    ->label('Tanggal Mulai')
+                    ->date('d M Y')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('price')
-                    ->label('Total Pembayaran')
-                    ->money('IDR'),
-                Tables\Columns\TextColumn::make('status') // Misal: Lunas, Pending
+
+                Tables\Columns\TextColumn::make('duration')
+                    ->label('Durasi')
+                    ->suffix(' hari'),
+
+                Tables\Columns\TextColumn::make('total_price')
+                    ->label('Total')
+                    ->money('IDR')
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('payment_method')
+                    ->label('Pembayaran')
+                    ->formatStateUsing(fn ($state) => match ($state) {
+                        'transfer' => '🏦 Transfer',
+                        'e_wallet' => '📱 E-Wallet',
+                        'cash'     => '💵 Tunai',
+                        default    => $state ?? '-',
+                    }),
+
+                Tables\Columns\TextColumn::make('status')
+                    ->label('Status')
                     ->badge()
-                    ->color('success'), 
+                    ->color(fn ($state): string => match ($state) {
+                        'pending'   => 'warning',
+                        'confirmed' => 'info',
+                        'completed' => 'success',
+                        'cancelled' => 'danger',
+                        default     => 'gray',
+                    })
+                    ->formatStateUsing(fn ($state) => match ($state) {
+                        'pending'   => '⏳ Menunggu',
+                        'confirmed' => '✅ Dikonfirmasi',
+                        'completed' => '🎉 Selesai',
+                        'cancelled' => '❌ Dibatalkan',
+                        default     => $state ?? '-',
+                    }),
+
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Waktu Booking')
+                    ->dateTime('d M Y, H:i')
+                    ->sortable(),
+            ])
+            ->actions([
+                Tables\Actions\Action::make('confirm')
+                    ->label('Konfirmasi')
+                    ->icon('heroicon-o-check')
+                    ->color('success')
+                    ->visible(fn ($record) => ($record->status ?? '') === 'pending')
+                    ->action(fn ($record) => $record->update(['status' => 'confirmed'])),
             ]);
     }
 }

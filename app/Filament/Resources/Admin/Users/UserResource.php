@@ -8,7 +8,6 @@ use App\Filament\Resources\Admin\Users\Pages\ListUsers;
 use App\Filament\Resources\Admin\Users\Schemas\UserForm;
 use App\Filament\Resources\Admin\Users\Tables\UsersTable;
 use App\Models\User;
-
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -19,8 +18,14 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    // protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
     protected static string|BackedEnum|null $navigationIcon = Heroicon::BookmarkSquare;
+
+    protected static ?string $navigationLabel = 'Users';
+
+    // protected static ?string $navigationGroup = 'Manajemen';
+
+    // ✅ FIX: Tanpa slug eksplisit, Filament generate dari namespace → /admin/admin/users
+    protected static ?string $slug = 'users';
 
     protected static ?string $recordTitleAttribute = 'name';
 
@@ -36,17 +41,15 @@ class UserResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => ListUsers::route('/'),
+            'index'  => ListUsers::route('/'),
             'create' => CreateUser::route('/create'),
-            'edit' => EditUser::route('/{record}/edit'),
+            'edit'   => EditUser::route('/{record}/edit'),
         ];
     }
 }
