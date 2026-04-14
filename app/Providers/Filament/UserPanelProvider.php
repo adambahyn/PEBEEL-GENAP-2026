@@ -28,14 +28,19 @@ class UserPanelProvider extends PanelProvider
             ->path('customer')
             ->login()
             ->registration()
-            // ✅ Setelah login, langsung diarahkan ke halaman Beranda (/customer)
+            // ✅ Setelah login langsung ke Beranda
             ->homeUrl('/customer')
+            ->renderHook(
+                // ✅ Inject Tailwind CDN ke <head> panel agar class custom di blade tampil dengan benar
+                PanelsRenderHook::HEAD_END,
+                fn(): string => '<script src="https://cdn.tailwindcss.com"></script>'
+            )
             ->renderHook(
                 PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
                 fn(): string => Blade::render('
                     <div class="mt-4 text-center">
                         <p class="text-sm text-gray-500 dark:text-gray-400">
-                            Pengelola Rental? 
+                            Pengelola Rental?
                             <a href="/admin/login" class="font-semibold text-primary-600 hover:text-primary-500 hover:underline">
                                 Masuk sebagai Admin
                             </a>
@@ -49,7 +54,6 @@ class UserPanelProvider extends PanelProvider
             ])
             ->discoverResources(in: app_path('Filament/Resources/User'), for: 'App\\Filament\\Resources\\User')
             ->discoverPages(in: app_path('Filament/Pages/User'), for: 'App\\Filament\\Pages\\User')
-            // ✅ Hapus Dashboard::class — Beranda (CustomerHome) sudah jadi halaman utama via slug kosong
             ->pages([])
             ->discoverWidgets(in: app_path('Filament/Widgets/User'), for: 'App\\Filament\\Widgets\\User')
             ->widgets([
