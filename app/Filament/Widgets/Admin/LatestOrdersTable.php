@@ -79,12 +79,6 @@ class LatestOrdersTable extends BaseWidget
                     ->sortable(),
             ])
             ->actions([
-                Tables\Actions\Action::make('confirm')
-                    ->label('Konfirmasi')
-                    ->icon('heroicon-o-check')
-                    ->color('success')
-                    ->visible(fn ($record) => ($record->status ?? '') === 'pending')
-                    ->action(fn ($record) => $record->update(['status' => 'confirmed'])),
             ]);
     }
 }

@@ -19,7 +19,6 @@ class ProductInfolist
             ->components([
                 Tabs::make('Product Tabs')
                     ->tabs([
-                        // Tab 1: Menggunakan icon information-circle
                         Tab::make('Product Details')
                             ->icon('heroicon-o-information-circle')
                             ->schema([
@@ -29,7 +28,7 @@ class ProductInfolist
                                 TextEntry::make('sku')
                                     ->label('SKU')
                                     ->badge()
-                                    ->color('info'), // Warna info (biru) untuk SKU
+                                    ->color('info'),
                                 TextEntry::make('description')
                                     ->label('Description')
                                     ->markdown(),
@@ -42,22 +41,14 @@ class ProductInfolist
                                 TextEntry::make('price')
                                     ->label('Product Price')
                                     ->icon('heroicon-o-currency-dollar')
-                                    ->formatStateUsing(fn($state) => 'Rp ' . number_format($state, 0, ',', '.'))
                                     ->color('success'),
 
-                                // 1 & 2. Badge dinamis berdasarkan jumlah stok dengan warna berbeda
                                 TextEntry::make('stock')
                                     ->label('Inventory Stock')
                                     ->badge()
-                                    ->color(fn(int $state): string => match (true) {
-                                        $state <= 5 => 'danger',  // Merah jika stok kritis (<= 5)
-                                        $state <= 20 => 'warning', // Kuning jika stok menipis (<= 20)
-                                        default => 'success',      // Hijau jika stok aman
-                                    })
                                     ->icon('heroicon-o-cube'),
                             ])->columns(2),
 
-                        // Tab 3: Menggunakan icon photo
                         Tab::make('Media & Status')
                             ->icon('heroicon-o-photo')
                             ->schema([
@@ -74,7 +65,7 @@ class ProductInfolist
                             ])->columns(2),
                     ])
                     ->columnSpanFull()
-                    ->vertical(), // 3. Mengubah tampilan Tabs menjadi Vertical (di samping kiri)
+                    ->vertical(),
             ]);
     }
 }
