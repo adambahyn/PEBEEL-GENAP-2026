@@ -11,7 +11,7 @@ class ProductController extends Controller
     {
         $query = Product::query()->where('is_active', 1);
 
-        // 🔍 FILTER HARGA
+        // FILTER HARGA
         if ($request->min_price) {
             $query->where('price', '>=', $request->min_price);
         }
@@ -20,17 +20,17 @@ class ProductController extends Controller
             $query->where('price', '<=', $request->max_price);
         }
 
-        // 🔍 FILTER TIPE
+        // FILTER TIPE
         if ($request->type) {
             $query->where('type', $request->type);
         }
 
-        // 🔍 FILTER LOKASI
+        // FILTER LOKASI
         if ($request->location) {
             $query->where('location', $request->location);
         }
 
-        // 🔽 SORTING
+        // SORTING
         if ($request->sort == 'cheapest') {
             $query->orderBy('price', 'asc');
         } elseif ($request->sort == 'expensive') {
