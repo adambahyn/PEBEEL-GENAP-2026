@@ -7,7 +7,7 @@ use Filament\Pages\Page;
 
 class CustomerHome extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-home';
+    // protected static ?string $navigationIcon = 'heroicon-o-home';
 
     // ✅ Non-static — wajib di Filament v3 (static akan error "Cannot redeclare non static")
     protected string $view = 'filament.pages.user.customer-home';
