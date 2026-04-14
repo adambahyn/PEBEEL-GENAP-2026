@@ -21,7 +21,6 @@ class ProductsTable
                     ->searchable()
                     ->sortable(),
 
-                // 1. Tambahkan badge untuk SKU dengan warna berbeda (misal: info/biru)
                 TextColumn::make('sku')
                     ->label('SKU')
                     ->badge()
@@ -30,21 +29,19 @@ class ProductsTable
                     ->sortable(),
 
                 TextColumn::make('description')
-                    ->limit(50) // Membatasi tampilan deskripsi agar tabel tetap rapi
+                    ->limit(50) 
                     ->searchable()
                     ->sortable(),
 
-                // 3. Tambahkan format harga menjadi Rp dengan formatStateUsing()
                 TextColumn::make('price')
                     ->label('Harga')
                     ->formatStateUsing(fn(string $state): string => 'Rp ' . number_format($state, 0, ',', '.'))
                     ->searchable()
                     ->sortable(),
 
-                // 2. Tambahkan icon pada Stock
                 TextColumn::make('stock')
                     ->label('Stok')
-                    ->icon('heroicon-o-cube') // Menambahkan ikon kubus/stok
+                    ->icon('heroicon-o-cube')
                     ->searchable()
                     ->sortable(),
 

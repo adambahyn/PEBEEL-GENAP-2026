@@ -53,27 +53,27 @@
             transform: scale(1.1);
         }
     </style>
-    <!-- 🔝 NAVBAR -->
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
         <div class="container">
 
-            <!-- 🔹 BRAND -->
+            <!-- BRAND -->
             <a class="navbar-brand fw-bold" href="{{ url('/home') }}">
                 Adam Rental
             </a>
 
-            <!-- 🔹 TOGGLE (mobile) -->
+            <!-- TOGGLE (mobile) -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <!-- 🔹 MENU -->
+            <!-- MENU -->
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav gap-2">
 
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('home') ? 'active fw-bold' : '' }}"
-                            href="{{ url('/home') }}">
+                        <a class="nav-link {{ request()->is('customer') ? 'active fw-bold' : '' }}"
+                            href="{{ url('/customer') }}">
                             Beranda
                         </a>
                     </li>
@@ -103,12 +103,12 @@
 
     <div class="container py-4">
 
-        <!-- 🔥 HERO -->
+        <!-- HERO -->
         <div class="hero mb-4">
             <h1 class="fw-bold">Adam Rental</h1>
             <p>Rental Mobil Terpercaya se Kota Malang</p>
 
-            <!-- 🔍 SEARCH -->
+            <!-- SEARCH -->
             <form method="GET" class="search-box w-75">
                 <input type="text" name="location" class="form-control" placeholder="Lokasi"
                     value="{{ request('location') }}">
@@ -125,7 +125,7 @@
             </form>
         </div>
 
-        <!-- 🔘 FILTER CATEGORY -->
+        <!-- FILTER CATEGORY -->
         <div class="mb-4 d-flex gap-2">
 
             <a href="/product" class="btn btn-sm {{ request('type') ? 'btn-outline-dark' : 'btn-dark' }}">
@@ -147,7 +147,7 @@
 
         </div>
 
-        <!-- 🚗 LIST MOBIL -->
+        <!--  LIST MOBIL -->
         <div class="row g-4">
             @forelse($products as $product)
                 <div class="col-md-3">
@@ -179,7 +179,7 @@
                             </div>
 
 
-                            <!-- 🔥 BUTTON BOOKING -->
+                            <!-- BUTTON BOOKING -->
                             <div class="d-grid mt-3">
                                 <a href="http://127.0.0.1:8000/payment" class="btn btn-primary btn-sm">
                                     Booking Now
@@ -193,7 +193,7 @@
             @endforelse
         </div>
 
-        <!-- 📄 PAGINATION -->
+        <!-- PAGINATION -->
         <div class="mt-4">
             {{ $products->withQueryString()->links() }}
         </div>

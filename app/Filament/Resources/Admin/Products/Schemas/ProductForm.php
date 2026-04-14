@@ -21,7 +21,6 @@ class ProductForm
             ->components([
                 Wizard::make([
 
-                    // 🔹 STEP 1
                     Step::make('Product Info')
                         ->icon('heroicon-o-information-circle')
                         ->description('Isi informasi dasar produk')
@@ -34,7 +33,7 @@ class ProductForm
                             MarkdownEditor::make('description')->required(),
                         ]),
 
-                    // 🔹 STEP 2
+
                     Step::make('Pricing & Stock')
                         ->icon('heroicon-o-currency-dollar')
                         ->description('Isi harga dan jumlah stok')
@@ -48,7 +47,6 @@ class ProductForm
                                 ->numeric()
                                 ->required(),
 
-                            // ✅ TYPE
                             Select::make('type')
                                 ->options([
                                     'SUV' => 'SUV',
@@ -57,12 +55,10 @@ class ProductForm
                                 ])
                                 ->required(),
 
-                            // ✅ LOCATION
                             TextInput::make('location')
                                 ->required(),
                         ]),
 
-                    // 🔹 STEP 3
                     Step::make('Media & Status')
                         ->icon('heroicon-o-photo')
                         ->description('Upload gambar dan atur status')
