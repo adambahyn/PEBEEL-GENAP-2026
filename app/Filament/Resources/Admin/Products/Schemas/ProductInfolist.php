@@ -33,8 +33,6 @@ class ProductInfolist
                                     ->label('Description')
                                     ->markdown(),
                             ]),
-
-                        // Tab 2: Menggunakan icon banknotes
                         Tab::make('Pricing & Stock')
                             ->icon('heroicon-o-banknotes')
                             ->schema([
@@ -47,7 +45,7 @@ class ProductInfolist
                                     ->label('Inventory Stock')
                                     ->badge()
                                     ->icon('heroicon-o-cube'),
-                            ])->columns(2),
+                            ])->columns(),
 
                         Tab::make('Media & Status')
                             ->icon('heroicon-o-photo')
@@ -62,7 +60,7 @@ class ProductInfolist
                                 IconEntry::make('is_featured')
                                     ->label('Featured Product')
                                     ->boolean(),
-                            ])->columns(2),
+                            ])->columns(),
                     ])
                     ->columnSpanFull()
                     ->vertical(),
