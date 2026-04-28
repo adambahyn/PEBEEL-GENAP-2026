@@ -18,6 +18,8 @@ class CarInfolist
                 TextEntry::make('model'),
                 TextEntry::make('capacity')
                     ->numeric(),
+                TextEntry::make('stock')
+                    ->numeric(),
                 TextEntry::make('transmission'),
                 TextEntry::make('fuel_type'),
                 TextEntry::make('price')

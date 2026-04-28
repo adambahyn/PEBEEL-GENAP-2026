@@ -34,6 +34,12 @@ class CarForm
                 TextInput::make('capacity')
                     ->numeric()
                     ->required(),
+
+                TextInput::make('stock')
+                    ->label('Stock')
+                    ->numeric()
+                    ->required()
+                    ->default(1),
                 
                 TextInput::make('fuel_type')
                     ->required(),
