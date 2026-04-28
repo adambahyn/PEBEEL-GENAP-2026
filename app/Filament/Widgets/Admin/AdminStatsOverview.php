@@ -41,21 +41,21 @@ class AdminStatsOverview extends BaseWidget
         $bookingPending = Booking::where('status', 'pending')->count();
 
         return [
-            Stat::make('Total Booking Bulan Ini', $bookingBulanIni)
-                ->description($trendBooking >= 0
-                    ? "{$trendBooking}% naik dari bulan lalu"
-                    : abs($trendBooking) . '% turun dari bulan lalu')
-                ->descriptionIcon($trendBooking >= 0
-                    ? 'heroicon-m-arrow-trending-up'
-                    : 'heroicon-m-arrow-trending-down')
-                ->color($trendBooking >= 0 ? 'success' : 'danger')
-                ->chart(
-                    Booking::selectRaw('COUNT(*) as count')
-                        ->whereMonth('created_at', '>=', now()->subMonths(6)->month)
-                        ->groupByRaw('MONTH(created_at)')
-                        ->pluck('count')
-                        ->toArray()
-                ),
+            // Stat::make('Total Booking Bulan Ini', $bookingBulanIni)
+            //     ->description($trendBooking >= 0
+            //         ? "{$trendBooking}% naik dari bulan lalu"
+            //         : abs($trendBooking) . '% turun dari bulan lalu')
+            //     ->descriptionIcon($trendBooking >= 0
+            //         ? 'heroicon-m-arrow-trending-up'
+            //         : 'heroicon-m-arrow-trending-down')
+            //     ->color($trendBooking >= 0 ? 'success' : 'danger')
+            //     ->chart(
+            //         Booking::selectRaw('COUNT(*) as count')
+            //             ->whereMonth('created_at', '>=', now()->subMonths(6)->month)
+            //             ->groupByRaw('MONTH(created_at)')
+            //             ->pluck('count')
+            //             ->toArray()
+            //     ),
 
             Stat::make('Pendapatan Bulan Ini', 'Rp ' . number_format($pendapatanBulanIni, 0, ',', '.'))
                 ->description('Dari booking confirmed & selesai')
