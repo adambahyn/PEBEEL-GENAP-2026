@@ -87,7 +87,7 @@
 
                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('payment') ? 'active fw-bold' : '' }}"
-                            href="{{ url('/payment') }}">
+                            href="{{ route('payment.index') }}">
                             Pembayaran
                         </a>
                     </li>
@@ -181,7 +181,7 @@
 
                             <!-- BUTTON BOOKING -->
                             <div class="d-grid mt-3">
-                                <a href="http://127.0.0.1:8000/payment" class="btn btn-primary btn-sm">
+                                <a href="{{ route('payment.index') }}" class="btn btn-primary btn-sm">
                                     Booking Now
                                 </a>
                             </div>

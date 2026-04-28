@@ -159,7 +159,7 @@
                             <span class="text-muted" style="font-size:0.75rem;">/hari</span>
                         </div>
                         @if ($car->stock > 0)
-                        <a href="/payment" class="btn btn-warning btn-sm rounded-pill fw-bold px-3"
+                        <a href="{{ route('payment.index') }}" class="btn btn-warning btn-sm rounded-pill fw-bold px-3"
                            style="font-size:0.78rem;">
                             Booking
                         </a>
