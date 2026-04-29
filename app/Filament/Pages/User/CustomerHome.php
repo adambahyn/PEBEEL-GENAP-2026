@@ -10,7 +10,7 @@ class CustomerHome extends Page
     // protected static ?string $navigationIcon = 'heroicon-o-home';
 
     // ✅ Non-static — wajib di Filament v3 (static akan error "Cannot redeclare non static")
-    protected string $view = 'filament.pages.user.customer-home';
+    protected string $view = 'Home.index';
 
     protected static ?string $title = 'Beranda';
     protected static ?string $navigationLabel = 'Beranda';
