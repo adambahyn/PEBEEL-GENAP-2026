@@ -54,49 +54,7 @@
         }
     </style>
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
-        <div class="container">
-
-            <!-- BRAND -->
-            <a class="navbar-brand fw-bold" href="{{ url('/home') }}">
-                Adam Rental
-            </a>
-
-            <!-- TOGGLE (mobile) -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- MENU -->
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav gap-2">
-
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('customer') ? 'active fw-bold' : '' }}"
-                            href="{{ url('/customer') }}">
-                            Beranda
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('product') ? 'active fw-bold' : '' }}"
-                            href="{{ url('/product') }}">
-                            Product
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('payment') ? 'active fw-bold' : '' }}"
-                            href="{{ route('payment.index') }}">
-                            Pembayaran
-                        </a>
-                    </li>
-
-                </ul>
-            </div>
-
-        </div>
-    </nav>
+    @include('layouts.navbar')
 </head>
 
 <body class="bg-light">
@@ -155,7 +113,7 @@
 
                         <div class="card-img-hover">
                             <a href="http://127.0.0.1:8000/detail">
-                                <img src="{{ asset('storage/p' . $product->image) }}" class="card-img-top">
+                                <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top">
                             </a>
                         </div>
 

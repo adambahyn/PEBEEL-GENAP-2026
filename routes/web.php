@@ -3,17 +3,16 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
-use App\Models\car;
+use App\Models\Product;
 
 Route::get('/', function () {
-    return redirect('/customer/login');
+    return redirect('/customer');
 });
 Route::get('/customer', function () {
-    // Ambil beberapa mobil secara acak atau terbaru untuk ditampilkan di beranda
-    $cars = Car::latest()->take(8)->get(); 
+    $cars = Product::latest()->take(8)->get(); 
+    $carsCount = Product::count();
     
-    // Kembalikan view yang baru saja dibuat
-    return view('home.index', compact('cars'));
+    return view('home.index', compact('cars', 'carsCount'));
 });
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');
 Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
