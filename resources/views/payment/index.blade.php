@@ -130,7 +130,7 @@
                     @if (!Auth::check())
                         <!-- BELUM LOGIN -->
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->is('login') ? 'active fw-bold' : '' }} btn btn-primary text-white px-3"
+                            <a class="nav-link {{ request()->is('login') ? 'active fw-bold' : '' }} btn btn-primary text-black px-3"
                                 href="{{ route('login') }}">
                                 Login
                             </a>
