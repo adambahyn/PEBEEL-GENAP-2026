@@ -104,6 +104,7 @@
 </head>
 
 <body class="bg-light">
+    @include('layouts.navbar')
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
         <div class="container">
             <a class="navbar-brand fw-bold" href="{{ route('product.index') }}">Adam Rental</a>
@@ -214,7 +215,14 @@
                         <span class="badge bg-primary bg-opacity-10 text-primary py-2 px-3">Simpel & Cepat</span>
                     </div>
 
-                    @if (session('success'))
+ HEAD
+                    @if(session('warning'))
+                        <div class="alert alert-warning">{{ session('warning') }}</div>
+                    @endif
+
+                    @if(session('success'))
+
+3c973db57c6115289193ce8ccce9391a0ecd7700
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
 

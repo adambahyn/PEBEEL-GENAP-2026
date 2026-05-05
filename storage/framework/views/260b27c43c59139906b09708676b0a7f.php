@@ -72,38 +72,8 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="<?php echo e(url('/customer')); ?>">
-                Adam Rental
-            </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav gap-2">
-                    <li class="nav-item">
-                        <a class="nav-link active fw-bold" href="<?php echo e(url('/customer')); ?>">
-                            Beranda
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?php echo e(url('/product')); ?>">
-                            Product
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?php echo e(route('payment.index')); ?>">
-                            Pembayaran
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
+    <?php echo $__env->make('layouts.navbar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+    
     <div class="container pb-5">
 
         
@@ -124,7 +94,7 @@
         <div class="row g-3 mb-5">
             <div class="col-6 col-md-3">
                 <div class="card feature-card shadow-sm border-0 h-100 text-center p-3">
-                    <div class="fs-2 fw-bold text-primary mb-1"><?php echo e($cars->count() ?? 0); ?>+</div>
+                    <div class="fs-2 fw-bold text-primary mb-1"><?php echo e($carsCount); ?>+</div>
                     <div class="text-muted small fw-semibold section-label">Mobil Aktif</div>
                 </div>
             </div>

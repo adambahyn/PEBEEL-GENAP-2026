@@ -11,6 +11,54 @@
         body {
             background: radial-gradient(circle at top, rgba(13, 110, 253, 0.12), transparent 30%), #eef5ff;
             color: #1f2937;
+<<<<<<< HEAD
+        }
+        .page-card, .feature-card {
+            background: #ffffff;
+            border: 0;
+            border-radius: 28px;
+            box-shadow: 0 24px 70px rgba(15, 23, 42, 0.08);
+        }
+        .hero-panel {
+            position: relative;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.18), rgba(15, 23, 42, 0.04)), url('<?php echo e(asset('images/payment-hero.jpg')); ?>') no-repeat center/cover;
+            border-radius: 30px;
+            border: 1px solid rgba(13, 110, 253, 0.12);
+            overflow: hidden;
+        }
+        .hero-panel::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.45), rgba(15, 23, 42, 0.18));
+            pointer-events: none;
+        }
+        .hero-panel .row {
+            position: relative;
+            z-index: 1;
+        }
+        .hero-panel .section-label,
+        .hero-panel h1,
+        .hero-panel p,
+        .hero-panel .step-badge,
+        .hero-panel .d-inline-flex {
+            color: #ffffff !important;
+        }
+        .hero-panel h1 {
+            text-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+        }
+        .hero-panel p {
+            color: rgba(255, 255, 255, 0.88) !important;
+        }
+        .hero-panel .step-badge {
+            background: rgba(255, 255, 255, 0.16);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: #f8fafc !important;
+        }
+        .hero-panel .d-inline-flex {
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.14);
+=======
         }
 
         .page-card,
@@ -19,6 +67,7 @@
             border: 0;
             border-radius: 28px;
             box-shadow: 0 24px 70px rgba(15, 23, 42, 0.08);
+>>>>>>> 3c973db57c6115289193ce8ccce9391a0ecd7700
         }
 
         .hero-panel {
@@ -188,8 +237,12 @@
                         <div class="col-md-8">
                             <p class="section-label mb-2">Booking & Pembayaran</p>
                             <h1 class="h3 fw-semibold mb-2">Booking mobil dan bayar langsung dari satu halaman.</h1>
+<<<<<<< HEAD
+                            <p class="text-muted mb-3">Pilih mobil, tentukan tanggal sewa, dan pilih metode pembayaran — semuanya mudah diatur di sini.</p>
+=======
                             <p class="text-muted mb-3">Pilih mobil, tentukan tanggal sewa, dan pilih metode pembayaran —
                                 semuanya mudah diatur di sini.</p>
+>>>>>>> 3c973db57c6115289193ce8ccce9391a0ecd7700
                             <div class="d-flex flex-wrap gap-3">
                                 <div class="step-badge">Booking cepat</div>
                                 <div class="step-badge">Pembayaran fleksibel</div>
