@@ -19,8 +19,8 @@ class UserForm
                 ->required(),
             TextInput::make('password')
                 ->password()
-                ->dehydrated(fn ($state) => filled($state))
-                ->required(fn (string $context): bool => $context === 'create'),
+                ->dehydrated(fn ($state) => filled($state)),
+                // ->required(fn (string $context): bool => $context === 'create'),
                 
             // TAMBAHKAN KODE INI DI SINI:
             Select::make('role')
@@ -29,7 +29,7 @@ class UserForm
                     'user' => 'User',
                 ])
                 ->required()
-                ->native(false), // Opsional: agar tampilan lebih modern
+                ->native(true), // Opsional: agar tampilan lebih modern
         ]);
     }
 }

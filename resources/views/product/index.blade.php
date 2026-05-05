@@ -169,6 +169,8 @@
                                 <a href="#" onclick="alert('Maaf, detail mobil belum tersedia. Hubungi admin untuk informasi lebih lanjut.'); return false;" style="cursor: not-allowed;" title="Detail mobil belum tersedia">
                             @endif
                                 <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top" @if(!($product->car_id && $product->car)) style="opacity: 0.5;" @endif>
+                            <a href="http://127.0.0.1:8000/detail">
+                                <img src="{{ asset('storage/p' . $product->image) }}" class="card-img-top">
                             </a>
                         </div>
 
