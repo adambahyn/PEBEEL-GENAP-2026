@@ -99,6 +99,56 @@
                             Pembayaran
                         </a>
                     </li>
+                    
+                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(!Auth::check()): ?>
+                            <!-- BELUM LOGIN -->
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo e(request()->is('login') ? 'active fw-bold' : ''); ?> btn btn-primary text-white px-3"
+                            href="<?php echo e(route('login')); ?>">
+                            Login
+                        </a>
+                    </li>
+                <?php elseif(Auth::user()->role === 'user'): ?>
+                    <!-- LOGIN SEBAGAI USER -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#"
+                            data-bs-toggle="dropdown">
+
+                            <i class="bi bi-person-circle fs-4"></i>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end">
+
+                            <!-- NAMA USER -->
+                            <li class="dropdown-item-text fw-semibold">
+                                👤 <?php echo e(Auth::user()->name); ?>
+
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <!-- MENU TAMBAHAN -->
+                            <li>
+                                <a class="dropdown-item" href="#">Profil</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Riwayat Sewa</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <!-- LOGOUT -->
+                            <li>
+                                <form method="POST" action="<?php echo e(route('logout')); ?>">
+                                    <?php echo csrf_field(); ?>
+                                    <button class="dropdown-item">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                 </ul>
             </div>
         </div>
