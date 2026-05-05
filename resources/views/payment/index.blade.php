@@ -221,7 +221,6 @@
 
                     @if(session('success'))
 
-                    @if (session('success'))
 3c973db57c6115289193ce8ccce9391a0ecd7700
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
