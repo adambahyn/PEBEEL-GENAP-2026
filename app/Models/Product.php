@@ -22,6 +22,11 @@ class Product extends Model
         'is_featured',
     ];
 
+    public function car()
+{
+    return $this->belongsTo(\App\Models\Car::class);
+}
+
     protected $casts = [
         'is_active' => 'boolean',
         'is_featured' => 'boolean',

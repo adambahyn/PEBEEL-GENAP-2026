@@ -12,6 +12,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Select;
 use Filament\Actions\Action;
+use App\Models\Car;
 
 class ProductForm
 {
@@ -25,6 +26,11 @@ class ProductForm
                         ->icon('heroicon-o-information-circle')
                         ->description('Isi informasi dasar produk')
                         ->schema([
+                            Select::make('car_id')
+                            ->label('Pilih Mobil')
+                            ->relationship('car', 'brand')
+                            ->searchable()
+                            ->required(),
                             Group::make([
                                 TextInput::make('name')->required(),
                                 TextInput::make('sku')->required(),

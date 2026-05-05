@@ -7,6 +7,7 @@
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
         .hero {
@@ -55,16 +56,116 @@
     </style>
     <!-- NAVBAR -->
     @include('layouts.navbar')
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
+        <div class="container">
+
+            <!-- BRAND -->
+            <a class="navbar-brand fw-bold" href="{{ url('/home') }}">
+                Adam Rental
+            </a>
+
+            <!-- TOGGLE (mobile) -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- MENU -->
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav gap-2">
+
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('customer') ? 'active fw-bold' : '' }}"
+                            href="{{ url('/customer') }}">
+                            Beranda
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('product') ? 'active fw-bold' : '' }}"
+                            href="{{ url('/product') }}">
+                            Product
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('payment') ? 'active fw-bold' : '' }}"
+                            href="{{ route('payment.index') }}">
+                            Pembayaran
+                        </a>
+                        {{-- LOGIN --}}
+                        @if (!Auth::check())
+                            <!-- BELUM LOGIN -->
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('login') ? 'active fw-bold' : '' }} btn btn-primary text-white px-3"
+                            href="{{ route('login') }}">
+                            Login
+                        </a>
+                    </li>
+                @elseif(Auth::user()->role === 'user')
+                    <!-- LOGIN SEBAGAI USER -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#"
+                            data-bs-toggle="dropdown">
+
+                            <i class="bi bi-person-circle fs-4"></i>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end">
+
+                            <!-- NAMA USER -->
+                            <li class="dropdown-item-text fw-semibold">
+                                👤 {{ Auth::user()->name }}
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <!-- MENU TAMBAHAN -->
+                            <li>
+                                <a class="dropdown-item" href="#">Profil</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Riwayat Sewa</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <!-- LOGOUT -->
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button class="dropdown-item">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                    @endif
+
+                </ul>
+            </div>
+
+        </div>
+    </nav>
 </head>
 
 <body class="bg-light">
 
     <div class="container py-4">
 
+        <!-- ALERT ERROR -->
+        @if ($errors->any() || session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>⚠️ Perhatian!</strong>
+                {{ session('error') ?? $errors->first() }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
         <!-- HERO -->
         <div class="hero mb-4">
             <h1 class="fw-bold">Adam Rental</h1>
-            <p>Rental Mobil Terpercaya se Kota Malang</p>
+            <p>Rental Mobil Terpercaya se Kota Malang dan Surabaya</p>
 
             <!-- SEARCH -->
             <form method="GET" class="search-box w-75">
@@ -114,6 +215,11 @@
                         <div class="card-img-hover">
                             <a href="http://127.0.0.1:8000/detail">
                                 <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top">
+                            <a href="{{ $product->car_id && $product->car ? route('cars.user-show', $product->id) : '#' }}"
+                                @if (!($product->car_id && $product->car)) onclick="alert('Maaf, detail mobil belum tersedia. Hubungi admin untuk informasi lebih lanjut'); return false;"
+           style="cursor: not-allowed;" @endif>
+                                <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top"
+                                    @if (!($product->car_id && $product->car))  @endif>
                             </a>
                         </div>
 
@@ -157,7 +263,8 @@
         </div>
 
     </div>
-
+    <!-- Bootstrap JS (WAJIB untuk dropdown) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

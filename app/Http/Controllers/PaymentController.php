@@ -5,11 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use App\Models\Car;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
     public function index(Request $request)
     {
+        if (!Auth::check()) {
+            return redirect('/customer/login')
+                ->with('warning', 'Anda wajib login terlebih dahulu.');
+        }
+
         $cars = Car::query()->where('stock', '>', 0)->get();
 
         return view('payment.index', [
@@ -19,6 +25,10 @@ class PaymentController extends Controller
 
     public function store(Request $request)
     {
+        if (!Auth::check()) {
+            return redirect('/customer/login')
+                ->with('warning', 'Anda wajib login terlebih dahulu.');
+        }
         $validated = $request->validate([
             'car_id' => ['required', 'exists:cars,id'],
             'customer_name' => ['required', 'string', 'max:255'],

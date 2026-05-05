@@ -7,6 +7,7 @@
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
         .hero {
@@ -90,7 +91,56 @@
                             href="<?php echo e(route('payment.index')); ?>">
                             Pembayaran
                         </a>
+                        
+                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(!Auth::check()): ?>
+                            <!-- BELUM LOGIN -->
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo e(request()->is('login') ? 'active fw-bold' : ''); ?> btn btn-primary text-white px-3"
+                            href="<?php echo e(route('login')); ?>">
+                            Login
+                        </a>
                     </li>
+                <?php elseif(Auth::user()->role === 'user'): ?>
+                    <!-- LOGIN SEBAGAI USER -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#"
+                            data-bs-toggle="dropdown">
+
+                            <i class="bi bi-person-circle fs-4"></i>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end">
+
+                            <!-- NAMA USER -->
+                            <li class="dropdown-item-text fw-semibold">
+                                👤 <?php echo e(Auth::user()->name); ?>
+
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <!-- MENU TAMBAHAN -->
+                            <li>
+                                <a class="dropdown-item" href="#">Profil</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Riwayat Sewa</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <!-- LOGOUT -->
+                            <li>
+                                <form method="POST" action="<?php echo e(route('logout')); ?>">
+                                    <?php echo csrf_field(); ?>
+                                    <button class="dropdown-item">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
                 </ul>
             </div>
@@ -103,10 +153,20 @@
 
     <div class="container py-4">
 
+        <!-- ALERT ERROR -->
+        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($errors->any() || session('error')): ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>⚠️ Perhatian!</strong>
+                <?php echo e(session('error') ?? $errors->first()); ?>
+
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
         <!-- HERO -->
         <div class="hero mb-4">
             <h1 class="fw-bold">Adam Rental</h1>
-            <p>Rental Mobil Terpercaya se Kota Malang</p>
+            <p>Rental Mobil Terpercaya se Kota Malang dan Surabaya</p>
 
             <!-- SEARCH -->
             <form method="GET" class="search-box w-75">
@@ -154,8 +214,11 @@
                     <div class="card shadow-sm border-0">
 
                         <div class="card-img-hover">
-                            <a href="http://127.0.0.1:8000/detail">
-                                <img src="<?php echo e(asset('storage/' . $product->image)); ?>" class="card-img-top">
+                            <a href="<?php echo e($product->car_id && $product->car ? route('cars.user-show', $product->id) : '#'); ?>"
+                                <?php if(!($product->car_id && $product->car)): ?> onclick="alert('Maaf, detail mobil belum tersedia. Hubungi admin untuk informasi lebih lanjut'); return false;"
+           style="cursor: not-allowed;" <?php endif; ?>>
+                                <img src="<?php echo e(asset('storage/' . $product->image)); ?>" class="card-img-top"
+                                    <?php if(!($product->car_id && $product->car)): ?>  <?php endif; ?>>
                             </a>
                         </div>
 
@@ -202,7 +265,8 @@
         </div>
 
     </div>
-
+    <!-- Bootstrap JS (WAJIB untuk dropdown) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
