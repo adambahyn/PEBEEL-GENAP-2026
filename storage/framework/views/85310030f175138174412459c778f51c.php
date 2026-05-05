@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Adam Rental</title>
+    <title>Login - Adam Rental</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -26,7 +26,7 @@
             font-size: 1.5rem;
         }
 
-        .register-container {
+        .login-container {
             flex: 1;
             display: flex;
             align-items: center;
@@ -34,7 +34,7 @@
             padding: 20px;
         }
 
-        .register-card {
+        .login-card {
             background: white;
             border-radius: 20px;
             padding: 40px;
@@ -43,18 +43,18 @@
             max-width: 450px;
         }
 
-        .register-header {
+        .login-header {
             text-align: center;
             margin-bottom: 35px;
         }
 
-        .register-header h2 {
+        .login-header h2 {
             color: #667eea;
             font-weight: 700;
             margin-bottom: 10px;
         }
 
-        .register-header p {
+        .login-header p {
             color: #6c757d;
             margin: 0;
         }
@@ -85,7 +85,7 @@
             box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
         }
 
-        .btn-register {
+        .btn-login {
             width: 100%;
             padding: 12px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -100,32 +100,32 @@
             margin-bottom: 20px;
         }
 
-        .btn-register:hover {
+        .btn-login:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
             color: white;
         }
 
-        .register-footer {
+        .login-footer {
             text-align: center;
             margin-top: 25px;
             padding-top: 25px;
             border-top: 1px solid #e0e0e0;
         }
 
-        .register-footer p {
+        .login-footer p {
             margin: 0;
             color: #6c757d;
         }
 
-        .register-footer a {
+        .login-footer a {
             color: #667eea;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
         }
 
-        .register-footer a:hover {
+        .login-footer a:hover {
             text-decoration: underline;
         }
 
@@ -136,11 +136,11 @@
         }
 
         @media (max-width: 768px) {
-            .register-card {
+            .login-card {
                 padding: 25px;
             }
 
-            .register-header {
+            .login-header {
                 margin-bottom: 25px;
             }
         }
@@ -151,30 +151,34 @@
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/customer') }}">
+            <a class="navbar-brand" href="<?php echo e(url('/customer')); ?>">
                 <i class="bi bi-car-front"></i> Adam Rental
             </a>
         </div>
     </nav>
 
-    <!-- REGISTER CONTAINER -->
-    <div class="register-container">
-        <div class="register-card">
+    <!-- LOGIN CONTAINER -->
+    <div class="login-container">
+        <div class="login-card">
 
-            <!-- REGISTER HEADER -->
-            <div class="register-header">
-                <h2><i class="bi bi-person-plus"></i> Register</h2>
-                <p>Buat akun baru untuk mulai menyewa</p>
+            <!-- LOGIN HEADER -->
+            <div class="login-header">
+                <h2><i class="bi bi-box-arrow-in-right"></i> Login</h2>
+                <p>Masuk untuk melanjutkan pengalaman sewa mobil</p>
             </div>
 
-            <!-- REGISTER FORM -->
-            <form method="POST" action="{{ route('register') }}">
-                @csrf
+            <!-- ERROR MESSAGE -->
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(session('error')): ?>
+                <div class="alert alert-danger">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <?php echo e(session('error')); ?>
 
-                <div class="form-group">
-                    <label><i class="bi bi-person"></i> Nama Lengkap</label>
-                    <input type="text" name="name" class="form-control" placeholder="Masukkan nama lengkap Anda" required>
                 </div>
+            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+            <!-- LOGIN FORM -->
+            <form method="POST" action="<?php echo e(route('login')); ?>">
+                <?php echo csrf_field(); ?>
 
                 <div class="form-group">
                     <label><i class="bi bi-envelope"></i> Email</label>
@@ -186,16 +190,16 @@
                     <input type="password" name="password" class="form-control" placeholder="Masukkan password Anda" required>
                 </div>
 
-                <button type="submit" class="btn-register">
-                    <i class="bi bi-check-circle"></i> Register
+                <button type="submit" class="btn-login">
+                    <i class="bi bi-check-circle"></i> Login
                 </button>
             </form>
 
-            <!-- REGISTER FOOTER -->
-            <div class="register-footer">
+            <!-- LOGIN FOOTER -->
+            <div class="login-footer">
                 <p>
-                    Sudah punya akun?
-                    <a href="{{ route('login') }}">Login di sini</a>
+                    Belum punya akun?
+                    <a href="<?php echo e(route('register')); ?>">Daftar di sini</a>
                 </p>
             </div>
 
@@ -205,4 +209,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
-</html>
+</html><?php /**PATH C:\laragon2\www\pbl_3\resources\views/auth/login.blade.php ENDPATH**/ ?>

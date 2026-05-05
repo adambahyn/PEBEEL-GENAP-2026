@@ -151,7 +151,7 @@
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/customer') }}">
+            <a class="navbar-brand" href="<?php echo e(url('/customer')); ?>">
                 <i class="bi bi-car-front"></i> Adam Rental
             </a>
         </div>
@@ -168,8 +168,8 @@
             </div>
 
             <!-- REGISTER FORM -->
-            <form method="POST" action="{{ route('register') }}">
-                @csrf
+            <form method="POST" action="<?php echo e(route('register')); ?>">
+                <?php echo csrf_field(); ?>
 
                 <div class="form-group">
                     <label><i class="bi bi-person"></i> Nama Lengkap</label>
@@ -195,7 +195,7 @@
             <div class="register-footer">
                 <p>
                     Sudah punya akun?
-                    <a href="{{ route('login') }}">Login di sini</a>
+                    <a href="<?php echo e(route('login')); ?>">Login di sini</a>
                 </p>
             </div>
 
@@ -205,4 +205,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
-</html>
+</html><?php /**PATH C:\laragon2\www\pbl_3\resources\views/auth/register.blade.php ENDPATH**/ ?>
