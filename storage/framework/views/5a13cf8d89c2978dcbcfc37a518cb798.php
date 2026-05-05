@@ -58,7 +58,7 @@
         <div class="container">
 
             <!-- BRAND -->
-            <a class="navbar-brand fw-bold" href="{{ url('/home') }}">
+            <a class="navbar-brand fw-bold" href="<?php echo e(url('/home')); ?>">
                 Adam Rental
             </a>
 
@@ -72,22 +72,22 @@
                 <ul class="navbar-nav gap-2">
 
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('customer') ? 'active fw-bold' : '' }}"
-                            href="{{ url('/customer') }}">
+                        <a class="nav-link <?php echo e(request()->is('customer') ? 'active fw-bold' : ''); ?>"
+                            href="<?php echo e(url('/customer')); ?>">
                             Beranda
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('product') ? 'active fw-bold' : '' }}"
-                            href="{{ url('/product') }}">
+                        <a class="nav-link <?php echo e(request()->is('product') ? 'active fw-bold' : ''); ?>"
+                            href="<?php echo e(url('/product')); ?>">
                             Product
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('payment') ? 'active fw-bold' : '' }}"
-                            href="{{ route('payment.index') }}">
+                        <a class="nav-link <?php echo e(request()->is('payment') ? 'active fw-bold' : ''); ?>"
+                            href="<?php echo e(route('payment.index')); ?>">
                             Pembayaran
                         </a>
                     </li>
@@ -104,23 +104,24 @@
     <div class="container py-4">
 
         <!-- ALERT ERROR -->
-        @if($errors->any() || session('error'))
+        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($errors->any() || session('error')): ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <strong>⚠️ Perhatian!</strong>
-                {{ session('error') ?? $errors->first() }}
+                <?php echo e(session('error') ?? $errors->first()); ?>
+
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
-        @endif
+        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
         <!-- HERO -->
         <div class="hero mb-4">
             <h1 class="fw-bold">Adam Rental</h1>
-            <p>Rental Mobil Terpercaya se Kota Malang dan S</p>
+            <p>Rental Mobil Terpercaya se Kota Malang</p>
 
             <!-- SEARCH -->
             <form method="GET" class="search-box w-75">
                 <input type="text" name="location" class="form-control" placeholder="Lokasi"
-                    value="{{ request('location') }}">
+                    value="<?php echo e(request('location')); ?>">
                 <input type="number" name="min_price" class="form-control" placeholder="Min Harga">
                 <input type="number" name="max_price" class="form-control" placeholder="Max Harga">
 
@@ -137,20 +138,20 @@
         <!-- FILTER CATEGORY -->
         <div class="mb-4 d-flex gap-2">
 
-            <a href="/product" class="btn btn-sm {{ request('type') ? 'btn-outline-dark' : 'btn-dark' }}">
+            <a href="/product" class="btn btn-sm <?php echo e(request('type') ? 'btn-outline-dark' : 'btn-dark'); ?>">
                 All
             </a>
 
-            <a href="?type=SUV" class="btn btn-sm {{ request('type') == 'SUV' ? 'btn-dark' : 'btn-outline-dark' }}">
+            <a href="?type=SUV" class="btn btn-sm <?php echo e(request('type') == 'SUV' ? 'btn-dark' : 'btn-outline-dark'); ?>">
                 SUV
             </a>
 
-            <a href="?type=MPV" class="btn btn-sm {{ request('type') == 'MPV' ? 'btn-dark' : 'btn-outline-dark' }}">
+            <a href="?type=MPV" class="btn btn-sm <?php echo e(request('type') == 'MPV' ? 'btn-dark' : 'btn-outline-dark'); ?>">
                 MPV
             </a>
 
             <a href="?type=Sedan"
-                class="btn btn-sm {{ request('type') == 'Sedan' ? 'btn-dark' : 'btn-outline-dark' }}">
+                class="btn btn-sm <?php echo e(request('type') == 'Sedan' ? 'btn-dark' : 'btn-outline-dark'); ?>">
                 Sedan
             </a>
 
@@ -158,35 +159,35 @@
 
         <!--  LIST MOBIL -->
         <div class="row g-4">
-            @forelse($products as $product)
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__empty_1 = true; $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoop($loop->index); ?><?php endif; ?>
                 <div class="col-md-3">
                     <div class="card shadow-sm border-0">
 
                         <div class="card-img-hover">
-                            @if($product->car_id && $product->car)
-                                <a href="{{ route('cars.user-show', $product->id) }}">
-                            @else
+                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($product->car_id && $product->car): ?>
+                                <a href="<?php echo e(route('cars.user-show', $product->id)); ?>">
+                            <?php else: ?>
                                 <a href="#" onclick="alert('Maaf, detail mobil belum tersedia. Hubungi admin untuk informasi lebih lanjut.'); return false;" style="cursor: not-allowed;" title="Detail mobil belum tersedia">
-                            @endif
-                                <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top" @if(!($product->car_id && $product->car)) style="opacity: 0.5;" @endif>
-                            <a href="http://127.0.0.1:8000/detail">
-                                <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top">
+                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                                <img src="<?php echo e(asset('storage/' . $product->image)); ?>" class="card-img-top" <?php if(!($product->car_id && $product->car)): ?> style="opacity: 0.5;" <?php endif; ?>>
                             </a>
                         </div>
 
                         <div class="card-body">
 
-                            <h6 class="fw-bold">{{ $product->name }}</h6>
+                            <h6 class="fw-bold"><?php echo e($product->name); ?></h6>
 
                             <small class="text-muted">
-                                {{ $product->type }} {{ $product->location }}
+                                <?php echo e($product->type); ?> <?php echo e($product->location); ?>
+
                             </small>
 
                             <div class="mt-2">
 
                                 <div class="d-flex align-items-center gap-1">
                                     <strong class="fs-6 mb-0">
-                                        Rp {{ number_format($product->price) }}
+                                        Rp <?php echo e(number_format($product->price)); ?>
+
                                     </strong>
                                     <small class="text-muted mb-0">/ hari</small>
                                 </div>
@@ -196,21 +197,22 @@
 
                             <!-- BUTTON BOOKING -->
                             <div class="d-grid mt-3">
-                                <a href="{{ route('payment.index') }}" class="btn btn-primary btn-sm">
+                                <a href="<?php echo e(route('payment.index')); ?>" class="btn btn-primary btn-sm">
                                     Booking Now
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-            @empty
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
                 <p>Tidak ada mobil ditemukan.</p>
-            @endforelse
+            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
         </div>
 
         <!-- PAGINATION -->
         <div class="mt-4">
-            {{ $products->withQueryString()->links() }}
+            <?php echo e($products->withQueryString()->links()); ?>
+
         </div>
 
     </div>
@@ -218,3 +220,4 @@
 </body>
 
 </html>
+<?php /**PATH C:\laragon2\www\pbl_3\resources\views/product/index.blade.php ENDPATH**/ ?>

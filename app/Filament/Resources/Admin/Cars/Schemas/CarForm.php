@@ -17,7 +17,8 @@ class CarForm
             ->components([
                 FileUpload::make('image')
                     ->image()
-                    ->directory('cars'),
+                    ->directory('cars')
+                    ->disk('public'),
                 
                 TextInput::make('brand')
                     ->required(),
