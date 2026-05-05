@@ -5,8 +5,8 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Models\Product;
 use App\Http\Controllers\CarController;
-use App\Models\car;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GlobalSearchController;
 
 Route::get('/', function () {
     return redirect('/customer');
@@ -14,11 +14,13 @@ Route::get('/', function () {
 Route::get('/customer', function () {
     $cars = Product::latest()->take(8)->get(); 
     $carsCount = Product::count();
-    // Ambil beberapa mobil secara acak atau terbaru untuk ditampilkan di beranda
-    $cars = Car::latest()->take(8)->get();
     
     return view('home.index', compact('cars', 'carsCount'));
 });
+
+Route::get('/search', [GlobalSearchController::class, 'search'])->name('search.global');
+
+
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');
 Route::get('/product/{product_id}', [CarController::class, 'userShow'])->name('cars.user-show');
 Route::get('/sync-products-cars', [ProductController::class, 'syncToCars'])->name('product.sync');

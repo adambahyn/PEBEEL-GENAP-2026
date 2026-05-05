@@ -74,6 +74,8 @@
 
     <?php echo $__env->make('layouts.navbar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
     
+
+   
     <div class="container pb-5">
 
         
@@ -84,9 +86,6 @@
                 <p class="mb-4 mx-auto text-white-50" style="max-width:520px; font-size:1.1rem;">
                     Rental Mobil Terpercaya se Kota Malang. Proses mudah, harga transparan, bebas ribet.
                 </p>
-
-                
-                
             </div>
         </div>
 
