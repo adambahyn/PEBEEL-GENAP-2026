@@ -71,6 +71,9 @@
     </style>
 </head>
 <body>
+{{-- include navbar --}}
+    @include('layouts.navbar')
+    
 
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
         <div class="container">
@@ -163,26 +166,6 @@
                 <p class="mb-4 mx-auto text-white-50" style="max-width:520px; font-size:1.1rem;">
                     Rental Mobil Terpercaya se Kota Malang. Proses mudah, harga transparan, bebas ribet.
                 </p>
-
-                {{-- Search Box --}}
-                {{-- <div class="search-box mx-auto d-flex flex-wrap align-items-center gap-2 shadow-lg">
-                    <div class="flex-grow-1 px-2 text-start">
-                        <label class="text-muted d-block" style="font-size:0.7rem; font-weight:700; text-transform:uppercase;">📍 Lokasi</label>
-                        <input type="text" class="form-control border-0 shadow-none px-0" placeholder="Kota, bandara..." style="min-width:140px; background: transparent;">
-                    </div>
-                    <div class="border-start px-3 text-start">
-                        <label class="text-muted d-block" style="font-size:0.7rem; font-weight:700; text-transform:uppercase;">🚗 Tipe</label>
-                        <select class="form-select border-0 shadow-none px-0" style="min-width:110px; background: transparent;">
-                            <option value="">Semua</option>
-                            <option value="SUV">SUV</option>
-                            <option value="MPV">MPV</option>
-                            <option value="Sedan">Sedan</option>
-                        </select>
-                    </div>
-                    <a href="/product" class="btn btn-primary fw-bold px-4 py-2 flex-shrink-0 rounded-3">
-                        🔍 Cari
-                    </a>
-                </div> --}}
             </div>
         </div>
 
@@ -190,7 +173,7 @@
         <div class="row g-3 mb-5">
             <div class="col-6 col-md-3">
                 <div class="card feature-card shadow-sm border-0 h-100 text-center p-3">
-                    <div class="fs-2 fw-bold text-primary mb-1">{{ $cars->count() ?? 0 }}+</div>
+                    <div class="fs-2 fw-bold text-primary mb-1">{{ $carsCount }}+</div>
                     <div class="text-muted small fw-semibold section-label">Mobil Aktif</div>
                 </div>
             </div>

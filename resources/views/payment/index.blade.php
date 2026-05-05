@@ -104,6 +104,7 @@
 </head>
 
 <body class="bg-light">
+    @include('layouts.navbar')
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
         <div class="container">
             <a class="navbar-brand fw-bold" href="{{ route('product.index') }}">Adam Rental</a>
