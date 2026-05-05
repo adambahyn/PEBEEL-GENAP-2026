@@ -106,7 +106,7 @@
         <!-- HERO -->
         <div class="hero mb-4">
             <h1 class="fw-bold">Adam Rental</h1>
-            <p>Rental Mobil Terpercaya se Kota Malang</p>
+            <p>Rental Mobil Terpercaya se Kota Malang dan S</p>
 
             <!-- SEARCH -->
             <form method="GET" class="search-box w-75">
@@ -155,7 +155,7 @@
 
                         <div class="card-img-hover">
                             <a href="http://127.0.0.1:8000/detail">
-                                <img src="{{ asset('storage/p' . $product->image) }}" class="card-img-top">
+                                <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top">
                             </a>
                         </div>
 

@@ -106,7 +106,7 @@
         <!-- HERO -->
         <div class="hero mb-4">
             <h1 class="fw-bold">Adam Rental</h1>
-            <p>Rental Mobil Terpercaya se Kota Malang</p>
+            <p>Rental Mobil Terpercaya se Kota Malang dan S</p>
 
             <!-- SEARCH -->
             <form method="GET" class="search-box w-75">
