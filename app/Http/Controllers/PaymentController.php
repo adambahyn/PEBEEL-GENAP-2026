@@ -42,15 +42,17 @@ class PaymentController extends Controller
         $totalPrice = $car->price * $validated['duration'];
 
         Booking::create([
-            'car_id' => $validated['car_id'],
-            'customer_name' => $validated['customer_name'],
-            'customer_contact' => $validated['customer_contact'],
-            'start_date' => $validated['start_date'],
-            'duration' => $validated['duration'],
-            'total_price' => $totalPrice,
-            'payment_method' => $validated['payment_method'],
-            'status' => 'pending',
-        ]);
+        'user_id' => auth()->id(), // 🔥 INI YANG PENTING
+
+        'car_id' => $validated['car_id'],
+        'customer_name' => $validated['customer_name'],
+        'customer_contact' => $validated['customer_contact'],
+        'start_date' => $validated['start_date'],
+        'duration' => $validated['duration'],
+        'total_price' => $totalPrice,
+        'payment_method' => $validated['payment_method'],
+        'status' => 'pending',
+    ]);
 
         return redirect()->route('payment.index')
             ->with('success', 'Booking Anda berhasil dibuat. Silakan lanjutkan pembayaran sesuai pilihan metode dan tunggu konfirmasi dari admin.');

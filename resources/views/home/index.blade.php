@@ -132,10 +132,10 @@
 
                             <!-- MENU TAMBAHAN -->
                             <li>
-                                <a class="dropdown-item" href="#">Profil</a>
+                                <a class="dropdown-item" href="{{ route('user.profile') }}">Profil</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">Riwayat Sewa</a>
+                                <a class="dropdown-item" href="{{ route('user.rental-history') }}">Riwayat Sewa</a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
