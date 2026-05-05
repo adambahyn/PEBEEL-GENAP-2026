@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Car;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -42,5 +43,33 @@ class ProductController extends Controller
         $products = $query->paginate(8);
 
         return view('product.index', compact('products'));
+    }
+
+    public function syncToCars()
+    {
+        $products = Product::where('is_active', 1)->get();
+
+        foreach ($products as $product) {
+            Car::updateOrCreate(
+                [
+                    'brand' => $product->name,
+                    'model' => $product->type,
+                ],
+                [
+                    'image' => $product->image,
+                    'capacity' => $product->type === 'MPV' ? 7 : 5,
+                    'transmission' => 'Automatic',
+                    'fuel_type' => 'Bensin',
+                    'price' => $product->price,
+                    'description' => $product->description,
+                    'provider_name' => 'Adam Rental',
+                    'provider_contact' => 'admin@pbl.com',
+                    'stock' => $product->stock,
+                ]
+            );
+        }
+
+        return redirect()->route('payment.index')
+            ->with('success', 'Sinkronisasi dari product ke cars berhasil. Silakan reload halaman payment.');
     }
 }

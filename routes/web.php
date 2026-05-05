@@ -18,6 +18,7 @@ Route::get('/customer', function () {
 });
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');
 Route::get('/product/{product_id}', [CarController::class, 'userShow'])->name('cars.user-show');
+Route::get('/sync-products-cars', [ProductController::class, 'syncToCars'])->name('product.sync');
 Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
 Route::post('/payment', [PaymentController::class, 'store'])->name('payment.store');
 Route::get('/cars/{id}', [CarController::class, 'show'])->name('cars.show');
