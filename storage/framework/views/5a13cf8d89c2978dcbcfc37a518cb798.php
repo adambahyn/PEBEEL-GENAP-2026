@@ -170,6 +170,8 @@
                                 <a href="#" onclick="alert('Maaf, detail mobil belum tersedia. Hubungi admin untuk informasi lebih lanjut.'); return false;" style="cursor: not-allowed;" title="Detail mobil belum tersedia">
                             <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                 <img src="<?php echo e(asset('storage/' . $product->image)); ?>" class="card-img-top" <?php if(!($product->car_id && $product->car)): ?> style="opacity: 0.5;" <?php endif; ?>>
+                            <a href="http://127.0.0.1:8000/detail">
+                                <img src="<?php echo e(asset('storage/p' . $product->image)); ?>" class="card-img-top">
                             </a>
                         </div>
 
