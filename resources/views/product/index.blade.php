@@ -103,6 +103,15 @@
 
     <div class="container py-4">
 
+        <!-- ALERT ERROR -->
+        @if($errors->any() || session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>⚠️ Perhatian!</strong>
+                {{ session('error') ?? $errors->first() }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
         <!-- HERO -->
         <div class="hero mb-4">
             <h1 class="fw-bold">Adam Rental</h1>
@@ -154,8 +163,12 @@
                     <div class="card shadow-sm border-0">
 
                         <div class="card-img-hover">
-                            <a href="http://127.0.0.1:8000/detail">
-                                <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top">
+                            @if($product->car_id && $product->car)
+                                <a href="{{ route('cars.user-show', $product->id) }}">
+                            @else
+                                <a href="#" onclick="alert('Maaf, detail mobil belum tersedia. Hubungi admin untuk informasi lebih lanjut.'); return false;" style="cursor: not-allowed;" title="Detail mobil belum tersedia">
+                            @endif
+                                <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top" @if(!($product->car_id && $product->car)) style="opacity: 0.5;" @endif>
                             </a>
                         </div>
 
