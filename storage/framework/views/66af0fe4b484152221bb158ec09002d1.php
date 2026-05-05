@@ -25,19 +25,21 @@
                 <h4 class="fw-bold text-center mb-3">Login</h4>
                 <p class="text-muted text-center mb-4">Masuk untuk melanjutkan</p>
 
-                @if(session('error'))
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(session('error')): ?>
                     <div class="alert alert-danger">
-                        {{ session('error') }}
-                    </div>
-                @endif
-                @if(session('warning'))
-                    <div class="alert alert-warning">
-                        {{ session('warning') }}
-                    </div>
-                @endif
+                        <?php echo e(session('error')); ?>
 
-                <form method="POST" action="{{ route('login') }}">
-                    @csrf
+                    </div>
+                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(session('warning')): ?>
+                    <div class="alert alert-warning">
+                        <?php echo e(session('warning')); ?>
+
+                    </div>
+                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+                <form method="POST" action="<?php echo e(route('login')); ?>">
+                    <?php echo csrf_field(); ?>
 
                     <div class="mb-3">
                         <label>Email</label>
@@ -56,7 +58,7 @@
 
                 <p class="text-center mt-4 mb-0">
                     Belum punya akun?
-                    <a href="{{ route('register') }}" class="text-primary fw-semibold">Register</a>
+                    <a href="<?php echo e(route('register')); ?>" class="text-primary fw-semibold">Register</a>
                 </p>
 
             </div>
@@ -66,4 +68,4 @@
 </div>
 
 </body>
-</html>
+</html><?php /**PATH C:\laragon\www\PEBEEL-GENAP-2026-1\resources\views/auth/login.blade.php ENDPATH**/ ?>

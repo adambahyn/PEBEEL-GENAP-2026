@@ -12,7 +12,7 @@ class PaymentController extends Controller
     public function index(Request $request)
     {
         if (!Auth::check()) {
-            return redirect('/customer/login')
+            return redirect('/login')
                 ->with('warning', 'Anda wajib login terlebih dahulu.');
         }
 
@@ -26,7 +26,7 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
         if (!Auth::check()) {
-            return redirect('/customer/login')
+            return redirect('/login')
                 ->with('warning', 'Anda wajib login terlebih dahulu.');
         }
         $validated = $request->validate([

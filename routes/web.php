@@ -8,7 +8,7 @@ use App\Models\car;
 use App\Http\Controllers\AuthController;
 
 Route::get('/', function () {
-    return redirect('/customer/login');
+    return redirect('/login');
 });
 Route::get('/customer', function () {
     // Ambil beberapa mobil secara acak atau terbaru untuk ditampilkan di beranda
