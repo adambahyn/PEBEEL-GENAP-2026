@@ -7,15 +7,54 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background: #f5f7fb;
+            background: radial-gradient(circle at top, rgba(13, 110, 253, 0.12), transparent 30%), #eef5ff;
+            color: #1f2937;
         }
-        .page-card {
+        .page-card, .feature-card {
+            background: #ffffff;
             border: 0;
-            border-radius: 22px;
+            border-radius: 28px;
+            box-shadow: 0 24px 70px rgba(15, 23, 42, 0.08);
         }
-        .feature-card {
-            border: 0;
-            border-radius: 18px;
+        .hero-panel {
+            position: relative;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.18), rgba(15, 23, 42, 0.04)), url('<?php echo e(asset('images/payment-hero.jpg')); ?>') no-repeat center/cover;
+            border-radius: 30px;
+            border: 1px solid rgba(13, 110, 253, 0.12);
+            overflow: hidden;
+        }
+        .hero-panel::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.45), rgba(15, 23, 42, 0.18));
+            pointer-events: none;
+        }
+        .hero-panel .row {
+            position: relative;
+            z-index: 1;
+        }
+        .hero-panel .section-label,
+        .hero-panel h1,
+        .hero-panel p,
+        .hero-panel .step-badge,
+        .hero-panel .d-inline-flex {
+            color: #ffffff !important;
+        }
+        .hero-panel h1 {
+            text-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+        }
+        .hero-panel p {
+            color: rgba(255, 255, 255, 0.88) !important;
+        }
+        .hero-panel .step-badge {
+            background: rgba(255, 255, 255, 0.16);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: #f8fafc !important;
+        }
+        .hero-panel .d-inline-flex {
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.14);
         }
         .section-label {
             font-size: 0.83rem;
@@ -67,6 +106,28 @@
     </nav>
 
     <div class="container py-4">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card hero-panel p-4 mb-4">
+                    <div class="row align-items-center gy-3">
+                        <div class="col-md-8">
+                            <p class="section-label mb-2">Booking & Pembayaran</p>
+                            <h1 class="h3 fw-semibold mb-2">Booking mobil dan bayar langsung dari satu halaman.</h1>
+                            <p class="text-muted mb-3">Pilih mobil, tentukan tanggal sewa, dan pilih metode pembayaran — semuanya mudah diatur di sini.</p>
+                            <div class="d-flex flex-wrap gap-3">
+                                <div class="step-badge">Booking cepat</div>
+                                <div class="step-badge">Pembayaran fleksibel</div>
+                                <div class="step-badge">Konfirmasi admin cepat</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-md-end d-none d-md-block">
+                            <!-- hero side spacing -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row g-4">
             <div class="col-lg-7">
                 <div class="card page-card p-4 mb-4">

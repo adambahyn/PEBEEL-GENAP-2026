@@ -139,6 +139,10 @@
                         <span class="badge bg-primary bg-opacity-10 text-primary py-2 px-3">Simpel & Cepat</span>
                     </div>
 
+                    @if(session('warning'))
+                        <div class="alert alert-warning">{{ session('warning') }}</div>
+                    @endif
+
                     @if(session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
