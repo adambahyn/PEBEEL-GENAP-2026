@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="{{ url('/customer') }}">
+        <a class="navbar-brand fw-bold" href="<?php echo e(url('/customer')); ?>">
             Adam Rental
         </a>
 
@@ -8,38 +8,33 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <form action="{{ url('/search') }}" method="GET" class="d-flex">
-            <input class="form-control me-2" type="search" name="q"
-                placeholder="Cari mobil, spesifikasi, atau bantuan..." aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Cari</button>
-        </form>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav gap-2">
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('customer') ? 'active fw-bold' : '' }}" href="{{ url('/customer') }}">
+                    <a class="nav-link <?php echo e(request()->is('customer') ? 'active fw-bold' : ''); ?>" href="<?php echo e(url('/customer')); ?>">
                         Beranda
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('product*') ? 'active fw-bold' : '' }}" href="{{ url('/product') }}">
+                    <a class="nav-link <?php echo e(request()->is('product*') ? 'active fw-bold' : ''); ?>" href="<?php echo e(url('/product')); ?>">
                         Product
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('payment.*') ? 'active fw-bold' : '' }}" href="{{ route('payment.index') }}">
+                    <a class="nav-link <?php echo e(request()->routeIs('payment.*') ? 'active fw-bold' : ''); ?>" href="<?php echo e(route('payment.index')); ?>">
                         Pembayaran
                     </a>
                 </li>
-                {{-- LOGIN --}}
-                @if (!Auth::check())
+                
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(!Auth::check()): ?>
                     <!-- BELUM LOGIN -->
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('login') ? 'active fw-bold' : '' }} btn btn-primary text-white px-3"
-                            href="{{ route('login') }}">
+                        <a class="nav-link <?php echo e(request()->is('login') ? 'active fw-bold' : ''); ?> btn btn-primary text-white px-3"
+                            href="<?php echo e(route('login')); ?>">
                             Login
                         </a>
                     </li>
-                @elseif(Auth::user()->role === 'user')
+                <?php elseif(Auth::user()->role === 'user'): ?>
                     <!-- LOGIN SEBAGAI USER -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle d-flex align-items-center" href="#"
@@ -52,7 +47,8 @@
 
                             <!-- NAMA USER -->
                             <li class="dropdown-item-text fw-semibold">
-                                👤 {{ Auth::user()->name }}
+                                👤 <?php echo e(Auth::user()->name); ?>
+
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -60,10 +56,10 @@
 
                             <!-- MENU TAMBAHAN -->
                             <li>
-                                <a class="dropdown-item" href="{{ route('user.profile') }}">Profil</a>
+                                <a class="dropdown-item" href="<?php echo e(route('user.profile')); ?>">Profil</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="{{ route('user.rental-history') }}">Riwayat Sewa</a>
+                                <a class="dropdown-item" href="<?php echo e(route('user.rental-history')); ?>">Riwayat Sewa</a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -71,15 +67,15 @@
 
                             <!-- LOGOUT -->
                             <li>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
+                                <form method="POST" action="<?php echo e(route('logout')); ?>">
+                                    <?php echo csrf_field(); ?>
                                     <button class="dropdown-item">Logout</button>
                                 </form>
                             </li>
                         </ul>
                     </li>
-                @endif
+                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
             </ul>
         </div>
     </div>
-</nav>
+</nav><?php /**PATH C:\laragon\www\PEBEEL-GENAP-2026-1\resources\views/layouts/navbar.blade.php ENDPATH**/ ?>
