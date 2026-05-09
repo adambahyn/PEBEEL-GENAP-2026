@@ -1,325 +1,382 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pembayaran Booking</title>
+    <title>Detail Kendaraan - Adam Rental</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body {
-            background: radial-gradient(circle at top, rgba(13, 110, 253, 0.12), transparent 30%), #eef5ff;
-            color: #1f2937;
+            background-color: #f4f6f9;
+            color: #333;
         }
 
-        .page-card,
-        .feature-card {
-            background: #ffffff;
-            border: 0;
-            border-radius: 28px;
-            box-shadow: 0 24px 70px rgba(15, 23, 42, 0.08);
-        }
-
-        .hero-panel {
-            position: relative;
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0.18), rgba(15, 23, 42, 0.04)), url('{{ asset('images/payment-hero.jpg') }}') no-repeat center/cover;
-            border-radius: 30px;
-            border: 1px solid rgba(13, 110, 253, 0.12);
-            overflow: hidden;
-        }
-
-        .hero-panel::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0.45), rgba(15, 23, 42, 0.18));
-            pointer-events: none;
-        }
-
-        .hero-panel .row {
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-panel .section-label,
-        .hero-panel h1,
-        .hero-panel p,
-        .hero-panel .step-badge,
-        .hero-panel .d-inline-flex {
-            color: #ffffff !important;
-        }
-
-        .hero-panel h1 {
-            text-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
-        }
-
-        .hero-panel p {
-            color: rgba(255, 255, 255, 0.88) !important;
-        }
-
-        .hero-panel .step-badge {
-            background: rgba(255, 255, 255, 0.16);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            color: #f8fafc !important;
-        }
-
-        .hero-panel .d-inline-flex {
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            background: rgba(255, 255, 255, 0.14);
-        }
-
-        .section-label {
-            font-size: 0.83rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: #6c757d;
-        }
-
-        .price-value {
-            color: #0d6efd;
-            font-weight: 700;
-        }
-
-        .sticky-sidebar {
-            position: sticky;
-            top: 1.5rem;
-        }
-
-        .highlight-badge {
-            display: inline-flex;
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&q=80&w=2000') center/cover;
+            height: 250px;
+            display: flex;
             align-items: center;
-            gap: 0.35rem;
-            font-size: 0.82rem;
+            justify-content: center;
+            color: white;
+            text-align: center;
         }
 
-        .highlight-badge::before {
-            content: "";
-            width: 0.6rem;
-            height: 0.6rem;
-            border-radius: 50%;
-            background: #0d6efd;
+        .car-image-container img {
+            width: 100%;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .car-specs {
+            display: flex;
+            justify-content: space-between;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        .car-specs .spec-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .car-specs .spec-item i {
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        .warning-box {
+            background-color: #fffbea;
+            border: 1px solid #fceca1;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: #d97706;
+            margin-bottom: 20px;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .form-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .form-control, .form-select {
+            font-size: 0.9rem;
+            border-radius: 6px;
+        }
+
+        .btn-green {
+            background-color: #10b981;
+            border-color: #10b981;
+            color: white;
+            font-weight: 600;
+        }
+        .btn-green:hover {
+            background-color: #059669;
+            border-color: #059669;
+            color: white;
+        }
+
+        .price-summary {
+            background-color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .price-summary h4 {
+            font-weight: 700;
+            margin: 0;
+            color: #1e293b;
+        }
+
+        .file-upload-btn {
+            background-color: #10b981;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            display: inline-block;
         }
     </style>
 </head>
-
-<body class="bg-light">
+<body>
     @include('layouts.navbar')
-    
-    <div class="container py-4">
-        <div class="row mb-4">
-            <div class="col-12">
-                <div class="card hero-panel p-4 mb-4">
-                    <div class="row align-items-center gy-3">
-                        <div class="col-md-8">
-                            <p class="section-label mb-2">Booking & Pembayaran</p>
-                            <h1 class="h3 fw-semibold mb-2">Booking mobil dan bayar langsung dari satu halaman.</h1>
-                            <p class="text-muted mb-3">Pilih mobil, tentukan tanggal sewa, dan pilih metode pembayaran —
-                                semuanya mudah diatur di sini.</p>
-                            <div class="d-flex flex-wrap gap-3">
-                                <div class="step-badge">Booking cepat</div>
-                                <div class="step-badge">Pembayaran fleksibel</div>
-                                <div class="step-badge">Konfirmasi admin cepat</div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 text-md-end d-none d-md-block">
-                            <!-- hero side spacing -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="row g-4">
-            <div class="col-lg-7">
-                <div class="card page-card p-4 mb-4">
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <div>
-                            <p class="section-label mb-1">Form Booking</p>
-                            <h2 class="h4 mb-0">Booking Mobil dengan Lebih Mudah</h2>
-                        </div>
-                        <span class="badge bg-primary bg-opacity-10 text-primary py-2 px-3">Simpel & Cepat</span>
-                    </div>
-
- HEAD
-                    @if(session('warning'))
-                        <div class="alert alert-warning">{{ session('warning') }}</div>
-                    @endif
-
-                    @if(session('success'))
-
-3c973db57c6115289193ce8ccce9391a0ecd7700
-                        <div class="alert alert-success">{{ session('success') }}</div>
-                    @endif
-
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul class="mb-0">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-                    <form action="{{ route('payment.store') }}" method="POST" id="payment-form">
-                        @csrf
-
-                        <div class="mb-4">
-                            <label for="car_id" class="form-label">Pilih Mobil</label>
-                            <select class="form-select form-select-lg" id="car_id" name="car_id" required>
-                                <option value="">-- Pilih mobil --</option>
-                                @foreach ($cars as $car)
-                                    <option value="{{ $car->id }}" data-price="{{ $car->price }}"
-                                        data-name="{{ $car->brand }} {{ $car->model }}"
-                                        {{ old('car_id') == $car->id ? 'selected' : '' }}>
-                                        {{ $car->brand }} {{ $car->model }} — Rp
-                                        {{ number_format($car->price, 0, ',', '.') }} /hari
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="customer_name" class="form-label">Nama Lengkap</label>
-                            <input type="text" class="form-control form-control-lg" id="customer_name"
-                                name="customer_name" value="{{ old('customer_name') }}" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="customer_contact" class="form-label">Nomor WA / Kontak</label>
-                            <input type="text" class="form-control form-control-lg" id="customer_contact"
-                                name="customer_contact" value="{{ old('customer_contact') }}" required>
-                        </div>
-
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label for="start_date" class="form-label">Tanggal Mulai</label>
-                                <input type="date" class="form-control" id="start_date" name="start_date"
-                                    value="{{ old('start_date', now()->format('Y-m-d')) }}"
-                                    min="{{ now()->format('Y-m-d') }}" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="duration" class="form-label">Durasi (hari)</label>
-                                <input type="number" class="form-control" id="duration" name="duration"
-                                    value="{{ old('duration', 1) }}" min="1" required>
-                            </div>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="payment_method" class="form-label">Metode Pembayaran</label>
-                            <select class="form-select" id="payment_method" name="payment_method" required>
-                                <option value="">-- Pilih metode --</option>
-                                <option value="transfer" {{ old('payment_method') == 'transfer' ? 'selected' : '' }}>
-                                    Transfer Bank</option>
-                                <option value="e_wallet" {{ old('payment_method') == 'e_wallet' ? 'selected' : '' }}>
-                                    E-Wallet (GoPay, OVO, Dana)</option>
-                                <option value="cash" {{ old('payment_method') == 'cash' ? 'selected' : '' }}>Tunai
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="form-label">Total Harga</label>
-                            <div class="input-group input-group-lg shadow-sm rounded-3 overflow-hidden">
-                                <span class="input-group-text bg-white border-end-0">Rp</span>
-                                <input type="text" class="form-control border-start-0" id="total_price"
-                                    value="Rp 0" readonly>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary btn-lg w-100">Book Sekarang</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="col-lg-5">
-                <div class="card feature-card shadow-sm border-0 sticky-sidebar mb-4">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <div>
-                                <p class="section-label mb-1">Panduan Pembayaran</p>
-                                <h5 class="mb-0">Cara Bayar</h5>
-                            </div>
-                            <span class="badge bg-primary bg-opacity-10 text-primary">Update</span>
-                        </div>
-                        <p class="text-muted small mb-3">Pilih metode pembayaran yang sesuai. Booking akan masuk ke
-                            status <strong>Menunggu Konfirmasi</strong>, lalu admin akan menghubungi Anda.</p>
-                        <div class="list-group list-group-flush">
-                            <div class="list-group-item px-0 py-3 border-0">
-                                <div class="d-flex justify-content-between align-items-center mb-1">
-                                    <span class="fw-semibold">Transfer Bank</span>
-                                    <span class="badge bg-info bg-opacity-10 text-info">Rekomendasi</span>
-                                </div>
-                                <small class="text-muted d-block">Kirim ke BCA 123-456-7890 a.n. Adam Rental.</small>
-                            </div>
-                            <div class="list-group-item px-0 py-3 border-0">
-                                <div class="fw-semibold mb-1">E-Wallet</div>
-                                <small class="text-muted d-block">GoPay / OVO / Dana.</small>
-                            </div>
-                            <div class="list-group-item px-0 py-3 border-0">
-                                <div class="fw-semibold mb-1">Tunai</div>
-                                <small class="text-muted d-block">Bayar langsung saat penjemputan / pengambilan
-                                    mobil.</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card feature-card shadow-sm border-0 sticky-sidebar">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <div>
-                                <p class="section-label mb-1">Tersedia</p>
-                                <h5 class="mb-0">Mobil Siap Sewa</h5>
-                            </div>
-                            <span class="badge bg-success bg-opacity-10 text-success">{{ $cars->count() }} unit</span>
-                        </div>
-                        @if ($cars->isEmpty())
-                            <div class="alert alert-secondary mb-0">Belum ada mobil tersedia. Cek kembali nanti.</div>
-                        @else
-                            <div class="list-group list-group-flush">
-                                @foreach ($cars as $car)
-                                    <div class="list-group-item px-0 py-3 border-0">
-                                        <div class="d-flex justify-content-between align-items-start gap-3">
-                                            <div>
-                                                <div class="fw-semibold">{{ $car->brand }} {{ $car->model }}
-                                                </div>
-                                                <div class="text-muted small">{{ $car->capacity }} penumpang •
-                                                    {{ $car->transmission }}</div>
-                                            </div>
-                                            <div class="text-end">
-                                                <div class="price-value">Rp
-                                                    {{ number_format($car->price, 0, ',', '.') }}</div>
-                                                <small class="badge bg-success bg-opacity-10 text-success">Stock
-                                                    {{ $car->stock ?? '-' }}</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="hero-section">
+        <h1 class="fw-bold">Detail Kendaraan</h1>
     </div>
 
-    <script>
-        function updateTotalPrice() {
-            const selectedOption = document.querySelector('#car_id option:checked');
-            const duration = Number(document.querySelector('#duration').value) || 0;
-            const price = Number(selectedOption?.dataset.price || 0);
-            const total = price * duration;
-            document.querySelector('#total_price').value = total > 0 ? 'Rp ' + total.toLocaleString('id-ID') : 'Rp 0';
-        }
+    <div class="container py-5">
+        
+        @if(session('warning'))
+            <div class="alert alert-warning">{{ session('warning') }}</div>
+        @endif
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-        document.querySelector('#car_id').addEventListener('change', updateTotalPrice);
-        document.querySelector('#duration').addEventListener('input', updateTotalPrice);
-        updateTotalPrice();
-    </script>
-    <!-- Bootstrap JS (WAJIB untuk dropdown) -->
+        <form action="{{ route('payment.store') }}" method="POST" enctype="multipart/form-data" id="bookingForm">
+            @csrf
+            <input type="hidden" name="car_id" value="{{ $car->id }}">
+            <input type="hidden" id="car_price" value="{{ $car->price }}">
+
+            <div class="row g-4">
+                <!-- Kiri: Detail Mobil -->
+                <div class="col-lg-6">
+                    <div class="car-image-container mb-3">
+                        <img src="{{ $car->image ? asset('storage/' . $car->image) : 'https://images.unsplash.com/photo-1550355291-bbee04a92027?q=80&w=800&auto=format&fit=crop' }}" alt="{{ $car->brand }} {{ $car->model }}">
+                    </div>
+
+                    <div class="car-specs mb-3">
+                        <div class="spec-item">
+                            <i class="bi bi-calendar"></i>
+                            <span>Year<br><b>{{ $car->year ?? '2024' }}</b></span>
+                        </div>
+                        <div class="spec-item">
+                            <i class="bi bi-fuel-pump"></i>
+                            <span>Fuel<br><b>Pertamax</b></span>
+                        </div>
+                        <div class="spec-item">
+                            <i class="bi bi-palette"></i>
+                            <span>Color<br><b>{{ $car->color ?? 'Hitam' }}</b></span>
+                        </div>
+                        <div class="spec-item">
+                            <i class="bi bi-car-front"></i>
+                            <span>Capacity<br><b>{{ $car->capacity ?? '4' }}</b></span>
+                        </div>
+                        <div class="spec-item">
+                            <i class="bi bi-gear"></i>
+                            <span>Transmission<br><b>{{ $car->transmission ?? 'Auto' }}</b></span>
+                        </div>
+                    </div>
+
+                    <div class="warning-box">
+                        <strong>PERINGATAN</strong><br>
+                        MOHON SELALU LAKUKAN PENGECEKAN KENDARAAN SAAT SERAH TERIMA. KAMI TIDAK MENERIMA KOMPLAIN JIKA KENDARAAN SUDAH BERPINDAH TANGAN.
+                    </div>
+
+                    <div class="section-card">
+                        <h4 class="fw-bold mb-3">{{ $car->brand }} {{ $car->model }}</h4>
+                        <p class="text-muted small mb-3">Rental Sewa Mobil {{ $car->brand }} Lepas Kunci</p>
+                        
+                        <div class="small">
+                            <p>{{ $car->description ?? 'Mobil ini tersedia dalam kondisi prima, sangat cocok untuk perjalanan dalam dan luar kota. Fitur lengkap meliputi AC, Power Steering, dan Audio System yang memadai.' }}</p>
+                            <p>* Gambar unit di aplikasi hanya ilustrasi, untuk real picture bisa hubungi customer service kami.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kanan: Form Transaksi -->
+                <div class="col-lg-6">
+                    
+                    <div class="price-summary">
+                        <div class="text-muted small mb-1">Total Harga</div>
+                        <div class="small mb-1">Lokasi - {{ $car->location ?? 'Malang' }}</div>
+                        <div class="small fw-semibold mb-2" id="date-summary">-</div>
+                        <h4 id="display-total-price">Rp {{ number_format($car->price, 0, ',', '.') }}</h4>
+                    </div>
+
+                    <!-- Data Pribadi -->
+                    <div class="section-card">
+                        <div class="section-title">Data Pribadi</div>
+                        <div class="mb-3">
+                            <label class="form-label">Nama Lengkap</label>
+                            <input type="text" class="form-control" name="customer_name" value="{{ old('customer_name', auth()->user()->name) }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" value="{{ old('email', auth()->user()->email) }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Nomor telepon / WA</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white">+62</span>
+                                <input type="text" class="form-control border-start-0" name="customer_contact" value="{{ old('customer_contact') }}" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Alamat</label>
+                            <input type="text" class="form-control" name="alamat" value="{{ old('alamat') }}" placeholder="Masukkan alamat Anda" required>
+                        </div>
+                        
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <label class="form-label">Unggah Kartu Identitas (KTP)</label>
+                                <input type="file" name="ktp_file" class="form-control form-control-sm" accept="image/*">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label">Unggah SIM</label>
+                                <input type="file" name="sim_file" class="form-control form-control-sm" accept="image/*">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detail Sewa Mobil -->
+                    <div class="section-card">
+                        <div class="section-title">Detail Sewa Mobil</div>
+                        <div class="mb-3">
+                            <label class="form-label">Tanggal Mulai</label>
+                            <input type="date" class="form-control" id="start_date" name="start_date" value="{{ old('start_date', now()->format('Y-m-d')) }}" min="{{ now()->format('Y-m-d') }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Tanggal Selesai</label>
+                            <input type="date" class="form-control" id="end_date" name="end_date" value="{{ old('end_date', now()->addDay()->format('Y-m-d')) }}" min="{{ now()->format('Y-m-d') }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Lokasi Mobil</label>
+                            <input type="text" class="form-control" name="pickup_location" value="{{ old('pickup_location', $car->location) }}" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Pengambilan Mobil</label>
+                            <div class="d-flex gap-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="pickup_method" id="pickup_1" value="Ambil Sendiri" checked>
+                                    <label class="form-check-label small" for="pickup_1">Ambil Sendiri</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="pickup_method" id="pickup_2" value="Diantar">
+                                    <label class="form-check-label small" for="pickup_2">Diantar (Biaya Tambahan)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Pengembalian Mobil</label>
+                            <div class="d-flex gap-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="return_method" id="return_1" value="Kembalikan Sendiri" checked>
+                                    <label class="form-check-label small" for="return_1">Kembalikan Sendiri</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="return_method" id="return_2" value="Diambil">
+                                    <label class="form-check-label small" for="return_2">Diambil (Biaya Tambahan)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label">Anda tahu Adam Rental darimana?</label>
+                            <select class="form-select" name="source_info">
+                                <option value="">Pilih Status</option>
+                                <option value="Instagram">Instagram</option>
+                                <option value="Tiktok">Tiktok</option>
+                                <option value="Teman">Teman</option>
+                                <option value="Google">Google</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Detail Pembayaran -->
+                    <div class="section-card">
+                        <div class="section-title">Detail Pembayaran</div>
+                        
+                        <div class="d-flex justify-content-between mb-3 small">
+                            <span id="price-calculation-text">Harga (1 hari)</span>
+                            <span id="price-calculation-value">Rp {{ number_format($car->price, 0, ',', '.') }}</span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label text-success">Pilih Metode Pembayaran</label>
+                            <select class="form-select" name="payment_method" required>
+                                <option value="transfer">Transfer Bank</option>
+                                <option value="e_wallet">E-Wallet (OVO/GoPay/Dana)</option>
+                                <option value="cash">Bayar Tunai</option>
+                            </select>
+                        </div>
+
+                        <hr>
+                        
+                        <div class="d-flex justify-content-between fw-bold mb-3">
+                            <span>Total Harga</span>
+                            <span id="final-total-price">Rp {{ number_format($car->price, 0, ',', '.') }}</span>
+                        </div>
+
+                        <div class="warning-box" style="font-size: 0.7rem; margin-bottom: 0;">
+                            <strong>PERINGATAN</strong><br>
+                            Harap pastikan untuk membaca syarat dan ketentuan sepenuhnya karena TIDAK AKAN ADA PENGEMBALIAN UANG jika Anda gagal memenuhi syarat.
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-green btn-lg w-100 mb-2">Pesan sekarang</button>
+                    <p class="text-center text-muted" style="font-size: 0.75rem;">Diperlukan uang jaminan yang akan dikembalikan saat masa sewa berakhir.</p>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const startDateInput = document.getElementById('start_date');
+            const endDateInput = document.getElementById('end_date');
+            const carPrice = parseInt(document.getElementById('car_price').value);
+            
+            function calculateTotal() {
+                const start = new Date(startDateInput.value);
+                const end = new Date(endDateInput.value);
+                
+                let days = 1;
+                if (!isNaN(start.getTime()) && !isNaN(end.getTime())) {
+                    const diffTime = Math.abs(end - start);
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    days = diffDays > 0 ? diffDays : 1;
+                }
+                
+                const total = carPrice * days;
+                const formattedTotal = 'Rp ' + total.toLocaleString('id-ID');
+                
+                document.getElementById('display-total-price').textContent = formattedTotal;
+                document.getElementById('final-total-price').textContent = formattedTotal;
+                document.getElementById('price-calculation-text').textContent = `Harga (${days} hari)`;
+                document.getElementById('price-calculation-value').textContent = formattedTotal;
+                
+                // Update Date Summary
+                if (!isNaN(start.getTime()) && !isNaN(end.getTime())) {
+                    const options = { day: 'numeric', month: 'short', year: 'numeric' };
+                    document.getElementById('date-summary').textContent = 
+                        start.toLocaleDateString('id-ID', options) + ' - ' + end.toLocaleDateString('id-ID', options);
+                }
+            }
+            
+            startDateInput.addEventListener('change', calculateTotal);
+            endDateInput.addEventListener('change', calculateTotal);
+            
+            // Initial calculation
+            calculateTotal();
+        });
+    </script>
 </body>
-
 </html>

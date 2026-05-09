@@ -141,9 +141,6 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="{{ url('/product') }}">Product</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('payment.index') }}">Pembayaran</a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -279,7 +276,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <a href="{{ route('payment.index') }}" class="btn btn-booking">Lanjut Booking</a>
+                    <a href="{{ route('payment.index', ['car_id' => $car->id]) }}" class="btn btn-booking">Lanjut Booking</a>
                 </div>
             </div>
         </div>

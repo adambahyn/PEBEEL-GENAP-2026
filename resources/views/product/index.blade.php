@@ -155,7 +155,7 @@
 
                             <!-- BUTTON BOOKING -->
                             <div class="d-grid mt-3">
-                                <a href="{{ route('payment.index') }}" class="btn btn-primary btn-sm">
+                                <a href="{{ route('payment.index', ['product_id' => $product->id]) }}" class="btn btn-primary btn-sm">
                                     Booking Now
                                 </a>
                             </div>

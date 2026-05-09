@@ -16,6 +16,15 @@ class Booking extends Model
         'total_price',
         'payment_method',
         'status',
+        'email',
+        'alamat',
+        'ktp_file',
+        'sim_file',
+        'end_date',
+        'pickup_location',
+        'pickup_method',
+        'return_method',
+        'source_info',
     ];
 
     public function car()

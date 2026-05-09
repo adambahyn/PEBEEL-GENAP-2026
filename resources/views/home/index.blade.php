@@ -164,7 +164,7 @@
                             </div>
                             
                             <div class="d-grid">
-                                <a href="{{ route('payment.index') }}" class="btn btn-primary btn-sm fw-semibold rounded-3">
+                                <a href="{{ route('payment.index', ['product_id' => $car->id]) }}" class="btn btn-primary btn-sm fw-semibold rounded-3">
                                     Booking Now
                                 </a>
                             </div>
