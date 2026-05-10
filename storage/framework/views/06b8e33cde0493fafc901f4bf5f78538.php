@@ -264,7 +264,7 @@
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="{{ url('/customer') }}">
+            <a class="navbar-brand fw-bold" href="<?php echo e(url('/customer')); ?>">
                 Adam Rental
             </a>
 
@@ -275,22 +275,22 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav gap-2">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/customer') }}">
+                        <a class="nav-link" href="<?php echo e(url('/customer')); ?>">
                             Beranda
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/product') }}">
+                        <a class="nav-link" href="<?php echo e(url('/product')); ?>">
                             Product
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('payment.index') }}">
+                        <a class="nav-link" href="<?php echo e(route('payment.index')); ?>">
                             Pembayaran
                         </a>
                     </li>
 
-                    @if (Auth::check())
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(Auth::check()): ?>
                         <!-- LOGIN SEBAGAI USER -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle d-flex align-items-center" href="#"
@@ -301,16 +301,17 @@
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <!-- NAMA USER -->
                                 <li class="dropdown-item-text fw-semibold">
-                                    👤 {{ Auth::user()->name }}
+                                    👤 <?php echo e(Auth::user()->name); ?>
+
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <a class="dropdown-item active fw-bold" href="{{ route('user.profile') }}">Profil</a>
+                                    <a class="dropdown-item active fw-bold" href="<?php echo e(route('user.profile')); ?>">Profil</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('user.rental-history') }}">Riwayat Sewa</a>
+                                    <a class="dropdown-item" href="<?php echo e(route('user.rental-history')); ?>">Riwayat Sewa</a>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider">
@@ -318,14 +319,14 @@
 
                                 <!-- LOGOUT -->
                                 <li>
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
+                                    <form method="POST" action="<?php echo e(route('logout')); ?>">
+                                        <?php echo csrf_field(); ?>
                                         <button class="dropdown-item">Logout</button>
                                     </form>
                                 </li>
                             </ul>
                         </li>
-                    @endif
+                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                 </ul>
             </div>
         </div>
@@ -353,14 +354,14 @@
             <!-- FOTO -->
             <div class="col-md-4 text-center border-end">
                 <div class="position-relative d-inline-block mb-3">
-                    <img src="{{ $user->photo ? asset('storage/'.$user->photo) : 'https://ui-avatars.com/api/?name='.$user->name }}"
+                    <img src="<?php echo e($user->photo ? asset('storage/'.$user->photo) : 'https://ui-avatars.com/api/?name='.$user->name); ?>"
                         class="rounded-circle shadow"
                         width="130" height="130"
                         style="object-fit: cover;">
                 </div>
 
-                <h5 class="fw-bold">{{ $user->name }}</h5>
-                <p class="text-muted small">{{ $user->email }}</p>
+                <h5 class="fw-bold"><?php echo e($user->name); ?></h5>
+                <p class="text-muted small"><?php echo e($user->email); ?></p>
 
                 <button class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#editProfileModal">
                     ✏️ Edit Profil
@@ -370,19 +371,19 @@
             <!-- modal edit profil -->
             <div class="modal fade" id="editProfileModal">
     <div class="modal-dialog">
-        <form action="{{ route('user.update-profile') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+        <form action="<?php echo e(route('user.update-profile')); ?>" method="POST" enctype="multipart/form-data">
+            <?php echo csrf_field(); ?>
 
             <div class="modal-content p-3">
                 <h5>Edit Profil</h5>
 
                 <input type="file" name="photo" class="form-control mb-2">
 
-                <input type="text" name="name" value="{{ $user->name }}"
+                <input type="text" name="name" value="<?php echo e($user->name); ?>"
                     class="form-control mb-2" placeholder="Nama">
 
                 <textarea name="bio" class="form-control mb-2"
-                        placeholder="Bio">{{ $user->bio }}</textarea>
+                        placeholder="Bio"><?php echo e($user->bio); ?></textarea>
 
                 <button class="btn btn-primary">Simpan</button>
             </div>
@@ -397,7 +398,7 @@
                     <div class="col-md-6">
                         <div class="profile-info-item">
                             <div class="profile-info-label">Total Booking</div>
-                            <div class="profile-info-value">{{ $user->bookings->count() }}</div>
+                            <div class="profile-info-value"><?php echo e($user->bookings->count()); ?></div>
                         </div>
                     </div>
 
@@ -405,7 +406,8 @@
                         <div class="profile-info-item">
                             <div class="profile-info-label">Bergabung</div>
                             <div class="profile-info-value">
-                                {{ $user->created_at->format('d M Y') }}
+                                <?php echo e($user->created_at->format('d M Y')); ?>
+
                             </div>
                         </div>
                     </div>
@@ -414,7 +416,8 @@
                         <div class="profile-info-item">
                             <div class="profile-info-label">Bio</div>
                             <div class="profile-info-value">
-                                {{ $user->bio ?? 'Belum ada bio' }}
+                                <?php echo e($user->bio ?? 'Belum ada bio'); ?>
+
                             </div>
                         </div>
                     </div>
@@ -422,7 +425,7 @@
                 </div>
 
                 <div class="mt-4">
-                    <a href="{{ route('user.rental-history') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('user.rental-history')); ?>" class="btn btn-primary">
                         Riwayat Sewa
                     </a>
                     </button>
@@ -533,3 +536,4 @@
 
 </body>
 </html>
+<?php /**PATH C:\laragon2\www\pbl_3\resources\views/user/profile.blade.php ENDPATH**/ ?>

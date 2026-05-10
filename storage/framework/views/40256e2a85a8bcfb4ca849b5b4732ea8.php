@@ -73,7 +73,6 @@
 <body>
 
     <?php echo $__env->make('layouts.navbar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
-    
 
 
     <div class="container pb-5">
@@ -168,7 +167,7 @@
                             </div>
                             
                             <div class="d-grid">
-                                <a href="<?php echo e(route('payment.index')); ?>" class="btn btn-primary btn-sm fw-semibold rounded-3">
+                                <a href="<?php echo e(route('payment.index', ['product_id' => $car->id])); ?>" class="btn btn-primary btn-sm fw-semibold rounded-3">
                                     Booking Now
                                 </a>
                             </div>
@@ -286,4 +285,4 @@
     });
     </script>
 </body>
-</html><?php /**PATH C:\laragon\www\PEBEEL-GENAP-2026-1\resources\views/home/index.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\laragon2\www\pbl_3\resources\views/home/index.blade.php ENDPATH**/ ?>
