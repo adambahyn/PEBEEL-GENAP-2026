@@ -468,7 +468,7 @@
 
                 <!-- KOLOM 3: IKUTI MEDIA SOSIAL -->
                 <div class="footer-column social-media-section">
-                    <h5>Ikuti Adam Rental Di</h5>
+                    <h5>Ikuti Kami Di</h5>
                     <p style="margin-bottom: 20px;">Tetap update dengan promo dan tips terbaru dari kami</p>
                     <div class="social-icons">
                         <a href="https://instagram.com/adamrental" class="social-icon" title="Instagram" target="_blank">
