@@ -414,7 +414,7 @@
     <!-- HERO HEADER -->
     <div class="container mb-4">
         <div class="hero-section">
-            <h1 class="fw-bold"><i class="bi bi-clock-history"></i> Riwayat Sewa Mobil</h1>
+            <h1 class="fw-bold"><i class="bi bi-clock-history"></i> Riwayat Booking</h1>
             <p class="text-white-50 mb-0">Kelola dan lihat detail semua penyewaan Anda</p>
         </div>
     </div>
