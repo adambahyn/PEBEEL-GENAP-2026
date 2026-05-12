@@ -56,7 +56,7 @@
     </style>
     <!-- NAVBAR -->
     @include('layouts.navbar')
-    
+
 </head>
 
 <body class="bg-light">
@@ -109,8 +109,7 @@
                 MPV
             </a>
 
-            <a href="?type=Sedan"
-                class="btn btn-sm {{ request('type') == 'Sedan' ? 'btn-dark' : 'btn-outline-dark' }}">
+            <a href="?type=Sedan" class="btn btn-sm {{ request('type') == 'Sedan' ? 'btn-dark' : 'btn-outline-dark' }}">
                 Sedan
             </a>
 
@@ -123,13 +122,11 @@
                     <div class="card shadow-sm border-0">
 
                         <div class="card-img-hover">
-                            <a href="http://127.0.0.1:8000/detail">
-                                <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top">
                             <a href="{{ $product->car_id && $product->car ? route('cars.user-show', $product->id) : '#' }}"
                                 @if (!($product->car_id && $product->car)) onclick="alert('Maaf, detail mobil belum tersedia. Hubungi admin untuk informasi lebih lanjut'); return false;"
-           style="cursor: not-allowed;" @endif>
-                                <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top"
-                                    @if (!($product->car_id && $product->car))  @endif>
+            style="cursor: not-allowed;" @endif>
+
+                                <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top">
                             </a>
                         </div>
 
@@ -155,7 +152,8 @@
 
                             <!-- BUTTON BOOKING -->
                             <div class="d-grid mt-3">
-                                <a href="{{ route('payment.index', ['product_id' => $product->id]) }}" class="btn btn-primary btn-sm">
+                                <a href="{{ route('payment.index', ['product_id' => $product->id]) }}"
+                                    class="btn btn-primary btn-sm">
                                     Booking Now
                                 </a>
                             </div>
