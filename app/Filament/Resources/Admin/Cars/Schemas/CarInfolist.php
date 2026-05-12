@@ -16,6 +16,10 @@ class CarInfolist
                     ->placeholder('-'),
                 TextEntry::make('brand'),
                 TextEntry::make('model'),
+                TextEntry::make('tahun')
+                    ->label('Tahun'),
+                TextEntry::make('warna')
+                    ->label('Warna'),
                 TextEntry::make('capacity')
                     ->numeric(),
                 TextEntry::make('stock')

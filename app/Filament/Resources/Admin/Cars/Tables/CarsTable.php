@@ -30,6 +30,16 @@ class CarsTable
                     ->searchable()
                     ->sortable(),
 
+                TextColumn::make('tahun')
+                    ->label('📅 Tahun')
+                    ->numeric()
+                    ->sortable(),
+
+                TextColumn::make('warna')
+                    ->label('🎨 Warna')
+                    ->searchable()
+                    ->sortable(),
+
                 TextColumn::make('capacity')
                     ->label('👥 Kapasitas')
                     ->numeric()

@@ -10,7 +10,7 @@ class car extends Model
         'image', 'brand', 'model', 'capacity',
         'transmission', 'fuel_type', 'price',
         'description', 'provider_name', 'provider_contact',
-        'stock',
+        'stock', 'tahun', 'warna',
     ];
 
     public function bookings()

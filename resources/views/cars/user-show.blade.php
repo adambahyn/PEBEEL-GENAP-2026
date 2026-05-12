@@ -210,11 +210,11 @@
                     </div>
                     <div class="info-item">
                         <span class="info-label">Tahun</span>
-                        <span class="info-value">{{ $car->year ?? 'N/A' }}</span>
+                        <span class="info-value">{{ $car->tahun ?? 'N/A' }}</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Warna</span>
-                        <span class="info-value">{{ $car->color ?? 'N/A' }}</span>
+                        <span class="info-value">{{ $car->warna ?? 'N/A' }}</span>
                     </div>
                 </div>
 
