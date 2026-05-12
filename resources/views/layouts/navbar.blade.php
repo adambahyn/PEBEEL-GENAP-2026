@@ -25,11 +25,6 @@
                         Product
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('payment.*') ? 'active fw-bold' : '' }}" href="{{ route('payment.index') }}">
-                        Pembayaran
-                    </a>
-                </li>
                 {{-- LOGIN --}}
                 @if (!Auth::check())
                     <!-- BELUM LOGIN -->

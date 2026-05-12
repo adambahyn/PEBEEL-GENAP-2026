@@ -17,17 +17,26 @@
             font-size: 1.5rem;
         }
 
-        .page-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)),
+            url('https://images.unsplash.com/photo-1503376780353-7e6692767b70') center/cover;
             color: white;
-            padding: 30px 0;
+            padding: 60px 20px;
             margin-bottom: 30px;
-            border-radius: 0;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
         }
 
-        .page-header h1 {
+        .hero-section h1 {
             margin: 0;
             font-weight: 700;
+            font-size: 2.5rem;
+        }
+
+        .hero-section p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
         }
 
         .rental-card {
@@ -183,6 +192,127 @@
             text-decoration: none;
         }
 
+        /* FOOTER STYLES */
+        .footer-section {
+            background: linear-gradient(135deg, #0066cc 0%, #0099ff 100%);
+            color: white;
+            padding: 60px 0;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        .footer-column h5 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-column p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .help-section {
+            margin-top: 30px;
+        }
+
+        .help-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .help-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .help-item i {
+            font-size: 1.3rem;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .btn-about {
+            background: white;
+            color: #0066cc;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-about:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .social-media-section h5 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .social-icon:hover {
+            background: white;
+            color: #0066cc;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: 40px;
+            padding-top: 30px;
+            text-align: center;
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
         @media (max-width: 768px) {
             .rental-header {
                 flex-direction: column;
@@ -192,8 +322,17 @@
                 grid-template-columns: 1fr;
             }
 
-            .page-header {
-                padding: 20px 0;
+            .hero-section {
+                padding: 40px 20px;
+            }
+
+            .hero-section h1 {
+                font-size: 1.8rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
             }
         }
     </style>
@@ -272,10 +411,10 @@
         </div>
     </nav>
 
-    <!-- PAGE HEADER -->
-    <div class="page-header">
-        <div class="container">
-            <h1><i class="bi bi-clock-history"></i> Riwayat Sewa Mobil</h1>
+    <!-- HERO HEADER -->
+    <div class="container mb-4">
+        <div class="hero-section">
+            <h1 class="fw-bold"><i class="bi bi-clock-history"></i> Riwayat Sewa Mobil</h1>
             <p class="text-white-50 mb-0">Kelola dan lihat detail semua penyewaan Anda</p>
         </div>
     </div>
@@ -383,6 +522,98 @@
                     </div>
                 @endif
 
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER SECTION -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="footer-content">
+                <!-- KOLOM 1: PENJELASAN WEBSITE -->
+                <div class="footer-column">
+                    <h5>Tentang Adam Rental</h5>
+                    <p>
+                        Adam Rental adalah platform penyewaan kendaraan terpercaya yang menyediakan berbagai pilihan kendaraan berkualitas untuk memenuhi kebutuhan transportasi Anda dengan harga terjangkau dan layanan terbaik.
+                    </p>
+                </div>
+
+                <!-- KOLOM 2: BANTUAN & KONTAK -->
+                <div class="footer-column">
+                    <h5>Bantuan & Kontak</h5>
+                    <div class="help-section">
+                        <a href="https://wa.me/628XXXXXXXXX" class="help-item" target="_blank">
+                            <i class="bi bi-whatsapp"></i>
+                            <span>Hubungi via WhatsApp</span>
+                        </a>
+                        <a href="mailto:info@adamrental.com" class="help-item">
+                            <i class="bi bi-envelope"></i>
+                            <span>Email: info@adamrental.com</span>
+                        </a>
+                    </div>
+                    <button class="btn-about" data-bs-toggle="modal" data-bs-target="#aboutModal">
+                        Tentang Kami
+                    </button>
+                </div>
+
+                <!-- KOLOM 3: IKUTI MEDIA SOSIAL -->
+                <div class="footer-column social-media-section">
+                    <h5>Ikuti Adam Rental Di</h5>
+                    <p style="margin-bottom: 20px;">Tetap update dengan promo dan tips terbaru dari kami</p>
+                    <div class="social-icons">
+                        <a href="https://instagram.com/adamrental" class="social-icon" title="Instagram" target="_blank">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                        <a href="https://facebook.com/adamrental" class="social-icon" title="Facebook" target="_blank">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                        <a href="https://tiktok.com/@adamrental" class="social-icon" title="TikTok" target="_blank">
+                            <i class="bi bi-tiktok"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOOTER BOTTOM -->
+            <div class="footer-bottom">
+                <p>&copy; 2026 Adam Rental. All rights reserved. | <a href="#" style="color: white; text-decoration: none;">Privacy Policy</a> | <a href="#" style="color: white; text-decoration: none;">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL TENTANG KAMI -->
+    <div class="modal fade" id="aboutModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Tentang Kami</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="fw-bold mb-3">Visi Kami</h6>
+                    <p>Menjadi platform penyewaan kendaraan nomor satu di Indonesia dengan memberikan layanan terbaik dan terpercaya.</p>
+
+                    <h6 class="fw-bold mb-3 mt-4">Misi Kami</h6>
+                    <ul>
+                        <li>Menyediakan kendaraan berkualitas tinggi dengan harga terjangkau</li>
+                        <li>Memberikan layanan pelanggan yang responsif dan profesional</li>
+                        <li>Memastikan pengalaman sewa yang aman dan nyaman</li>
+                        <li>Inovasi berkelanjutan dalam teknologi dan layanan</li>
+                    </ul>
+
+                    <h6 class="fw-bold mb-3 mt-4">Mengapa Memilih Kami?</h6>
+                    <ul>
+                        <li>✅ Armada kendaraan terlengkap dan terawat</li>
+                        <li>✅ Harga kompetitif dengan berbagai paket</li>
+                        <li>✅ Proses booking mudah dan cepat</li>
+                        <li>✅ Asuransi komprehensif tersedia</li>
+                        <li>✅ Customer support 24/7</li>
+                        <li>✅ Lokasi pickup di berbagai kota</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
             </div>
         </div>
     </div>

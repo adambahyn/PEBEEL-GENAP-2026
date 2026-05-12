@@ -8,6 +8,11 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
+        <form action="<?php echo e(url('/search')); ?>" method="GET" class="d-flex">
+            <input class="form-control me-2" type="search" name="q"
+                placeholder="Cari mobil, spesifikasi, atau bantuan..." aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Cari</button>
+        </form>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav gap-2">
                 <li class="nav-item">
@@ -18,11 +23,6 @@
                 <li class="nav-item">
                     <a class="nav-link <?php echo e(request()->is('product*') ? 'active fw-bold' : ''); ?>" href="<?php echo e(url('/product')); ?>">
                         Product
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link <?php echo e(request()->routeIs('payment.*') ? 'active fw-bold' : ''); ?>" href="<?php echo e(route('payment.index')); ?>">
-                        Pembayaran
                     </a>
                 </li>
                 
@@ -78,4 +78,4 @@
             </ul>
         </div>
     </div>
-</nav><?php /**PATH C:\laragon\www\PEBEEL-GENAP-2026-1\resources\views/layouts/navbar.blade.php ENDPATH**/ ?>
+</nav><?php /**PATH C:\laragon2\www\pbl_3\resources\views/layouts/navbar.blade.php ENDPATH**/ ?>
