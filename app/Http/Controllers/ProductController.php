@@ -42,7 +42,11 @@ class ProductController extends Controller
 
         $products = $query->paginate(8);
 
-        return view('product.index', compact('products'));
+        $locations = Product::select('location')
+            ->distinct()
+            ->pluck('location');
+
+        return view('product.index', compact('products', 'locations'));
     }
 
     public function syncToCars()

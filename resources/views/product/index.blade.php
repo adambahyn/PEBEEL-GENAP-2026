@@ -10,6 +10,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
+        body {
+            padding-top: 90px;
+        }
+
         .hero {
             background: url('https://images.unsplash.com/photo-1503376780353-7e6692767b70') center/cover;
             height: 300px;
@@ -79,8 +83,15 @@
 
             <!-- SEARCH -->
             <form method="GET" class="search-box w-75">
-                <input type="text" name="location" class="form-control" placeholder="Lokasi"
-                    value="{{ request('location') }}">
+                <select name="location" class="form-select">
+                    <option value="">Pilih Lokasi</option>
+
+                    @foreach ($locations as $location)
+                        <option value="{{ $location }}" {{ request('location') == $location ? 'selected' : '' }}>
+                            {{ $location }}
+                        </option>
+                    @endforeach
+                </select>
                 <input type="number" name="min_price" class="form-control" placeholder="Min Harga">
                 <input type="number" name="max_price" class="form-control" placeholder="Max Harga">
 
@@ -90,7 +101,9 @@
                     <option value="expensive">Termahal</option>
                 </select>
 
-                <button class="btn btn-primary">🔍</button>
+                <button class="btn btn-dark px-4 rounded-pill">
+                    <i class="bi bi-search"></i>
+                </button>
             </form>
         </div>
 
