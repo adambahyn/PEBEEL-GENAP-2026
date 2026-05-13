@@ -120,7 +120,7 @@
             background: linear-gradient(135deg, #0066cc 0%, #0099ff 100%);
             color: white;
             padding: 60px 0;
-            margin-top: 80px;
+            margin-top: 30px;
         }
 
         .footer-content {
