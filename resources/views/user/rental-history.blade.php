@@ -414,7 +414,7 @@
     <!-- HERO HEADER -->
     <div class="container mb-4">
         <div class="hero-section">
-            <h1 class="fw-bold"><i class="bi bi-clock-history"></i> Riwayat Sewa Mobil</h1>
+            <h1 class="fw-bold"><i class="bi bi-clock-history"></i> Riwayat Booking</h1>
             <p class="text-white-50 mb-0">Kelola dan lihat detail semua penyewaan Anda</p>
         </div>
     </div>
@@ -561,13 +561,13 @@
                     <h5>Ikuti Adam Rental Di</h5>
                     <p style="margin-bottom: 20px;">Tetap update dengan promo dan tips terbaru dari kami</p>
                     <div class="social-icons">
-                        <a href="https://instagram.com/adamrental" class="social-icon" title="Instagram" target="_blank">
+                        <a href="https://www.instagram.com/beansfolks?igsh=MWtqOXlqd3NhbHgxbA==" class="social-icon" title="Instagram" target="_blank">
                             <i class="bi bi-instagram"></i>
                         </a>
-                        <a href="https://facebook.com/adamrental" class="social-icon" title="Facebook" target="_blank">
+                        <a href="https://www.facebook.com/share/1PREsxVQ2H/" class="social-icon" title="Facebook" target="_blank">
                             <i class="bi bi-facebook"></i>
                         </a>
-                        <a href="https://tiktok.com/@adamrental" class="social-icon" title="TikTok" target="_blank">
+                        <a href="https://www.tiktok.com/@wskyyyw?_r=1&_t=ZS-96JSOSyWBZk" class="social-icon" title="TikTok" target="_blank">
                             <i class="bi bi-tiktok"></i>
                         </a>
                     </div>

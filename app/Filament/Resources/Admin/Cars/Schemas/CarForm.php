@@ -26,6 +26,15 @@ class CarForm
                 TextInput::make('model')
                     ->required(),
                 
+                TextInput::make('tahun')
+                    ->label('Tahun')
+                    ->numeric()
+                    ->required(),
+
+                TextInput::make('warna')
+                    ->label('Warna')
+                    ->required(),
+                
                 Select::make('transmission')
                     ->options([
                         'manual' => 'Manual',
