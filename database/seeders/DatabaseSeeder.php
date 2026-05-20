@@ -61,6 +61,7 @@ class DatabaseSeeder extends Seeder
                 'description' => 'SUV tangguh untuk segala medan.',
                 'price' => 850000,
                 'stock' => 3,
+                'is_active' => true,
                 'is_booked' => false,
                 'is_featured' => false,
             ]
