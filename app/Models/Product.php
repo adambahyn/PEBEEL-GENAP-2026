@@ -9,28 +9,36 @@ class Product extends Model
 {
     use HasFactory;
 
+    // Tambahkan kolom brand, model, capacity, transmission, dan fuel_type
     protected $fillable = [
         'name',
         'sku',
+        'type',
+        'brand',
+        'model',
+        'capacity',
+        'transmission',
+        'fuel_type',
+        'location',
+        'description',
         'price',
         'stock',
-        'description',
-        'type',
-        'location',
         'image',
+        'is_booked',
         'is_active',
         'is_featured',
     ];
 
-    public function car()
-{
-    return $this->belongsTo(\App\Models\Car::class);
-}
-
     protected $casts = [
+        'is_booked' => 'boolean',
         'is_active' => 'boolean',
         'is_featured' => 'boolean',
         'price' => 'integer',
         'stock' => 'integer',
     ];
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
 }

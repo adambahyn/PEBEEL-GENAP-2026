@@ -12,7 +12,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Select;
 use Filament\Actions\Action;
-use App\Models\Car;
+
 
 class ProductForm
 {
@@ -26,16 +26,15 @@ class ProductForm
                         ->icon('heroicon-o-information-circle')
                         ->description('Isi informasi dasar produk')
                         ->schema([
-                            Select::make('car_id')
-                            ->label('Pilih Mobil')
-                            ->relationship('car', 'brand')
-                            ->searchable()
-                            ->required(),
                             Group::make([
                                 TextInput::make('name')->required(),
-                                TextInput::make('sku')->required(),
+                                TextInput::make('sku')->required()->unique(ignoreRecord: true),
                             ])->columns(2),
 
+                            Group::make([
+                                TextInput::make('brand')->required(),
+                                TextInput::make('model')->required(),
+                            ])->columns(2),
                             MarkdownEditor::make('description')->required(),
                         ]),
 
@@ -44,23 +43,42 @@ class ProductForm
                         ->icon('heroicon-o-currency-dollar')
                         ->description('Isi harga dan jumlah stok')
                         ->schema([
-                            TextInput::make('price')
-                                ->numeric()
-                                ->minValue(1)
-                                ->required(),
-
-                            TextInput::make('stock')
-                                ->numeric()
-                                ->required(),
-
-                            Select::make('type')
-                                ->options([
-                                    'SUV' => 'SUV',
-                                    'MPV' => 'MPV',
-                                    'Sedan' => 'Sedan',
-                                ])
-                                ->required(),
-
+                            Group::make([
+                                TextInput::make('price')
+                                    ->numeric()
+                                    ->minValue(1)
+                                    ->required(),
+                                TextInput::make('stock')
+                                    ->numeric()
+                                    ->default(1)
+                                    ->readOnly()
+                                    ->required(),
+                            ])->columns(2),
+                            Group::make([
+                                Select::make('type')
+                                    ->options([
+                                        'SUV' => 'SUV',
+                                        'MPV' => 'MPV',
+                                        'Sedan' => 'Sedan',
+                                    ])->required(),
+                                TextInput::make('capacity')
+                                    ->label('Kapasitas (Penumpang)')
+                                    ->numeric()
+                                    ->required(),
+                                Select::make('transmission')
+                                    ->label('Transmisi')
+                                    ->options([
+                                        'Automatic' => 'Automatic',
+                                        'Manual' => 'Manual',
+                                    ])->required(),
+                                Select::make('fuel_type')
+                                    ->label('Bahan Bakar')
+                                    ->options([
+                                        'Bensin' => 'Bensin',
+                                        'Diesel' => 'Diesel',
+                                        'Listrik' => 'Listrik',
+                                    ])->required(),
+                            ])->columns(2),
                             TextInput::make('location')
                                 ->required(),
                         ]),
@@ -72,10 +90,9 @@ class ProductForm
                             FileUpload::make('image')
                                 ->disk('public')
                                 ->directory('products'),
-
-                            Checkbox::make('is_active'),
-
-                            Checkbox::make('is_featured'),
+                            Checkbox::make('is_active')->label('Aktif'),
+                            Checkbox::make('is_booked')->label('Booked / Disewa'),
+                            Checkbox::make('is_featured')->label('Produk Unggulan'),
                         ]),
 
                 ])

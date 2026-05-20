@@ -29,10 +29,14 @@ class ProductInfolist
                                     ->label('SKU')
                                     ->badge()
                                     ->color('info'),
+                                TextEntry::make('brand')
+                                    ->label('Brand'),
+                                TextEntry::make('model')
+                                    ->label('Model'),
                                 TextEntry::make('description')
                                     ->label('Description')
                                     ->markdown(),
-                            ]),
+                            ])->columns(2),
                         Tab::make('Pricing & Stock')
                             ->icon('heroicon-o-banknotes')
                             ->schema([
@@ -45,7 +49,17 @@ class ProductInfolist
                                     ->label('Inventory Stock')
                                     ->badge()
                                     ->icon('heroicon-o-cube'),
-                            ])->columns(),
+                                TextEntry::make('type')
+                                    ->label('Tipe Mobil'),
+                                TextEntry::make('capacity')
+                                    ->label('Kapasitas Penumpang'),
+                                TextEntry::make('transmission')
+                                    ->label('Transmisi'),
+                                TextEntry::make('fuel_type')
+                                    ->label('Bahan Bakar'),
+                                TextEntry::make('location')
+                                    ->label('Lokasi'),
+                            ])->columns(2),
 
                         Tab::make('Media & Status')
                             ->icon('heroicon-o-photo')
@@ -55,12 +69,15 @@ class ProductInfolist
                                     ->disk('public')
                                     ->columnSpanFull(),
                                 IconEntry::make('is_active')
-                                    ->label('Active Status')
+                                    ->label('Is Active')
+                                    ->boolean(),
+                                IconEntry::make('is_booked')
+                                    ->label('Is Booked')
                                     ->boolean(),
                                 IconEntry::make('is_featured')
                                     ->label('Featured Product')
                                     ->boolean(),
-                            ])->columns(),
+                            ])->columns(2),
                     ])
                     ->columnSpanFull()
                     ->vertical(),

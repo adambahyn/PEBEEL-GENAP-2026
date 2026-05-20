@@ -5,23 +5,16 @@
             Adam Rental
         </a>
 
-        <button class="navbar-toggler" type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
 
             <!-- SEARCH TENGAH -->
-            <form action="{{ url('/search') }}"
-                method="GET"
-                class="d-flex mx-auto">
-                <input class="form-control me-2"
-                    type="search"
-                    name="q"
-                    placeholder="Cari mobil, spesifikasi, atau bantuan..."
-                    aria-label="Search">
+            <form action="{{ url('/search') }}" method="GET" class="d-flex mx-auto">
+                <input class="form-control me-2" type="search" name="q"
+                    placeholder="Cari mobil, spesifikasi, atau bantuan..." aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">
                     <i class="bi bi-search"></i>
                 </button>
@@ -31,8 +24,7 @@
 
                 <!-- BERANDA -->
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('customer') ? 'active fw-bold' : '' }}"
-                        href="{{ url('/customer') }}">
+                    <a class="nav-link {{ request()->is('home') ? 'active fw-bold' : '' }}" href="{{ url('/') }}">
                         <i class="bi bi-house-door me-1"></i>
                         Beranda
                     </a>
@@ -46,6 +38,15 @@
                         Product
                     </a>
                 </li>
+                {{-- Payment --}}
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('payment*') ? 'active fw-bold' : '' }}"
+                        href="{{ route('payment.index') }}">
+                        <i class="bi bi-credit-card me-1"></i>
+                        Pembayaran
+                    </a>
+                </li>
+                
 
                 {{-- LOGIN --}}
                 @if (!Auth::check())
@@ -62,9 +63,7 @@
 
                     <!-- LOGIN SEBAGAI USER -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center"
-                            href="#"
-                            data-bs-toggle="dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" data-bs-toggle="dropdown">
                             <i class="bi bi-person-circle fs-4"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
@@ -79,15 +78,13 @@
 
                             <!-- MENU TAMBAHAN -->
                             <li>
-                                <a class="dropdown-item"
-                                    href="{{ route('user.profile') }}">
+                                <a class="dropdown-item" href="{{ route('user.profile') }}">
 
                                     Profil
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item"
-                                    href="{{ route('user.rental-history') }}">
+                                <a class="dropdown-item" href="{{ route('user.rental-history') }}">
 
                                     Riwayat Sewa
                                 </a>

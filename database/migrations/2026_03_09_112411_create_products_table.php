@@ -16,13 +16,20 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('sku')->unique();
+            $table->string('type');
+            $table->string('brand');
+            $table->string('model');
+            $table->integer('capacity'); // Kapasitas (penumpang)
+            $table->string('transmission'); // Manual/Otomatis
+            $table->string('fuel_type'); // Bensin/Diesel/Listrik
+            $table->string('location');
             $table->text('description');
             $table->integer('price');
             $table->integer('stock');
             $table->string('image')->nullable();
+            $table->boolean('is_booked')->default(true);
             $table->boolean('is_active')->default(true);
             $table->boolean('is_featured')->default(false);
-
         });
     }
 

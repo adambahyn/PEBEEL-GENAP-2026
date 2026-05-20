@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <style>
-        
         body {
             background: #f5f7fb;
         }
@@ -532,82 +532,14 @@
         }
     </style>
 </head>
+
 <body>
 
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="{{ url('/customer') }}">
-                Adam Rental
-            </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav gap-2">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/customer') }}">
-                            Beranda
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/product') }}">
-                            Product
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('payment.index') }}">
-                            Pembayaran
-                        </a>
-                    </li>
-
-                    @if (Auth::check())
-                        <!-- LOGIN SEBAGAI USER -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#"
-                                data-bs-toggle="dropdown">
-                                <i class="bi bi-person-circle fs-4"></i>
-                            </a>
-
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <!-- NAMA USER -->
-                                <li class="dropdown-item-text fw-semibold">
-                                    👤 {{ Auth::user()->name }}
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <a class="dropdown-item active fw-bold" href="{{ route('user.profile') }}">Profil</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('user.rental-history') }}">Riwayat Sewa</a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-
-                                <!-- LOGOUT -->
-                                <li>
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
-                                        <button class="dropdown-item">Logout</button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                    @endif
-                </ul>
-            </div>
-        </div>
-    </nav>
-
+    @include('layouts.navbar')
     <!-- Hero -->
     <div class="container mb-4">
-        <div class="hero-section text-white text-center shadow-sm"
-            style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)),
+        <div class="hero-section text-white text-center shadow-sm" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)),
             url('https://images.unsplash.com/photo-1503376780353-7e6692767b70') center/cover;
             border-radius: 20px; padding: 60px 20px;">
 
@@ -624,11 +556,19 @@
                 <!-- SIDEBAR PROFILE -->
                 <div class="sidebar-profile">
                     <div class="sidebar-profile-photo">
-                        <img src="{{ $user->photo ? asset('storage/'.$user->photo) : 'https://ui-avatars.com/api/?name='.$user->name }}"
+                        <img src="{{ $user->photo ? asset('storage/' . $user->photo) : 'https://ui-avatars.com/api/?name=' . $user->name }}"
                             alt="{{ $user->name }}">
                     </div>
                     <div class="sidebar-profile-name">{{ $user->name }}</div>
                     <div class="sidebar-profile-email">{{ $user->email }}</div>
+                    
+                                @if(!empty($user->alamat) && !empty($user->ktp_file) && !empty($user->sim_file))
+                                    <span class="badge bg-success rounded-pill px-3 py-2"><i
+                                            class="bi bi-patch-check-fill me-1"></i> Akun Terverifikasi</span>
+                                @else
+                                    <span class="badge bg-secondary rounded-pill px-3 py-2"><i
+                                            class="bi bi-info-circle-fill me-1"></i> Belum Terverifikasi</span>
+                                @endif
                 </div>
 
                 <!-- SIDEBAR MENU -->
@@ -650,50 +590,113 @@
 
             <!-- CONTENT AREA -->
             <div class="content-area">
-                <!-- PROFILE CARD -->
+
+                @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" style="border-radius: 10px;">
+                        <i class="bi bi-check-circle-fill me-2"></i> {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                @if(empty($user->alamat) || empty($user->ktp_file) || empty($user->sim_file))
+                    <div class="alert alert-warning alert-dismissible fade show d-flex align-items-center" role="alert"
+                        style="border-radius: 10px;">
+                        <i class="bi bi-exclamation-triangle-fill fs-4 me-3 text-warning"></i>
+                        <div>
+                            <strong>Profil Belum Lengkap!</strong><br>
+                            Harap lengkapi Alamat, KTP, dan SIM Anda agar dapat melakukan transaksi penyewaan mobil.
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
                 <div class="profile-content-card">
-                    <!-- TAB HEADER -->
                     <div class="profile-tab-header">
-                        Profil
+                        Informasi Detail Profil
                     </div>
 
-                    <!-- CONTENT -->
                     <div class="profile-content-inner">
                         <div class="profile-row">
-                            <!-- LEFT COLUMN - FOTO -->
-                            <div class="profile-left-column">
-                                <img src="{{ $user->photo ? asset('storage/'.$user->photo) : 'https://ui-avatars.com/api/?name='.$user->name }}"
-                                    class="profile-main-photo"
-                                    alt="{{ $user->name }}">
-                                <div class="profile-name-title">{{ $user->name }}</div>
-                                <div class="profile-email-display">{{ $user->email }}</div>
-                            </div>
+                
 
-                            <!-- RIGHT COLUMN - INFO -->
                             <div class="profile-right-column">
-                                <!-- INFO ITEMS -->
                                 <div class="profile-info-row">
                                     <div class="profile-info-box">
                                         <div class="profile-info-box-label">Total Booking</div>
-                                        <div class="profile-info-box-value">{{ $user->bookings->count() }}</div>
+                                        <div class="profile-info-box-value">{{ $user->bookings->count() ?? 0 }}</div>
                                     </div>
 
                                     <div class="profile-info-box">
-                                        <div class="profile-info-box-label">Bergabung</div>
-                                        <div class="profile-info-box-value">{{ $user->created_at->format('d M Y') }}</div>
+                                        <div class="profile-info-box-label">Bergabung Sejak</div>
+                                        <div class="profile-info-box-value">{{ $user->created_at->format('d M Y') }}
+                                        </div>
                                     </div>
                                 </div>
 
-                                <!-- BIO SECTION -->
                                 <div class="profile-bio-section">
-                                    <div class="profile-bio-label">Bio</div>
-                                    <div class="profile-bio-value">{{ $user->bio ?? 'Belum ada bio' }}</div>
+                                    <div class="profile-bio-label">Alamat Lengkap</div>
+                                    <div class="profile-bio-value">
+                                        @if(!empty($user->alamat))
+                                            {{ $user->alamat }}
+                                        @else
+                                            <span class="text-danger fst-italic"><i class="bi bi-x-circle me-1"></i> Belum
+                                                diisi</span>
+                                        @endif
+                                    </div>
                                 </div>
 
-                                <!-- ACTION BUTTONS -->
-                                <div class="profile-action-buttons">
-                                    <button class="btn-profile-action btn-profile-edit" data-bs-toggle="modal" data-bs-target="#editProfileModal">
-                                        <i class="bi bi-pencil"></i> Edit Profil
+                                <div class="profile-info-row" style="margin-top: -15px;">
+                                    <div class="profile-info-box">
+                                        <div class="profile-info-box-label">Dokumen KTP</div>
+                                        <div class="profile-info-box-value fs-6 mt-1">
+                                            @if(!empty($user->ktp_file))
+                                                <span class="text-success"><i class="bi bi-check-circle-fill me-1"></i>
+                                                    Terupload</span>
+                                                <a href="{{ asset('storage/' . $user->ktp_file) }}" target="_blank"
+                                                    class="badge bg-primary ms-2 text-decoration-none">Lihat</a>
+                                            @else
+                                                <span class="text-danger"><i class="bi bi-x-circle-fill me-1"></i>
+                                                    Kosong</span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-info-box">
+                                        <div class="profile-info-box-label">Dokumen SIM A</div>
+                                        <div class="profile-info-box-value fs-6 mt-1">
+                                            @if(!empty($user->sim_file))
+                                                <span class="text-success"><i class="bi bi-check-circle-fill me-1"></i>
+                                                    Terupload</span>
+                                                <a href="{{ asset('storage/' . $user->sim_file) }}" target="_blank"
+                                                    class="badge bg-primary ms-2 text-decoration-none">Lihat</a>
+                                            @else
+                                                <span class="text-danger"><i class="bi bi-x-circle-fill me-1"></i>
+                                                    Kosong</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="profile-bio-section">
+                                    <div class="profile-bio-label">Bio / Catatan</div>
+                                    <div class="profile-bio-value">
+                                        @if(!empty($user->bio))
+                                            {{ $user->bio }}
+                                        @else
+                                            <span class="text-muted fst-italic">Belum ada bio</span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="profile-action-buttons mt-4">
+                                    <button class="btn-profile-action btn-profile-edit w-100" data-bs-toggle="modal"
+                                        data-bs-target="#editProfileModal">
+                                        <i class="bi bi-pencil-square me-2"></i>
+                                        @if(empty($user->alamat) || empty($user->ktp_file) || empty($user->sim_file))
+                                            Lengkapi Data Sekarang
+                                        @else
+                                            Edit Profil
+                                        @endif
                                     </button>
                                 </div>
                             </div>
@@ -705,31 +708,73 @@
     </div>
 
     <!-- MODAL EDIT PROFIL -->
-    <div class="modal fade" id="editProfileModal" tabindex="-1">
-        <div class="modal-dialog">
+    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title">Edit Profil</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProfileModalLabel"><i class="bi bi-pencil-square me-2"></i>Lengkapi
+                        / Ubah Data Profil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('user.update-profile') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    @method('PUT')
                     <div class="modal-body">
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Foto Profil</label>
-                            <input type="file" name="photo" class="form-control">
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="name" class="form-label fw-bold">Nama Lengkap</label>
+                                <input type="text" class="form-control" id="name" name="name"
+                                    value="{{ auth()->user()->name }}" required>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="photo" class="form-label fw-bold">Foto Profil</label>
+                                <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
+                                <small class="text-muted">Format: JPG, JPEG, PNG (Maks 2MB)</small>
+                            </div>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Nama</label>
-                            <input type="text" name="name" value="{{ $user->name }}"
-                                class="form-control" placeholder="Nama Lengkap">
+                            <label for="bio" class="form-label fw-bold">Bio / Catatan Singkat</label>
+                            <textarea class="form-control" id="bio" name="bio" rows="2"
+                                placeholder="Ceritakan sedikit tentang Anda...">{{ auth()->user()->bio }}</textarea>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Bio</label>
-                            <textarea name="bio" class="form-control" placeholder="Ceritakan tentang diri Anda" rows="4">{{ $user->bio }}</textarea>
+                            <label for="alamat" class="form-label fw-bold">Alamat Lengkap</label>
+                            <textarea class="form-control" id="alamat" name="alamat" rows="3" required
+                                placeholder="Alamat sesuai KTP...">{{ auth()->user()->alamat }}</textarea>
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="ktp_file" class="form-label fw-bold">Upload KTP (Untuk Verifikasi
+                                    Rental)</label>
+                                <input type="file" class="form-control" id="ktp_file" name="ktp_file" accept="image/*">
+                                @if(auth()->user()->ktp_file)
+                                    <small class="text-success"><i class="bi bi-check-circle-fill"></i> KTP Sudah
+                                        Terupload</small>
+                                @else
+                                    <small class="text-danger"><i class="bi bi-exclamation-circle-fill"></i> KTP Belum
+                                        Diupload</small>
+                                @endif
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="sim_file" class="form-label fw-bold">Upload SIM A</label>
+                                <input type="file" class="form-control" id="sim_file" name="sim_file" accept="image/*">
+                                @if(auth()->user()->sim_file)
+                                    <small class="text-success"><i class="bi bi-check-circle-fill"></i> SIM Sudah
+                                        Terupload</small>
+                                @else
+                                    <small class="text-danger"><i class="bi bi-exclamation-circle-fill"></i> SIM Belum
+                                        Diupload</small>
+                                @endif
+                            </div>
+                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -741,59 +786,7 @@
     </div>
 
     <!-- FOOTER SECTION -->
-    <footer class="footer-section">
-        <div class="container">
-            <div class="footer-content">
-                <!-- KOLOM 1: PENJELASAN WEBSITE -->
-                <div class="footer-column">
-                    <h5>Tentang Adam Rental</h5>
-                    <p>
-                        Adam Rental adalah platform penyewaan kendaraan terpercaya yang menyediakan berbagai pilihan kendaraan berkualitas untuk memenuhi kebutuhan transportasi Anda dengan harga terjangkau dan layanan terbaik.
-                    </p>
-                </div>
-
-                <!-- KOLOM 2: BANTUAN & KONTAK -->
-                <div class="footer-column">
-                    <h5>Bantuan & Kontak</h5>
-                    <div class="help-section">
-                        <a href="https://wa.me/628XXXXXXXXX" class="help-item" target="_blank">
-                            <i class="bi bi-whatsapp"></i>
-                            <span>Hubungi via WhatsApp</span>
-                        </a>
-                        <a href="mailto:info@adamrental.com" class="help-item">
-                            <i class="bi bi-envelope"></i>
-                            <span>Email: info@adamrental.com</span>
-                        </a>
-                    </div>
-                    <button class="btn-about" data-bs-toggle="modal" data-bs-target="#aboutModal">
-                        Tentang Kami
-                    </button>
-                </div>
-
-                <!-- KOLOM 3: IKUTI MEDIA SOSIAL -->
-                <div class="footer-column social-media-section">
-                    <h5>Ikuti Kami Di</h5>
-                    <p style="margin-bottom: 20px;">Tetap update dengan promo dan tips terbaru dari kami</p>
-                    <div class="social-icons">
-                        <a href="https://www.instagram.com/beansfolks?igsh=MWtqOXlqd3NhbHgxbA==" class="social-icon" title="Instagram" target="_blank">
-                            <i class="bi bi-instagram"></i>
-                        </a>
-                        <a href="https://www.facebook.com/share/1PREsxVQ2H/" class="social-icon" title="Facebook" target="_blank">
-                            <i class="bi bi-facebook"></i>
-                        </a>
-                        <a href="https://www.tiktok.com/@wskyyyw?_r=1&_t=ZS-96JSOSyWBZk" class="social-icon" title="TikTok" target="_blank">
-                            <i class="bi bi-tiktok"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- FOOTER BOTTOM -->
-            <div class="footer-bottom">
-                <p>&copy; 2026 Adam Rental. All rights reserved. | <a href="#" style="color: white; text-decoration: none;">Privacy Policy</a> | <a href="#" style="color: white; text-decoration: none;">Terms of Service</a></p>
-            </div>
-        </div>
-    </footer>
+    @include('layouts.footer')
 
     <!-- MODAL TENTANG KAlas-->
     <div class="modal fade" id="aboutModal" tabindex="-1">
@@ -805,7 +798,8 @@
                 </div>
                 <div class="modal-body">
                     <h6 class="fw-bold mb-3">Visi Kami</h6>
-                    <p>Menjadi platform penyewaan kendaraan nomor satu di Indonesia dengan memberikan layanan terbaik dan terpercaya.</p>
+                    <p>Menjadi platform penyewaan kendaraan nomor satu di Indonesia dengan memberikan layanan terbaik
+                        dan terpercaya.</p>
 
                     <h6 class="fw-bold mb-3 mt-4">Misi Kami</h6>
                     <ul>
@@ -836,4 +830,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>

@@ -12,12 +12,7 @@ class User extends Authenticatable implements FilamentUser
 {
     use HasFactory, Notifiable;
 
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'role', // Tambahkan role ke fillable
-    ];
+    protected $fillable = ['name', 'email', 'password', 'role', 'photo', 'bio', 'alamat', 'ktp_file', 'sim_file'];
 
     protected $hidden = [
         'password',
@@ -46,6 +41,7 @@ class User extends Authenticatable implements FilamentUser
         return false;
     }
 
+    
     public function bookings()
     {
         return $this->hasMany(Booking::class);

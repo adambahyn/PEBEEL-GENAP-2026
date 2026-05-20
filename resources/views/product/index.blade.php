@@ -110,21 +110,16 @@
         <!-- FILTER CATEGORY -->
         <div class="mb-4 d-flex gap-2">
 
-            <a href="/product" class="btn btn-sm {{ request('type') ? 'btn-outline-dark' : 'btn-dark' }}">
+            <a href="{{ url('/product') }}" class="btn btn-sm {{ !request('type') ? 'btn-dark' : 'btn-outline-dark' }}">
                 All
             </a>
 
-            <a href="?type=SUV" class="btn btn-sm {{ request('type') == 'SUV' ? 'btn-dark' : 'btn-outline-dark' }}">
-                SUV
-            </a>
-
-            <a href="?type=MPV" class="btn btn-sm {{ request('type') == 'MPV' ? 'btn-dark' : 'btn-outline-dark' }}">
-                MPV
-            </a>
-
-            <a href="?type=Sedan" class="btn btn-sm {{ request('type') == 'Sedan' ? 'btn-dark' : 'btn-outline-dark' }}">
-                Sedan
-            </a>
+            @foreach($types as $type)
+                <a href="?type={{ urlencode($type) }}"
+                    class="btn btn-sm {{ request('type') == $type ? 'btn-dark' : 'btn-outline-dark' }}">
+                    {{ $type }}
+                </a>
+            @endforeach
 
         </div>
 
@@ -136,8 +131,9 @@
 
                         <div class="card-img-hover">
                             <a href="{{ $product->car_id && $product->car ? route('cars.user-show', $product->id) : '#' }}"
-                                @if (!($product->car_id && $product->car)) onclick="alert('Maaf, detail mobil belum tersedia. Hubungi admin untuk informasi lebih lanjut'); return false;"
-            style="cursor: not-allowed;" @endif>
+                                @if (!($product->car_id && $product->car))
+                                    onclick="alert('Maaf, detail mobil belum tersedia. Hubungi admin untuk informasi lebih lanjut'); return false;"
+                                style="cursor: not-allowed;" @endif>
 
                                 <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top">
                             </a>

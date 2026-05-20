@@ -7,279 +7,109 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
     <style>
-        body {
+        body, html {
+            height: 100%;
+            margin: 0;
             background: #f5f7fb;
         }
 
-        /* Hero Section */
+        /* Layout agar background hero memenuhi layar (fullscreen) */
         .hero-section {
-            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1503376780353-7e6692767b70') center/cover;
-            border-radius: 22px;
-            padding: 80px 20px;
-            overflow: hidden;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1503376780353-7e6692767b70') center/cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 60px; /* Menghindari tertutup navbar */
         }
 
-        /* Search Box */
+        /* Kotak Pencarian Utama */
         .search-box {
-            background: white;
-            padding: 15px 25px;
-            border-radius: 18px;
-            max-width: 900px;
-        }
-        .search-box input:focus, .search-box select:focus {
-            box-shadow: none !important;
-        }
-
-        /* Cards */
-        .page-card { border-radius: 22px; }
-        .feature-card { border-radius: 18px; }
-        
-        .section-label {
-            font-size: 0.83rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: #6c757d;
-        }
-        .price-value {
-            color: #0d6efd;
-            font-weight: 700;
-        }
-
-        /* Zoom Image Effect */
-        .card-img-hover {
-            overflow: hidden;
-            border-radius: 18px 18px 0 0;
-        }
-        .card-img-hover img {
-            height: 180px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 24px;
+            max-width: 450px;
             width: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-        .page-card:hover .card-img-hover img {
-            transform: scale(1.1);
+            backdrop-filter: blur(10px);
         }
 
-        /* Animations */
-        .rh-filter-btn { transition: all 0.2s ease; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to   { opacity: 1; transform: translateY(0); }
+        /* Menyesuaikan desain kalender Flatpickr agar menyatu */
+        .flatpickr-calendar.inline {
+            margin: 0 auto;
+            border: none;
+            box-shadow: none;
+            background: transparent;
+            width: 100%;
         }
     </style>
 </head>
 <body>
-{{-- include navbar --}}
+    {{-- Include Navbar --}}
     @include('layouts.navbar')
 
-
-    <div class="container pb-5">
-
-        {{-- ===== HERO ===== --}}
-        <div class="hero-section text-white text-center mb-5 position-relative shadow-sm">
-            <div class="position-relative z-1">
-                <p class="text-info fw-semibold mb-2 text-uppercase" style="letter-spacing:2px; font-size:0.85rem;">✦ Platform Rental Terpercaya</p>
-                <h1 class="display-4 fw-bold mb-3">Adam Rental</h1>
-                <p class="mb-4 mx-auto text-white-50" style="max-width:520px; font-size:1.1rem;">
-                    Rental Mobil Terpercaya se Kota Malang. Proses mudah, harga transparan, bebas ribet.
-                </p>
-            </div>
-        </div>
-
-        {{-- ===== STATS ===== --}}
-        <div class="row g-3 mb-5">
-            <div class="col-6 col-md-3">
-                <div class="card feature-card shadow-sm border-0 h-100 text-center p-3">
-                    <div class="fs-2 fw-bold text-primary mb-1">{{ $carsCount }}+</div>
-                    <div class="text-muted small fw-semibold section-label">Mobil Aktif</div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card feature-card shadow-sm border-0 h-100 text-center p-3">
-                    <div class="fs-2 fw-bold text-success mb-1">15+</div>
-                    <div class="text-muted small fw-semibold section-label">Kota Tersedia</div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card feature-card shadow-sm border-0 h-100 text-center p-3">
-                    <div class="fs-2 fw-bold text-info mb-1">500+</div>
-                    <div class="text-muted small fw-semibold section-label">Pelanggan Puas</div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card feature-card shadow-sm border-0 h-100 text-center p-3">
-                    <div class="fs-2 fw-bold text-warning mb-1">4.9 ⭐</div>
-                    <div class="text-muted small fw-semibold section-label">Rating Rata-rata</div>
-                </div>
-            </div>
-        </div>
-
-        {{-- ===== DAFTAR MOBIL ===== --}}
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <p class="section-label mb-1">Tersedia</p>
-                <h4 class="fw-bold mb-0">Rekomendasi Mobil</h4>
-            </div>
-            <a href="/product" class="btn btn-outline-primary btn-sm rounded-pill fw-semibold px-3">
-                Lihat Semua <i class="bi bi-arrow-right"></i>
-            </a>
-        </div>
-
-        <div class="d-flex flex-wrap gap-2 mb-4">
-            <button class="btn btn-sm btn-dark rh-filter-btn fw-semibold" data-filter="all">All</button>
-            <button class="btn btn-sm btn-outline-dark rh-filter-btn fw-semibold" data-filter="SUV">SUV</button>
-            <button class="btn btn-sm btn-outline-dark rh-filter-btn fw-semibold" data-filter="MPV">MPV</button>
-            <button class="btn btn-sm btn-outline-dark rh-filter-btn fw-semibold" data-filter="Sedan">Sedan</button>
-        </div>
-
-        <div class="row g-4 mb-5" id="car-grid">
-            @forelse ($cars as $car)
-            <div class="col-sm-6 col-lg-3 car-item" data-type="{{ $car->type }}">
-                <div class="card shadow-sm border-0 h-100 page-card overflow-hidden">
-                    <div class="card-img-hover position-relative">
-                        <a href="/product/{{ $car->id }}">
-                            <img src="{{ $car->image ? asset('storage/' . $car->image) : 'https://images.unsplash.com/photo-1550355291-bbee04a92027?q=80&w=800&auto=format&fit=crop' }}" alt="{{ $car->name ?? $car->brand }}" class="card-img-top">
-                        </a>
-                        @if ($car->type)
-                        <span class="badge bg-dark text-white position-absolute shadow-sm" style="top:12px; right:12px; font-weight:500;">
-                            {{ $car->type }}
-                        </span>
-                        @endif
-                    </div>
-                    
-                    <div class="card-body d-flex flex-column">
-                        <h6 class="fw-bold mb-1 text-truncate">{{ $car->name ?? $car->brand . ' ' . $car->model }}</h6>
-                        <small class="text-muted d-block mb-3">
-                            {{ $car->type ?? 'Unit' }} • {{ $car->location ?? 'Malang' }}
-                        </small>
-
-                        <div class="mt-auto">
-                            <div class="d-flex align-items-center gap-1 mb-3">
-                                <strong class="fs-6 mb-0 price-value">
-                                    Rp {{ number_format($car->price, 0, ',', '.') }}
-                                </strong>
-                                <small class="text-muted mb-0">/ hari</small>
-                            </div>
-                            
-                            <div class="d-grid">
-                                <a href="{{ route('payment.index', ['product_id' => $car->id]) }}" class="btn btn-primary btn-sm fw-semibold rounded-3">
-                                    Booking Now
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @empty
-            <div class="col-12 text-center py-5">
-                <i class="bi bi-car-front text-muted" style="font-size:4rem;"></i>
-                <p class="mt-3 fw-semibold text-muted">Belum ada mobil yang tersedia.</p>
-            </div>
-            @endforelse
-        </div>
-
-        {{-- ===== PANDUAN ===== --}}
-        <div class="row g-4 mb-5">
-            <div class="col-lg-7">
-                <div class="card page-card shadow-sm border-0 p-4 h-100">
-                    <p class="section-label mb-1">Panduan Booking</p>
-                    <h4 class="fw-bold mb-4">Cara Booking di Adam Rental</h4>
-                    
-                    <div class="list-group list-group-flush">
-                        <div class="list-group-item px-0 py-3 border-0 d-flex align-items-start gap-3">
-                            <span class="badge bg-primary rounded-circle p-2">1</span>
-                            <div>
-                                <div class="fw-semibold">Pilih Mobil</div>
-                                <small class="text-muted">Temukan mobil yang sesuai kebutuhan. Filter berdasarkan tipe, lokasi, dan harga.</small>
-                            </div>
-                        </div>
-                        <div class="list-group-item px-0 py-3 border-0 d-flex align-items-start gap-3">
-                            <span class="badge bg-primary rounded-circle p-2">2</span>
-                            <div>
-                                <div class="fw-semibold">Isi Data Booking</div>
-                                <small class="text-muted">Lengkapi form pembayaran, pilih tanggal sewa, dan metode pembayaran favoritmu.</small>
-                            </div>
-                        </div>
-                        <div class="list-group-item px-0 py-3 border-0 d-flex align-items-start gap-3">
-                            <span class="badge bg-primary rounded-circle p-2">3</span>
-                            <div>
-                                <div class="fw-semibold">Nikmati Perjalanan</div>
-                                <small class="text-muted">Mobil siap digunakan. Perjalanan nyaman dan aman menanti!</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    {{-- ===== HERO & KALENDER ===== --}}
+    <div class="hero-section text-center position-relative">
+        <div class="container position-relative z-1">
             
-            <div class="col-lg-5">
-                <div class="card feature-card shadow-sm border-0 p-4 h-100">
-                    <p class="section-label mb-1">Keunggulan</p>
-                    <h4 class="fw-bold mb-4">Mengapa Memilih Kami?</h4>
-                    <div class="d-flex flex-column gap-4 mt-2">
-                        <div class="d-flex align-items-center gap-3">
-                            <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">🛡️</div>
-                            <div>
-                                <h6 class="fw-bold mb-0">Terpercaya & Aman</h6>
-                                <small class="text-muted">Host terverifikasi, mobil prima.</small>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center gap-3">
-                            <div class="bg-success bg-opacity-10 text-success p-3 rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">💰</div>
-                            <div>
-                                <h6 class="fw-bold mb-0">Harga Transparan</h6>
-                                <small class="text-muted">Tanpa biaya tersembunyi.</small>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center gap-3">
-                            <div class="bg-info bg-opacity-10 text-info p-3 rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">📞</div>
-                            <div>
-                                <h6 class="fw-bold mb-0">Support 24/7</h6>
-                                <small class="text-muted">Tim siap sedia membantu.</small>
-                            </div>
-                        </div>
-                    </div>
+            <h1 class="display-4 fw-bold mb-2 text-white">Adam Rental</h1>
+            <p class="mb-4 text-white-50 fs-5">Kapan Anda ingin memulai perjalanan?</p>
+            
+            <form id="searchForm" action="{{ url('/product') }}" method="GET" class="search-box mx-auto shadow-lg text-center">
+                
+                <h6 class="fw-bold text-secondary mb-3 text-uppercase" style="letter-spacing: 1px;">Pilih Tanggal Sewa</h6>
+                
+                <div class="d-flex justify-content-center mb-4">
+                    <div id="inline-calendar"></div>
                 </div>
-            </div>
-        </div>
+                
+                <input type="hidden" name="start_date" id="start_date" required>
+                <input type="hidden" name="end_date" id="end_date" required>
+                
+                <button type="submit" class="btn btn-primary w-100 rounded-pill py-3 fw-bold fs-6 shadow-sm">
+                    <i class="bi bi-search me-2"></i> Tampilkan Mobil Tersedia
+                </button>
 
-        {{-- ===== CTA ===== --}}
-        <div class="card page-card bg-primary text-white text-center p-5 mb-2 border-0 shadow-sm" style="background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);">
-            <h3 class="fw-bold mb-2">Siap Memulai Perjalananmu?</h3>
-            <p class="mb-4 text-white-50">Ribuan pelanggan sudah merasakan kemudahannya. Giliran kamu!</p>
-            <a href="/product" class="btn btn-light text-primary btn-lg rounded-pill px-5 fw-bold shadow-sm d-inline-block mx-auto">
-                Cari Mobil
-            </a>
+            </form>
         </div>
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     
     <script>
-    document.querySelectorAll('.rh-filter-btn').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            document.querySelectorAll('.rh-filter-btn').forEach(function(b) {
-                b.classList.remove('btn-dark');
-                b.classList.add('btn-outline-dark');
-            });
-
-            this.classList.remove('btn-outline-dark');
-            this.classList.add('btn-dark');
-
-            var filter = this.dataset.filter;
-
-            document.querySelectorAll('.car-item').forEach(function(item) {
-                if (filter === 'all' || item.dataset.type === filter) {
-                    item.style.display = '';
-                    item.style.animation = 'fadeIn 0.4s ease forwards';
+        // Inisialisasi Kalender Interaktif
+        flatpickr("#inline-calendar", {
+            inline: true,        
+            mode: "range",       
+            dateFormat: "Y-m-d",
+            minDate: "today",    
+            showMonths: 1,       // Menampilkan 1 bulan agar rapi di mobile
+            onChange: function(selectedDates, dateStr, instance) {
+                // Isi input tersembunyi hanya jika user sudah memilih TANGGAL MULAI dan TANGGAL SELESAI
+                if (selectedDates.length === 2) {
+                    document.getElementById('start_date').value = instance.formatDate(selectedDates[0], "Y-m-d");
+                    document.getElementById('end_date').value = instance.formatDate(selectedDates[1], "Y-m-d");
                 } else {
-                    item.style.display = 'none';
+                    document.getElementById('start_date').value = "";
+                    document.getElementById('end_date').value = "";
                 }
-            });
+            }
         });
-    });
+
+        // Validasi: Cegah user menekan tombol cari jika belum memilih 2 tanggal
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
+            const start = document.getElementById('start_date').value;
+            const end = document.getElementById('end_date').value;
+            
+            if (!start || !end) {
+                e.preventDefault(); // Batalkan pengiriman form
+                alert('Silakan pilih rentang tanggal (mulai dan selesai) pada kalender terlebih dahulu.');
+            }
+        });
     </script>
 </body>
 </html>

@@ -30,7 +30,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect('/customer');
+        return redirect('/home');
     }
 
     public function login(Request $request)
@@ -42,7 +42,7 @@ class AuthController extends Controller
                 return redirect('/admin');
             }
 
-            return redirect('/customer');
+            return redirect('/home');
         }
 
         return back()->with('error', 'Login gagal');
@@ -51,6 +51,6 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect('/customer');
+        return redirect('/home');
     }
 }

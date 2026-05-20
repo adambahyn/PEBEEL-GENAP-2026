@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\Car;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Product::query()->where('is_active', 1);
+        $query = Product::query()->where('is_booked', 0)->where('is_active', 1);
 
         // FILTER HARGA
         if ($request->min_price) {
@@ -40,40 +39,34 @@ class ProductController extends Controller
             $query->latest();
         }
 
+        if ($request->filled(['start_date', 'end_date'])) {
+            $start = $request->start_date;
+            $end = $request->end_date;
+
+            $query->whereDoesntHave('bookings', function ($q) use ($start, $end) {
+                $q->where('status', 'confirmed')
+                    ->where(function ($q) use ($start, $end) {
+                        $q->whereBetween('start_date', [$start, $end])
+                            ->orWhereBetween('end_date', [$start, $end])
+                            ->orWhere(function ($sub) use ($start, $end) {
+                                $sub->where('start_date', '<=', $start)
+                                    ->where('end_date', '>=', $end);
+                            });
+                    });
+            });
+        }
+
         $products = $query->paginate(8);
 
         $locations = Product::select('location')
             ->distinct()
             ->pluck('location');
 
-        return view('product.index', compact('products', 'locations'));
-    }
+        $types = Product::select('type')
+            ->distinct()
+            ->whereNotNull('type')
+            ->pluck('type');
 
-    public function syncToCars()
-    {
-        $products = Product::where('is_active', 1)->get();
-
-        foreach ($products as $product) {
-            Car::updateOrCreate(
-                [
-                    'brand' => $product->name,
-                    'model' => $product->type,
-                ],
-                [
-                    'image' => $product->image,
-                    'capacity' => $product->type === 'MPV' ? 7 : 5,
-                    'transmission' => 'Automatic',
-                    'fuel_type' => 'Bensin',
-                    'price' => $product->price,
-                    'description' => $product->description,
-                    'provider_name' => 'Adam Rental',
-                    'provider_contact' => 'admin@pbl.com',
-                    'stock' => $product->stock,
-                ]
-            );
-        }
-
-        return redirect()->route('payment.index')
-            ->with('success', 'Sinkronisasi dari product ke cars berhasil. Silakan reload halaman payment.');
+        return view('product.index', compact('products', 'locations', 'types'));
     }
 }

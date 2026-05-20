@@ -28,6 +28,16 @@ class ProductsTable
                     ->searchable()
                     ->sortable(),
 
+                // Kolom tambahan dari form
+                TextColumn::make('brand')
+                    ->searchable()
+                    ->sortable(),
+
+                // Kolom tambahan dari form
+                TextColumn::make('model')
+                    ->searchable()
+                    ->sortable(),
+
                 TextColumn::make('description')
                     ->limit(50) 
                     ->searchable()
@@ -48,6 +58,21 @@ class ProductsTable
                 TextColumn::make('type')
                     ->label('Tipe'),
 
+                // Kolom tambahan dari form
+                TextColumn::make('capacity')
+                    ->label('Kapasitas (Seat)')
+                    ->sortable(),
+
+                // Kolom tambahan dari form
+                TextColumn::make('transmission')
+                    ->label('Transmisi')
+                    ->searchable(),
+
+                // Kolom tambahan dari form
+                TextColumn::make('fuel_type')
+                    ->label('Bahan Bakar')
+                    ->searchable(),
+
                 TextColumn::make('location')
                     ->label('Lokasi'),
 
@@ -63,6 +88,14 @@ class ProductsTable
                         default => 'gray',
                     })
                     ->formatStateUsing(fn(string $state): string => $state ? 'Aktif' : 'Non-Aktif')
+                    ->sortable(),
+
+                // Kolom tambahan dari form
+                TextColumn::make('is_booked')
+                    ->label('Booked')
+                    ->badge()
+                    ->color(fn(string $state): string => $state ? 'warning' : 'success')
+                    ->formatStateUsing(fn(string $state): string => $state ? 'Disewa' : 'Tersedia')
                     ->sortable(),
 
                 TextColumn::make('is_featured')

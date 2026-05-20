@@ -15,9 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('photo')->nullable();
+            $table->text('bio')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role', ['admin', 'user'])->default('user');
+            $table->text('alamat')->nullable();
+            $table->string('ktp_file')->nullable();
+            $table->string('sim_file')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

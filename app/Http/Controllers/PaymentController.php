@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
-use App\Models\Car;
+use App\Models\Product; // Perbaikan: Import model Product
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,28 +16,18 @@ class PaymentController extends Controller
                 ->with('warning', 'Anda wajib login terlebih dahulu.');
         }
 
-        $carId = $request->input('car_id');
+        // Mengambil product_id langsung dari request
         $productId = $request->input('product_id');
 
-        if (!$carId && $productId) {
-            $product = \App\Models\Product::find($productId);
-            if ($product) {
-                // Find matching car by brand (since sync uses product name as car brand)
-                $car = \App\Models\Car::where('brand', $product->name)->first();
-                if ($car) {
-                    $carId = $car->id;
-                }
-            }
+        if (!$productId) {
+            return redirect('/product')->with('warning', 'Mobil belum dipilih untuk disewa.');
         }
 
-        if (!$carId) {
-            return redirect('/product')->with('warning', 'Mobil belum tersedia untuk disewa. Hubungi admin.');
-        }
-
-        $car = Car::findOrFail($carId);
+        // Mencari data berdasarkan Product
+        $product = Product::findOrFail($productId);
 
         return view('payment.index', [
-            'car' => $car,
+            'product' => $product, // Mengirim variabel product ke view
         ]);
     }
 
@@ -48,36 +38,38 @@ class PaymentController extends Controller
                 ->with('warning', 'Anda wajib login terlebih dahulu.');
         }
 
+        // Perbaikan Validasi: Menggunakan exists:products,id bukan cars
         $validated = $request->validate([
-            'car_id' => ['required', 'exists:cars,id'],
-            'customer_name' => ['required', 'string', 'max:255'],
-            'customer_contact' => ['required', 'string', 'max:255'],
-            'email' => ['nullable', 'email', 'max:255'],
-            'alamat' => ['nullable', 'string'],
-            'ktp_file' => ['nullable', 'image', 'max:2048'],
-            'sim_file' => ['nullable', 'image', 'max:2048'],
-            'start_date' => ['required', 'date', 'after_or_equal:today'],
-            'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],
-            'pickup_location' => ['nullable', 'string', 'max:255'],
-            'pickup_method' => ['nullable', 'string', 'max:255'],
-            'return_method' => ['nullable', 'string', 'max:255'],
-            'source_info' => ['nullable', 'string', 'max:255'],
-            'payment_method' => ['required', 'in:transfer,e_wallet,cash'],
+            'product_id'       => ['required', 'exists:products,id'],
+            'customer_name'    => ['required', 'string', 'max:255'],
+            'customer_contact' => ['required', 'string', 'max:20'],
+            'email'            => ['nullable', 'email'],
+            'alamat'           => ['nullable', 'string'],
+            'ktp_file'         => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'sim_file'         => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'start_date'       => ['required', 'date', 'after_or_equal:today'],
+            'end_date'         => ['required', 'date', 'after:start_date'],
+            'pickup_location'  => ['nullable', 'string'],
+            'pickup_method'    => ['nullable', 'string'],
+            'return_method'    => ['nullable', 'string'],
+            'source_info'      => ['nullable', 'string'],
+            'payment_method'   => ['required', 'string'],
         ]);
 
-        $car = Car::findOrFail($validated['car_id']);
+        // Hitung durasi dan total harga berdasarkan data Product
+        $product = Product::findOrFail($validated['product_id']);
         
-        // Calculate duration from start and end dates if end_date is provided
-        $duration = 1;
-        if (!empty($validated['end_date'])) {
-            $start = \Carbon\Carbon::parse($validated['start_date']);
-            $end = \Carbon\Carbon::parse($validated['end_date']);
-            $duration = $start->diffInDays($end) ?: 1;
+        $startDate = new \DateTime($validated['start_date']);
+        $endDate = new \DateTime($validated['end_date']);
+        $duration = $startDate->diff($endDate)->days;
+        
+        if ($duration <= 0) {
+            $duration = 1; // Minimal 1 hari sewa
         }
-        
-        $totalPrice = $car->price * $duration;
 
-        // Handle File Uploads
+        $totalPrice = $duration * $product->price;
+
+        // Upload file KTP & SIM jika ada
         $ktpPath = null;
         if ($request->hasFile('ktp_file')) {
             $ktpPath = $request->file('ktp_file')->store('bookings/ktp', 'public');
@@ -88,28 +80,28 @@ class PaymentController extends Controller
             $simPath = $request->file('sim_file')->store('bookings/sim', 'public');
         }
 
+        // Menyimpan data ke tabel bookings
         Booking::create([
-            'user_id' => auth()->id(),
-            'car_id' => $validated['car_id'],
-            'customer_name' => $validated['customer_name'],
+            'user_id'          => auth()->id(),
+            'product_id'       => $validated['product_id'], // Menggunakan product_id sesuai migrasi baru
+            'customer_name'    => $validated['customer_name'],
             'customer_contact' => $validated['customer_contact'],
-            'email' => $validated['email'] ?? null,
-            'alamat' => $validated['alamat'] ?? null,
-            'ktp_file' => $ktpPath,
-            'sim_file' => $simPath,
-            'start_date' => $validated['start_date'],
-            'end_date' => $validated['end_date'] ?? null,
-            'duration' => $duration,
-            'total_price' => $totalPrice,
-            'pickup_location' => $validated['pickup_location'] ?? null,
-            'pickup_method' => $validated['pickup_method'] ?? null,
-            'return_method' => $validated['return_method'] ?? null,
-            'source_info' => $validated['source_info'] ?? null,
-            'payment_method' => $validated['payment_method'],
-            'status' => 'pending',
+            'email'            => $validated['email'] ?? null,
+            'alamat'           => $validated['alamat'] ?? null,
+            'ktp_file'         => $ktpPath,
+            'sim_file'         => $simPath,
+            'start_date'       => $validated['start_date'],
+            'end_date'         => $validated['end_date'],
+            'total_price'      => $totalPrice,
+            'pickup_location'  => $validated['pickup_location'] ?? null,
+            'pickup_method'    => $validated['pickup_method'] ?? null,
+            'return_method'    => $validated['return_method'] ?? null,
+            'source_info'      => $validated['source_info'] ?? null,
+            'payment_method'   => $validated['payment_method'],
+            'status'           => 'pending',
         ]);
 
         return redirect()->route('user.rental-history')
-            ->with('success', 'Booking Anda berhasil dibuat. Silakan lanjutkan pembayaran sesuai pilihan metode dan tunggu konfirmasi dari admin.');
+            ->with('success', 'Booking berhasil dibuat! Silahkan tunggu konfirmasi admin.');
     }
 }
