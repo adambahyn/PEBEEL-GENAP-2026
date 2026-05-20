@@ -442,9 +442,19 @@
                         <div class="rental-card">
                             <div class="rental-header">
                                 <div>
+                                    <!-- 
+                                    NAMA MOBIL: Kombinasi brand & model
+                                    - $booking->car->brand: Merek mobil (Toyota, Honda, dll)
+                                    - $booking->car->model: Model mobil (Avanza, Jazz, dll)
+                                    Fallback: 'N/A' jika data mobil tidak tersedia
+                                    -->
                                     <div class="rental-car-name">
-                                        <i class="bi bi-car-front"></i> {{ $booking->car->name ?? 'N/A' }}
+                                        <i class="bi bi-car-front"></i> {{ $booking->car->brand ?? 'N/A' }} {{ $booking->car->model ?? '' }}
                                     </div>
+                                    <!-- 
+                                    TANGGAL MULAI SEWA
+                                    Format: YYYY-MM-DD (dari database)
+                                    -->
                                     <div class="rental-date">
                                         <i class="bi bi-calendar-event"></i> {{ $booking->start_date }}
                                     </div>
