@@ -126,49 +126,52 @@
         <!--  LIST MOBIL -->
         <div class="row g-4">
             @forelse($products as $product)
-                <div class="col-md-3">
-                    <div class="card shadow-sm border-0">
+                        <div class="col-md-3">
+                            <div class="card shadow-sm border-0">
 
-                        <div class="card-img-hover">
-                            <a href="{{ $product->car_id && $product->car ? route('cars.user-show', $product->id) : '#' }}"
-                                @if (!($product->car_id && $product->car))
-                                    onclick="alert('Maaf, detail mobil belum tersedia. Hubungi admin untuk informasi lebih lanjut'); return false;"
-                                style="cursor: not-allowed;" @endif>
+                                <div class="card-img-hover">
+                                    <a href="{{ $product->car_id && $product->car ? route('cars.user-show', $product->id) : '#' }}"
+                                        @if (!($product->car_id && $product->car))
+                                            onclick="alert('Maaf, detail mobil belum tersedia. Hubungi admin untuk informasi lebih lanjut'); return false;"
+                                        style="cursor: not-allowed;" @endif>
 
-                                <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top">
-                            </a>
-                        </div>
-
-                        <div class="card-body">
-
-                            <h6 class="fw-bold">{{ $product->name }}</h6>
-
-                            <small class="text-muted">
-                                {{ $product->type }} {{ $product->location }}
-                            </small>
-
-                            <div class="mt-2">
-
-                                <div class="d-flex align-items-center gap-1">
-                                    <strong class="fs-6 mb-0">
-                                        Rp {{ number_format($product->price) }}
-                                    </strong>
-                                    <small class="text-muted mb-0">/ hari</small>
+                                        <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top">
+                                    </a>
                                 </div>
 
-                            </div>
+                                <div class="card-body">
+
+                                    <h6 class="fw-bold">{{ $product->name }}</h6>
+
+                                    <small class="text-muted">
+                                        {{ $product->type }} {{ $product->location }}
+                                    </small>
+
+                                    <div class="mt-2">
+
+                                        <div class="d-flex align-items-center gap-1">
+                                            <strong class="fs-6 mb-0">
+                                                Rp {{ number_format($product->price) }}
+                                            </strong>
+                                            <small class="text-muted mb-0">/ hari</small>
+                                        </div>
+
+                                    </div>
 
 
-                            <!-- BUTTON BOOKING -->
-                            <div class="d-grid mt-3">
-                                <a href="{{ route('payment.index', ['product_id' => $product->id]) }}"
-                                    class="btn btn-primary btn-sm">
-                                    Booking Now
-                                </a>
+                                    <!-- BUTTON BOOKING -->
+                                    <div class="d-grid mt-3">
+                                        <a href="{{ route('payment.index', [
+                    'product_id' => $product->id,
+                    'start_date' => request('start_date'),
+                    'end_date' => request('end_date')
+                ]) }}" class="btn btn-primary btn-sm">
+                                            Booking Now
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
             @empty
                 <p>Tidak ada mobil ditemukan.</p>
             @endforelse

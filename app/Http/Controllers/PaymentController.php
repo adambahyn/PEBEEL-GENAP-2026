@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
-use App\Models\Product; // Perbaikan: Import model Product
+use App\Models\Product; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,18 +16,28 @@ class PaymentController extends Controller
                 ->with('warning', 'Anda wajib login terlebih dahulu.');
         }
 
-        // Mengambil product_id langsung dari request
+        if (!Auth::user()->ktp_file || !Auth::user()->sim_file) {
+            return redirect()->route('user.profile')
+                ->with('warning', 'Silakan lengkapi unggah data KTP dan SIM Anda terlebih dahulu sebelum melakukan penyewaan.');
+        }
+
         $productId = $request->input('product_id');
+        
+        // 1. Tangkap tanggal dari URL
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
 
         if (!$productId) {
             return redirect('/product')->with('warning', 'Mobil belum dipilih untuk disewa.');
         }
 
-        // Mencari data berdasarkan Product
         $product = Product::findOrFail($productId);
 
         return view('payment.index', [
-            'product' => $product, // Mengirim variabel product ke view
+            'product' => $product,
+            // 2. Kirim ke View
+            'startDate' => $startDate, 
+            'endDate' => $endDate,
         ]);
     }
 
@@ -38,25 +48,27 @@ class PaymentController extends Controller
                 ->with('warning', 'Anda wajib login terlebih dahulu.');
         }
 
-        // Perbaikan Validasi: Menggunakan exists:products,id bukan cars
+        if (!Auth::user()->ktp_file || !Auth::user()->sim_file) {
+            return redirect()->route('user.profile')
+                ->with('warning', 'Silakan lengkapi data KTP dan SIM Anda terlebih dahulu.');
+        }
+
         $validated = $request->validate([
             'product_id'       => ['required', 'exists:products,id'],
             'customer_name'    => ['required', 'string', 'max:255'],
             'customer_contact' => ['required', 'string', 'max:20'],
             'email'            => ['nullable', 'email'],
             'alamat'           => ['nullable', 'string'],
-            'ktp_file'         => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
-            'sim_file'         => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
             'start_date'       => ['required', 'date', 'after_or_equal:today'],
-            'end_date'         => ['required', 'date', 'after:start_date'],
+            'end_date'         => ['required', 'date', 'after_or_equal:start_date'],
             'pickup_location'  => ['nullable', 'string'],
             'pickup_method'    => ['nullable', 'string'],
             'return_method'    => ['nullable', 'string'],
             'source_info'      => ['nullable', 'string'],
             'payment_method'   => ['required', 'string'],
+            'agree_terms'      => ['accepted'], // Validasi backend wajib centang terms
         ]);
 
-        // Hitung durasi dan total harga berdasarkan data Product
         $product = Product::findOrFail($validated['product_id']);
         
         $startDate = new \DateTime($validated['start_date']);
@@ -64,32 +76,18 @@ class PaymentController extends Controller
         $duration = $startDate->diff($endDate)->days;
         
         if ($duration <= 0) {
-            $duration = 1; // Minimal 1 hari sewa
+            $duration = 1; 
         }
 
         $totalPrice = $duration * $product->price;
 
-        // Upload file KTP & SIM jika ada
-        $ktpPath = null;
-        if ($request->hasFile('ktp_file')) {
-            $ktpPath = $request->file('ktp_file')->store('bookings/ktp', 'public');
-        }
-
-        $simPath = null;
-        if ($request->hasFile('sim_file')) {
-            $simPath = $request->file('sim_file')->store('bookings/sim', 'public');
-        }
-
-        // Menyimpan data ke tabel bookings
         Booking::create([
             'user_id'          => auth()->id(),
-            'product_id'       => $validated['product_id'], // Menggunakan product_id sesuai migrasi baru
+            'product_id'       => $validated['product_id'], 
             'customer_name'    => $validated['customer_name'],
             'customer_contact' => $validated['customer_contact'],
             'email'            => $validated['email'] ?? null,
             'alamat'           => $validated['alamat'] ?? null,
-            'ktp_file'         => $ktpPath,
-            'sim_file'         => $simPath,
             'start_date'       => $validated['start_date'],
             'end_date'         => $validated['end_date'],
             'total_price'      => $totalPrice,

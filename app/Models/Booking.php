@@ -19,49 +19,59 @@ class Booking extends Model
         'end_date',
         'total_price',
         'payment_method',
-        'status',
+        'status', // Status finansial (pending, confirmed)
         'pickup_location',
         'pickup_method',
         'return_method',
         'source_info',
+        // Kolom Baru:
+        'agree_terms',
+        'video_sebelum',
+        'video_sesudah',
+        'rental_status', // Status operasional rental
     ];
 
     protected $casts = [
         'start_date' => 'date',
         'end_date' => 'date',
         'total_price' => 'decimal:2',
+        'agree_terms' => 'boolean',
     ];
+
+    // Menambahkan virtual atribut "duration" (Durasi Hari)
+    protected $appends = ['duration'];
+
+    public function getDurationAttribute()
+    {
+        $start = Carbon::parse($this->start_date);
+        $end = Carbon::parse($this->end_date);
+        $days = $start->diffInDays($end);
+        return $days > 0 ? $days : 1;
+    }
 
     // ====================================================
     // FUNGSI OTOMATISASI STATUS MOBIL (is_booked)
     // ====================================================
     protected static function booted()
     {
-        // Berjalan setiap kali data booking dibuat atau diedit/di-save
         static::saved(function ($booking) {
             self::updateProductStatus($booking->product);
         });
 
-        // Berjalan jika data booking dihapus
         static::deleted(function ($booking) {
             self::updateProductStatus($booking->product);
         });
     }
 
-    // Fungsi pembantu untuk mengecek status secara real-time
     private static function updateProductStatus($product)
     {
         if ($product) {
-            // Cek apakah produk ini punya booking berstatus 'confirmed' 
-            // yang mana tanggal hari ini (now) berada di antara start_date dan end_date
             $isCurrentlyBooked = $product->bookings()
-                ->where('status', 'confirmed')
+                ->whereIn('rental_status', ['Telah Dikonfirmasi', 'Pengembalian Dalam Proses'])
                 ->whereDate('start_date', '<=', now())
                 ->whereDate('end_date', '>=', now())
                 ->exists();
 
-            // Update tabel products sesuai hasil pengecekan di atas
-            // Jika ada = true (1), Jika tidak ada / sudah lewat = false (0)
             $product->update([
                 'is_booked' => $isCurrentlyBooked
             ]);
