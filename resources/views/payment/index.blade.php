@@ -32,7 +32,7 @@
     @include('layouts.navbar')
 
     <div class="hero-section">
-        <h1 class="fw-bold">Detail Kendaraan & Pembayaran</h1>
+        <h1 class="fw-bold">Konfirmasi Booking</h1>
     </div>
 
     <div class="container py-5">

@@ -59,6 +59,23 @@ class ProductInfolist
                                     ->label('Bahan Bakar'),
                                 TextEntry::make('location')
                                     ->label('Lokasi'),
+                                TextEntry::make('tahun')
+                                    ->label('Tahun Produksi'),
+                                TextEntry::make('warna')
+                                    ->label('Warna'),
+                                TextEntry::make('plat_nomor')
+                                    ->label('Plat Nomor'),
+                                TextEntry::make('kapasitas_mesin')
+                                    ->label('Kapasitas Mesin')
+                                    ->suffix(' CC'),
+                                TextEntry::make('fitur')
+                                    ->label('Fitur')
+                                    ->listWithLineBreaks()
+                                    ->badge(),
+                                TextEntry::make('kondisi')
+                                    ->label('Kondisi')
+                                    ->markdown()
+                                    ->columnSpanFull(),
                             ])->columns(2),
 
                         Tab::make('Media & Status')
@@ -67,6 +84,12 @@ class ProductInfolist
                                 ImageEntry::make('image')
                                     ->label('Product Image')
                                     ->disk('public')
+                                    ->columnSpanFull(),
+                                ImageEntry::make('images')
+                                    ->label('Galeri Gambar')
+                                    ->disk('public')
+                                    ->stacked()
+                                    ->limit(5)
                                     ->columnSpanFull(),
                                 IconEntry::make('is_active')
                                     ->label('Is Active')

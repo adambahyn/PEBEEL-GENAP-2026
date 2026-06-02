@@ -77,7 +77,14 @@ class ProductsTable
                     ->label('Lokasi'),
 
                 ImageColumn::make('image')
+                    ->label('Gambar Utama')
                     ->disk('public'),
+
+                ImageColumn::make('images')
+                    ->label('Galeri')
+                    ->disk('public')
+                    ->stacked()
+                    ->limit(3),
 
                 TextColumn::make('is_active')
                     ->label('Status')

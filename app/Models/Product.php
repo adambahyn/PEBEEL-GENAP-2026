@@ -24,6 +24,13 @@ class Product extends Model
         'price',
         'stock',
         'image',
+        'images',
+        'tahun',
+        'warna',
+        'plat_nomor',
+        'kapasitas_mesin',
+        'fitur',
+        'kondisi',
         'is_booked',
         'is_active',
         'is_featured',
@@ -35,10 +42,13 @@ class Product extends Model
         'is_featured' => 'boolean',
         'price' => 'integer',
         'stock' => 'integer',
+        'images' => 'array',
+        'fitur' => 'array',
     ];
 
     public function bookings()
     {
         return $this->hasMany(Booking::class);
     }
+
 }
