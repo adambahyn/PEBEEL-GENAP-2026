@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('alamat')->nullable();
             $table->string('ktp_file')->nullable();
             $table->string('sim_file')->nullable();
+            $table->string('verification_status')->default('approved'); // approved, pending, rejected
             $table->rememberToken();
             $table->timestamps();
         });

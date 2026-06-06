@@ -13,7 +13,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
-    protected $fillable = ['name', 'email', 'password', 'role', 'photo', 'bio', 'alamat', 'ktp_file', 'sim_file'];
+    protected $fillable = ['name', 'email', 'password', 'role', 'photo', 'bio', 'alamat', 'ktp_file', 'sim_file', 'verification_status'];
 
     protected $hidden = [
         'password',
@@ -43,6 +43,19 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     }
 
     
+    public function hasVerifiedEmail()
+    {
+        return $this->verification_status === 'approved';
+    }
+
+    public function markEmailAsVerified()
+    {
+        return $this->forceFill([
+            'verification_status' => 'approved',
+            'email_verified_at' => $this->freshTimestamp(),
+        ])->save();
+    }
+
     public function bookings()
     {
         return $this->hasMany(Booking::class);

@@ -239,7 +239,7 @@
                         <div class="form-check bg-light border p-3 rounded mb-3">
                             <input class="form-check-input ms-0 me-2 border-secondary" type="checkbox" id="agree_terms" name="agree_terms" required>
                             <label class="form-check-label small fw-semibold text-dark" for="agree_terms" style="margin-left: 0.25rem;">
-                                Saya telah membaca, mengerti, dan menyetujui seluruh <a href="#" target="_blank" class="text-primary text-decoration-none">Syarat & Ketentuan (Kontrak Sewa)</a>.
+                                Saya telah membaca, mengerti, dan menyetujui seluruh <a href="{{ route('terms') }}" target="_blank" class="text-primary text-decoration-none">Syarat & Ketentuan (Kontrak Sewa)</a>.
                             </label>
                         </div>
                     </div>

@@ -19,6 +19,12 @@ Route::get('/home', function () {
 });
 
 Route::get('/search', [GlobalSearchController::class, 'search'])->name('search.global');
+Route::get('/terms', function () {
+    return view('home.terms');
+})->name('terms');
+Route::get('/about', function () {
+    return view('home.about');
+})->name('about');
 
 
 use Illuminate\Foundation\Auth\EmailVerificationRequest;

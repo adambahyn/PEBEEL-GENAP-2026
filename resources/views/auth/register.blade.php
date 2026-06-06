@@ -7,6 +7,8 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ asset('css/global-animations.css') }}">
+    <script src="{{ asset('js/global-transitions.js') }}"></script>
 
     <style>
         body {
@@ -14,6 +16,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            padding-top: 80px;
         }
 
         .navbar {
@@ -149,13 +152,7 @@
 <body>
 
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url('/customer') }}">
-                <i class="bi bi-car-front"></i> Adam Rental
-            </a>
-        </div>
-    </nav>
+    @include('layouts.navbar')
 
     <!-- REGISTER CONTAINER -->
     <div class="register-container">
@@ -168,7 +165,7 @@
             </div>
 
             <!-- REGISTER FORM -->
-            <form method="POST" action="{{ route('register') }}">
+            <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                 @csrf
 
                 <div class="form-group">
@@ -179,6 +176,21 @@
                 <div class="form-group">
                     <label><i class="bi bi-envelope"></i> Email</label>
                     <input type="email" name="email" class="form-control" placeholder="Masukkan email Anda" required>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="bi bi-geo-alt"></i> Alamat Lengkap</label>
+                    <textarea name="alamat" class="form-control" rows="2" placeholder="Masukkan alamat lengkap sesuai KTP" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="bi bi-card-image"></i> Foto KTP</label>
+                    <input type="file" name="ktp_file" class="form-control" accept="image/jpeg,image/png,image/jpg" required>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="bi bi-card-image"></i> Foto SIM A</label>
+                    <input type="file" name="sim_file" class="form-control" accept="image/jpeg,image/png,image/jpg" required>
                 </div>
 
                 <div class="form-group">

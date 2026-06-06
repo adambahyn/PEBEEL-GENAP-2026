@@ -7,6 +7,8 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ asset('css/global-animations.css') }}">
+    <script src="{{ asset('js/global-transitions.js') }}"></script>
 
     <style>
         body {
@@ -14,6 +16,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            padding-top: 80px;
         }
 
         .navbar {
@@ -149,13 +152,7 @@
 <body>
 
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url('/customer') }}">
-                <i class="bi bi-car-front"></i> Adam Rental
-            </a>
-        </div>
-    </nav>
+    @include('layouts.navbar')
 
     <!-- LOGIN CONTAINER -->
     <div class="login-container">

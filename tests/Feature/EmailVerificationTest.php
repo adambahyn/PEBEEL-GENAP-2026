@@ -4,11 +4,10 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Notification;
-use Illuminate\Auth\Notifications\VerifyEmail;
-use Illuminate\Support\Facades\URL;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\VerificationStatusMail;
 use Tests\TestCase;
 
 class EmailVerificationTest extends TestCase
@@ -20,34 +19,48 @@ class EmailVerificationTest extends TestCase
         $response = $this->post('/register', [
             'name' => '',
             'email' => 'invalid-email',
+            'alamat' => '',
             'password' => 'short',
         ]);
 
-        $response->assertSessionHasErrors(['name', 'email', 'password']);
+        $response->assertSessionHasErrors(['name', 'email', 'alamat', 'ktp_file', 'sim_file', 'password']);
     }
 
-    public function test_registration_sends_verification_email_and_redirects(): void
+    public function test_registration_saves_documents_and_sets_status_pending(): void
     {
-        Event::fake();
+        Storage::fake('public');
+
+        $ktp = UploadedFile::fake()->image('ktp.jpg');
+        $sim = UploadedFile::fake()->image('sim.jpg');
 
         $response = $this->post('/register', [
             'name' => 'John Doe',
             'email' => 'johndoe@example.com',
+            'alamat' => 'Jl. Merdeka No. 45',
+            'ktp_file' => $ktp,
+            'sim_file' => $sim,
             'password' => 'password123',
         ]);
 
-        Event::assertDispatched(Registered::class);
         $response->assertRedirect('/email/verify');
         
         $this->assertDatabaseHas('users', [
             'email' => 'johndoe@example.com',
+            'alamat' => 'Jl. Merdeka No. 45',
+            'verification_status' => 'pending',
         ]);
+
+        $user = User::where('email', 'johndoe@example.com')->first();
+        
+        // Assert files are stored
+        Storage::disk('public')->assertExists($user->ktp_file);
+        Storage::disk('public')->assertExists($user->sim_file);
     }
 
-    public function test_unverified_user_cannot_access_profile(): void
+    public function test_pending_user_is_redirected_to_verify_page(): void
     {
         $user = User::factory()->create([
-            'email_verified_at' => null,
+            'verification_status' => 'pending',
         ]);
 
         $response = $this->actingAs($user)->get('/user/profile');
@@ -55,22 +68,25 @@ class EmailVerificationTest extends TestCase
         $response->assertRedirect('/email/verify');
     }
 
-    public function test_email_can_be_verified(): void
+    public function test_approved_user_can_access_profile(): void
     {
-        Notification::fake();
-
         $user = User::factory()->create([
-            'email_verified_at' => null,
+            'verification_status' => 'approved',
         ]);
 
-        $verificationUrl = URL::signedRoute('verification.verify', [
-            'id' => $user->id,
-            'hash' => sha1($user->email),
+        $response = $this->actingAs($user)->get('/user/profile');
+
+        $response->assertStatus(200);
+    }
+
+    public function test_rejection_restricts_profile_access(): void
+    {
+        $user = User::factory()->create([
+            'verification_status' => 'rejected',
         ]);
 
-        $response = $this->actingAs($user)->get($verificationUrl);
+        $response = $this->actingAs($user)->get('/user/profile');
 
-        $this->assertTrue($user->fresh()->hasVerifiedEmail());
-        $response->assertRedirect('/home');
+        $response->assertRedirect('/email/verify');
     }
 }

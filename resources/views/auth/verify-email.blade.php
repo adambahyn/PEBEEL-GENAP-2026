@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verifikasi Email - Adam Rental</title>
+    <title>Status Verifikasi Akun - Adam Rental</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ asset('css/global-animations.css') }}">
+    <script src="{{ asset('js/global-transitions.js') }}"></script>
 
     <style>
         body {
@@ -14,6 +16,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            padding-top: 80px;
         }
 
         .navbar {
@@ -46,9 +49,16 @@
 
         .verify-icon {
             font-size: 4.5rem;
-            color: #2563eb;
             margin-bottom: 20px;
+        }
+
+        .icon-pending {
+            color: #f59e0b;
             animation: pulse 2s infinite;
+        }
+
+        .icon-rejected {
+            color: #ef4444;
         }
 
         @keyframes pulse {
@@ -79,10 +89,9 @@
             margin-bottom: 30px;
         }
 
-        .btn-resend {
+        .btn-action {
             width: 100%;
             padding: 12px;
-            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
             color: white;
             border: none;
             border-radius: 12px;
@@ -95,11 +104,26 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+            text-decoration: none;
         }
 
-        .btn-resend:hover {
+        .btn-pending {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .btn-pending:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(37, 99, 235, 0.4);
+            box-shadow: 0 5px 20px rgba(217, 119, 6, 0.4);
+            color: white;
+        }
+
+        .btn-rejected {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        .btn-rejected:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(220, 38, 38, 0.4);
             color: white;
         }
 
@@ -131,62 +155,56 @@
 <body>
 
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url('/customer') }}">
-                <i class="bi bi-car-front"></i> Adam Rental
-            </a>
-        </div>
-    </nav>
+    @include('layouts.navbar')
 
     <!-- VERIFY CONTAINER -->
     <div class="verify-container">
         <div class="verify-card">
 
-            <!-- ICON -->
-            <div class="verify-icon">
-                <i class="bi bi-envelope-check-fill"></i>
-            </div>
+            @php
+                $status = Auth::user()->verification_status ?? 'pending';
+            @endphp
 
-            <!-- HEADER -->
-            <div class="verify-header">
-                <h2>Verifikasi Email Anda</h2>
-            </div>
-
-            <!-- BODY -->
-            <div class="verify-body">
-                <p>Terima kasih telah mendaftar! Sebelum mulai menggunakan layanan rental mobil kami, harap verifikasi alamat email Anda dengan mengeklik tautan yang baru saja kami kirimkan melalui email.</p>
-                <p class="text-muted small">Jika Anda tidak menerima email tersebut, kami dengan senang hati akan mengirimkan ulang link yang baru.</p>
-            </div>
-
-            <!-- SUCCESS MESSAGE -->
-            @if (session('message'))
-                <div class="alert alert-success d-flex align-items-center" role="alert">
-                    <i class="bi bi-check-circle-fill me-2 fs-5"></i>
-                    <div>
-                        {{ session('message') }}
-                    </div>
+            @if ($status === 'pending')
+                <!-- PENDING STATUS -->
+                <div class="verify-icon icon-pending">
+                    <i class="bi bi-clock-history"></i>
                 </div>
+
+                <div class="verify-header">
+                    <h2>Akun Sedang Ditinjau</h2>
+                </div>
+
+                <div class="verify-body">
+                    <p>Terima kasih telah mendaftar! Dokumen KTP, SIM A, dan alamat Anda saat ini sedang diperiksa secara manual oleh Admin kami.</p>
+                    <p class="text-muted small">Proses verifikasi ini biasanya membutuhkan waktu beberapa menit. Kami akan mengirimkan email notifikasi ke <strong>{{ Auth::user()->email }}</strong> setelah akun Anda disetujui atau ditolak.</p>
+                </div>
+
+                <!-- REFRESH BUTTON -->
+                <a href="{{ url('/email/verify') }}" class="btn-action btn-pending">
+                    <i class="bi bi-arrow-clockwise"></i> Perbarui Status Halaman
+                </a>
+            @elseif ($status === 'rejected')
+                <!-- REJECTED STATUS -->
+                <div class="verify-icon icon-rejected">
+                    <i class="bi bi-x-circle-fill"></i>
+                </div>
+
+                <div class="verify-header">
+                    <h2>Verifikasi Ditolak</h2>
+                </div>
+
+                <div class="verify-body">
+                    <p class="text-danger font-weight-bold">Mohon maaf, dokumen atau data profil yang Anda unggah tidak memenuhi syarat kami.</p>
+                    <p class="text-muted small">Silakan periksa kotak masuk email Anda (<strong>{{ Auth::user()->email }}</strong>) untuk melihat detail alasan penolakan dan cara mengajukan verifikasi ulang.</p>
+                </div>
+
+                <a href="mailto:admin@adamrental.com" class="btn-action btn-rejected">
+                    <i class="bi bi-envelope-fill"></i> Hubungi Dukungan Admin
+                </a>
             @endif
 
-            @if (session('success'))
-                <div class="alert alert-success d-flex align-items-center" role="alert">
-                    <i class="bi bi-check-circle-fill me-2 fs-5"></i>
-                    <div>
-                        {{ session('success') }}
-                    </div>
-                </div>
-            @endif
-
-            <!-- RESEND BUTTON FORM -->
-            <form method="POST" action="{{ route('verification.send') }}">
-                @csrf
-                <button type="submit" class="btn-resend">
-                    <i class="bi bi-send-fill"></i> Kirim Ulang Email Verifikasi
-                </button>
-            </form>
-
-            <!-- LOGOUT FORM (For correction of wrong email) -->
+            <!-- LOGOUT FORM -->
             <form method="POST" action="{{ route('logout') }}" class="mt-3">
                 @csrf
                 <button type="submit" class="btn-logout">

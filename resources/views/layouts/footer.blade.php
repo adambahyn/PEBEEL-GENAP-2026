@@ -22,9 +22,9 @@
                             <span>Email: info@adamrental.com</span>
                         </a>
                     </div>
-                    <button class="btn-about" data-bs-toggle="modal" data-bs-target="#aboutModal">
+                    <a href="{{ route('about') }}" class="btn-about text-decoration-none d-inline-block text-center" style="line-height: 20px;">
                         Tentang Kami
-                    </button>
+                    </a>
                 </div>
 
                 <!-- KOLOM 3: IKUTI MEDIA SOSIAL -->

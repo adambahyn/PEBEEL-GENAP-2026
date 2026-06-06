@@ -26,21 +26,29 @@ class AuthController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string'],
+            'alamat' => ['required', 'string'],
+            'ktp_file' => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'sim_file' => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'password' => ['required', 'string', 'min:8'],
         ]);
+
+        $ktpPath = $request->file('ktp_file')->store('profiles/ktp', 'public');
+        $simPath = $request->file('sim_file')->store('profiles/sim', 'public');
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password, // otomatis ke-hash (karena casts di model User)
-            'role' => 'user'
+            'password' => $request->password, // otomatis ke-hash
+            'role' => 'user',
+            'alamat' => $request->alamat,
+            'ktp_file' => $ktpPath,
+            'sim_file' => $simPath,
+            'verification_status' => 'pending',
         ]);
-
-        event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect('/email/verify')->with('success', 'Registrasi sukses! Silakan verifikasi email Anda.');
+        return redirect('/email/verify')->with('success', 'Registrasi sukses! Akun Anda sedang dalam proses peninjauan oleh Admin.');
     }
 
     public function login(Request $request)
