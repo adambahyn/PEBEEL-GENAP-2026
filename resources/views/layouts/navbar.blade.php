@@ -12,10 +12,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
 
             <!-- SEARCH TENGAH -->
-            <form action="{{ url('/search') }}" method="GET" class="d-flex mx-auto">
-                <input class="form-control me-2" type="search" name="q"
-                    placeholder="Cari mobil, spesifikasi, atau bantuan..." aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">
+            <form action="{{ url('/search') }}" method="GET" class="d-flex mx-auto border rounded-pill shadow-sm bg-light" style="width: 100%; max-width: 550px; padding: 2px;">
+                <input class="form-control bg-transparent border-0 px-3" type="search" name="q" value="{{ request('q') }}"
+                    placeholder="Cari produk, halaman, atau bantuan..." aria-label="Search" style="box-shadow: none;">
+                <button class="btn btn-primary rounded-pill px-4 d-flex align-items-center" type="submit">
                     <i class="bi bi-search"></i>
                 </button>
             </form>
