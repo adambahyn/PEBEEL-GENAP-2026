@@ -32,9 +32,8 @@ if (!function_exists('getRealCarPhoto')) {
 <script src="{{ asset('js/global-transitions.js') }}"></script>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4 fixed-top py-2">
-    <div class="container">
-
-        <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="{{ url('/customer') }}">
+<div class="container-fluid px-4">
+        <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="{{ url('/home') }}">
             <i class="bi bi-car-front fs-4 text-primary"></i> Adam Rental
         </a>
 
