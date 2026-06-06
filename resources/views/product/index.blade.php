@@ -126,16 +126,15 @@
         <!--  LIST MOBIL -->
         <div class="row g-4">
             @forelse($products as $product)
+                @php
+                    $productImage = collect($product->images ?? [])->filter()->first() ?? $product->image;
+                @endphp
                         <div class="col-md-3">
                             <div class="card shadow-sm border-0">
 
                                 <div class="card-img-hover">
-                                    <a href="{{ $product->car_id && $product->car ? route('cars.user-show', $product->id) : '#' }}"
-                                        @if (!($product->car_id && $product->car))
-                                            onclick="alert('Maaf, detail mobil belum tersedia. Hubungi admin untuk informasi lebih lanjut'); return false;"
-                                        style="cursor: not-allowed;" @endif>
-
-                                        <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top">
+                                    <a href="{{ route('product.show', $product->id) }}">
+                                        <img src="{{ $productImage ? asset('storage/' . $productImage) : 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=800' }}" class="card-img-top" alt="{{ $product->name }}">
                                     </a>
                                 </div>
 

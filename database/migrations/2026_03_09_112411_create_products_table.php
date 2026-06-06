@@ -27,6 +27,13 @@ return new class extends Migration
             $table->integer('price');
             $table->integer('stock');
             $table->string('image')->nullable();
+            $table->json('images')->nullable();
+            $table->integer('tahun')->nullable();
+            $table->string('warna')->nullable();
+            $table->string('plat_nomor')->nullable();
+            $table->integer('kapasitas_mesin')->nullable();
+            $table->json('fitur')->nullable();
+            $table->text('kondisi')->nullable();
             $table->boolean('is_booked')->default(true);
             $table->boolean('is_active')->default(true);
             $table->boolean('is_featured')->default(false);

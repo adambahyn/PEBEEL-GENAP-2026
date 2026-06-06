@@ -6,6 +6,7 @@ use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Group;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\TagsInput;
 use Filament\Schemas\Components\Wizard;
 use Filament\Schemas\Components\Wizard\Step;
 use Filament\Forms\Components\FileUpload;
@@ -83,11 +84,45 @@ class ProductForm
                                 ->required(),
                         ]),
 
+                    Step::make('Car Details')
+                        ->icon('heroicon-o-truck')
+                        ->description('Isi detail unit kendaraan')
+                        ->schema([
+                            Group::make([
+                                TextInput::make('tahun')
+                                    ->label('Tahun Produksi')
+                                    ->numeric(),
+                                TextInput::make('warna')
+                                    ->label('Warna'),
+                            ])->columns(2),
+                            Group::make([
+                                TextInput::make('plat_nomor')
+                                    ->label('Plat Nomor'),
+                                TextInput::make('kapasitas_mesin')
+                                    ->label('Kapasitas Mesin (CC)')
+                                    ->numeric(),
+                            ])->columns(2),
+                            TagsInput::make('fitur')
+                                ->label('Fitur & Fasilitas')
+                                ->placeholder('Tambah fitur'),
+                            MarkdownEditor::make('kondisi')
+                                ->label('Kondisi Kendaraan'),
+                        ]),
+
                     Step::make('Media & Status')
                         ->icon('heroicon-o-photo')
                         ->description('Upload gambar dan atur status')
                         ->schema([
                             FileUpload::make('image')
+                                ->label('Gambar Utama')
+                                ->disk('public')
+                                ->directory('products'),
+                            FileUpload::make('images')
+                                ->label('Galeri Gambar')
+                                ->multiple()
+                                ->reorderable()
+                                ->appendFiles()
+                                ->image()
                                 ->disk('public')
                                 ->directory('products'),
                             Checkbox::make('is_active')->label('Aktif'),

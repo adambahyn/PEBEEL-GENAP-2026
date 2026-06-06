@@ -22,8 +22,7 @@ Route::get('/search', [GlobalSearchController::class, 'search'])->name('search.g
 
 
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');
-Route::get('/product/{product_id}', [ProductController::class, 'userShow'])->name('cars.user-show');
-Route::get('/sync-products-cars', [ProductController::class, 'syncToCars'])->name('product.sync');
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
 Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
 Route::post('/payment', [PaymentController::class, 'store'])->name('payment.store');
 
