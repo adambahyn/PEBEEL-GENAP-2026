@@ -6,28 +6,29 @@ use App\Filament\Resources\BookingResource\Pages;
 use App\Models\Booking;
 use App\Models\Product;
 use Carbon\Carbon;
-use Filament\Forms;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Filament\Infolists;
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Utilities\Set;
-
-// Import Actions khusus struktur Filament v4 (Schema)
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms;
+use Filament\Infolists;
+use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+// Import Actions khusus struktur Filament v4 (Schema)
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
+use Filament\Tables;
+use Filament\Tables\Table;
 
 class BookingResource extends Resource
 {
     protected static ?string $model = Booking::class;
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-calendar-days';
+
     protected static ?string $navigationLabel = 'Booking Mobil';
+
     protected static ?string $pluralModelLabel = 'Booking Mobil';
 
     // ----------------------------------------------------
@@ -41,13 +42,14 @@ class BookingResource extends Resource
 
         if ($productId && $startDate && $endDate) {
             $product = Product::find($productId);
-            
+
             if ($product) {
                 $start = Carbon::parse($startDate);
                 $end = Carbon::parse($endDate);
 
                 if ($end->lessThan($start)) {
                     $set('total_price', 0);
+
                     return;
                 }
 

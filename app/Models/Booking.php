@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
@@ -46,6 +46,7 @@ class Booking extends Model
         $start = Carbon::parse($this->start_date);
         $end = Carbon::parse($this->end_date);
         $days = $start->diffInDays($end);
+
         return $days > 0 ? $days : 1;
     }
 
@@ -73,7 +74,7 @@ class Booking extends Model
                 ->exists();
 
             $product->update([
-                'is_booked' => $isCurrentlyBooked
+                'is_booked' => $isCurrentlyBooked,
             ]);
         }
     }

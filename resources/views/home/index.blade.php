@@ -118,8 +118,6 @@
     {{-- ===== HERO & KALENDER ===== --}}
     <div class="hero-section text-center position-relative">
         <div class="hero-container position-relative z-1">
-            
-            {{-- <h1 class="hero-title">Adam Rental</h1> --}}
             <p class="hero-subtitle">Kapan Anda ingin memulai perjalanan?</p>
             
             <form id="searchForm" action="{{ url('/product') }}" method="GET" class="search-box shadow-lg text-center">

@@ -5,6 +5,7 @@ namespace App\Mail;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -14,7 +15,9 @@ class VerificationStatusMail extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
+
     public $status;
+
     public $reason;
 
     /**
@@ -32,8 +35,8 @@ class VerificationStatusMail extends Mailable
      */
     public function envelope(): Envelope
     {
-        $subject = $this->status === 'approved' 
-            ? 'Akun Anda Telah Diverifikasi - Adam Rental' 
+        $subject = $this->status === 'approved'
+            ? 'Akun Anda Telah Diverifikasi - Adam Rental'
             : 'Verifikasi Akun Anda Ditolak - Adam Rental';
 
         return new Envelope(
@@ -54,7 +57,7 @@ class VerificationStatusMail extends Mailable
     /**
      * Get the attachments for the message.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @return array<int, Attachment>
      */
     public function attachments(): array
     {

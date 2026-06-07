@@ -3,21 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage; // Pastikan ini di-import
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth; // Pastikan ini di-import
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
     // Halaman Profil User
     public function profile()
     {
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             return redirect('/login')->with('error', 'Anda harus login terlebih dahulu');
         }
 
         $user = Auth::user();
-        
+
         return view('user.profile', compact('user')); // Perbaikan: Sesuaikan dengan nama view profile.blade.php Anda
     }
 
@@ -29,10 +30,10 @@ class UserController extends Controller
 
         // Validasi inputan form
         $request->validate([
-            'name'     => ['required', 'string', 'max:255'],
-            'bio'      => ['nullable', 'string', 'max:500'],
-            'alamat'   => ['required', 'string'],
-            'photo'    => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'name' => ['required', 'string', 'max:255'],
+            'bio' => ['nullable', 'string', 'max:500'],
+            'alamat' => ['required', 'string'],
+            'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
             'ktp_file' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
             'sim_file' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
         ]);
@@ -73,14 +74,14 @@ class UserController extends Controller
     // Riwayat Sewa User
     public function rentalHistory()
     {
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             return redirect('/login')->with('error', 'Anda harus login terlebih dahulu');
         }
 
         $user = Auth::user();
         // Menggunakan relasi product sesuai perbaikan sistem rental sebelumnya
         $bookings = Booking::where('user_id', $user->id)->with('product')->latest()->get();
-        
+
         return view('user.rental-history', compact('user', 'bookings'));
     }
 }

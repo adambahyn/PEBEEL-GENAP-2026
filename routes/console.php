@@ -1,11 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Schedule;
 use App\Models\Product;
+use Illuminate\Support\Facades\Schedule;
 
 Schedule::call(function () {
     $products = Product::all();
-    
+
     foreach ($products as $product) {
         $isBooked = $product->bookings()
             ->where('status', 'confirmed')

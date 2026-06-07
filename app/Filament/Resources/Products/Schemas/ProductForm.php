@@ -2,18 +2,17 @@
 
 namespace App\Filament\Resources\Products\Schemas;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Group;
+use Filament\Actions\Action;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Wizard;
 use Filament\Schemas\Components\Wizard\Step;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Checkbox;
-use Filament\Forms\Components\Select;
-use Filament\Actions\Action;
-
+use Filament\Schemas\Schema;
 
 class ProductForm
 {
@@ -38,7 +37,6 @@ class ProductForm
                             ])->columns(2),
                             MarkdownEditor::make('description')->required(),
                         ]),
-
 
                     Step::make('Pricing & Stock')
                         ->icon('heroicon-o-currency-dollar')

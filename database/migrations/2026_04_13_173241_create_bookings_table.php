@@ -15,15 +15,15 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
             $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();
-            
+
             $table->string('customer_name');
             $table->string('customer_contact');
             $table->date('start_date');
-            $table->date('end_date'); 
+            $table->date('end_date');
             $table->decimal('total_price', 12, 2);
             $table->string('payment_method');
             $table->string('status')->default('pending'); // Status Pembayaran
-            
+
             $table->string('pickup_location')->nullable();
             $table->string('pickup_method')->nullable();
             $table->string('return_method')->nullable();
@@ -36,11 +36,11 @@ return new class extends Migration
             $table->string('video_sebelum')->nullable();   // Dokumentasi sebelum rental
             $table->string('video_sesudah')->nullable();   // Dokumentasi sesudah rental
             $table->enum('rental_status', [                // Status Operasional
-                'Menunggu Konfirmasi', 
-                'Telah Dikonfirmasi', 
-                'Pengembalian Dalam Proses', 
+                'Menunggu Konfirmasi',
+                'Telah Dikonfirmasi',
+                'Pengembalian Dalam Proses',
                 'Pengembalian Berhasil',
-                'Dibatalkan'
+                'Dibatalkan',
             ])->default('Menunggu Konfirmasi');
             // --------------------------------------------------------
 

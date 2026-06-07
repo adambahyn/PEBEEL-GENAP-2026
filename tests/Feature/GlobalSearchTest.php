@@ -29,7 +29,7 @@ class GlobalSearchTest extends TestCase
             'image' => null,
             'is_active' => true,
             'is_booked' => false,
-            'is_featured' => false
+            'is_featured' => false,
         ]);
 
         $response = $this->get('/search?q=Avanza');
@@ -45,7 +45,7 @@ class GlobalSearchTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertViewHas('matchedElements');
-        
+
         $matchedElements = $response->viewData('matchedElements');
         $this->assertNotEmpty($matchedElements);
         $this->assertEquals('Pembayaran (Payment)', $matchedElements[0]['title']);

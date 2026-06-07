@@ -2,15 +2,13 @@
 
 namespace App\Filament\Resources\Users\Tables;
 
-use Dom\Text;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Table;
-use Filament\Tables\Columns\TextColumn;
-
-use Filament\Actions\Action;
 use Filament\Forms\Components\Textarea;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 
 class UsersTable
 {
@@ -35,7 +33,7 @@ class UsersTable
             ])
             ->recordActions([
                 EditAction::make(),
-                
+
                 // Custom Action: Setujui
                 Action::make('approve')
                     ->label('Setujui')

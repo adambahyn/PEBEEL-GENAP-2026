@@ -1,20 +1,20 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\ProductController;
-use App\Models\Product;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GlobalSearchController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
+use App\Models\Product;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect('/home');
 });
 Route::get('/home', function () {
-    $cars = Product::latest()->take(8)->get(); 
+    $cars = Product::latest()->take(8)->get();
     $carsCount = Product::count();
-    
+
     return view('home.index', compact('cars', 'carsCount'));
 });
 
@@ -25,7 +25,6 @@ Route::get('/terms', function () {
 Route::get('/about', function () {
     return view('home.about');
 })->name('about');
-
 
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -46,11 +45,13 @@ Route::get('/email/verify', function () {
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
+
     return redirect('/home')->with('success', 'Email berhasil diverifikasi!');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
+
     return back()->with('message', 'Link verifikasi baru telah dikirim ke email Anda!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
@@ -58,7 +59,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
     Route::post('/payment', [PaymentController::class, 'store'])->name('payment.store');
-    
+
     // User Routes
     Route::get('/user/profile', [UserController::class, 'profile'])->name('user.profile');
     Route::get('/user/rental-history', [UserController::class, 'rentalHistory'])->name('user.rental-history');

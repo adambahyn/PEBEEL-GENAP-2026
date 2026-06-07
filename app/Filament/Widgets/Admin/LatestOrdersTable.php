@@ -3,7 +3,6 @@
 namespace App\Filament\Widgets\Admin;
 
 use App\Models\Booking;
-use App\Models\Product;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
@@ -11,18 +10,15 @@ use Filament\Widgets\TableWidget as BaseWidget;
 class LatestOrdersTable extends BaseWidget
 {
     protected static ?int $sort = 2;
+
     protected int|string|array $columnSpan = 'full';
+
     protected static ?string $heading = '📋 Booking Terbaru';
 
     public function table(Table $table): Table
     {
         return $table
-            ->query(
-                // Gunakan Booking jika ada, fallback ke Product sebagai placeholder
-                class_exists(\App\Models\Booking::class) && \Illuminate\Support\Facades\Schema::hasTable('bookings')
-                    ? Booking::query()->latest()->limit(8)
-                    : Product::query()->latest()->limit(8)
-            )
+            ->query(Booking::query()->latest()->limit(8))
             ->columns([
                 Tables\Columns\TextColumn::make('customer_name')
                     ->label('Pelanggan')
@@ -51,26 +47,26 @@ class LatestOrdersTable extends BaseWidget
                     ->formatStateUsing(fn ($state) => match ($state) {
                         'transfer' => '🏦 Transfer',
                         'e_wallet' => '📱 E-Wallet',
-                        'cash'     => '💵 Tunai',
-                        default    => $state ?? '-',
+                        'cash' => '💵 Tunai',
+                        default => $state ?? '-',
                     }),
 
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
                     ->color(fn ($state): string => match ($state) {
-                        'pending'   => 'warning',
+                        'pending' => 'warning',
                         'confirmed' => 'info',
                         'completed' => 'success',
                         'cancelled' => 'danger',
-                        default     => 'gray',
+                        default => 'gray',
                     })
                     ->formatStateUsing(fn ($state) => match ($state) {
-                        'pending'   => '⏳ Menunggu',
+                        'pending' => '⏳ Menunggu',
                         'confirmed' => '✅ Dikonfirmasi',
                         'completed' => '🎉 Selesai',
                         'cancelled' => '❌ Dibatalkan',
-                        default     => $state ?? '-',
+                        default => $state ?? '-',
                     }),
 
                 Tables\Columns\TextColumn::make('created_at')

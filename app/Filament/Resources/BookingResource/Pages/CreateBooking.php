@@ -3,8 +3,8 @@
 namespace App\Filament\Resources\BookingResource\Pages;
 
 use App\Filament\Resources\BookingResource;
-use Filament\Resources\Pages\CreateRecord;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\CreateRecord;
 
 class CreateBooking extends CreateRecord
 {
@@ -26,7 +26,7 @@ class CreateBooking extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         // Set status default ke pending jika belum diset
-        if (!isset($data['status'])) {
+        if (! isset($data['status'])) {
             $data['status'] = 'pending';
         }
 

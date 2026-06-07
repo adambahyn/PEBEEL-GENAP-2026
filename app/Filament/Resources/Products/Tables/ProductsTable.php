@@ -6,10 +6,9 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use Filament\Tables\Table;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ImageColumn;
-
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 
 class ProductsTable
 {
@@ -39,13 +38,13 @@ class ProductsTable
                     ->sortable(),
 
                 TextColumn::make('description')
-                    ->limit(50) 
+                    ->limit(50)
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('price')
                     ->label('Harga')
-                    ->formatStateUsing(fn(string $state): string => 'Rp ' . number_format($state, 0, ',', '.'))
+                    ->formatStateUsing(fn (string $state): string => 'Rp '.number_format($state, 0, ',', '.'))
                     ->searchable()
                     ->sortable(),
 
@@ -89,27 +88,27 @@ class ProductsTable
                 TextColumn::make('is_active')
                     ->label('Status')
                     ->badge()
-                    ->color(fn(string $state): string => match ($state) {
+                    ->color(fn (string $state): string => match ($state) {
                         '1', 'true' => 'success',
                         '0', 'false' => 'danger',
                         default => 'gray',
                     })
-                    ->formatStateUsing(fn(string $state): string => $state ? 'Aktif' : 'Non-Aktif')
+                    ->formatStateUsing(fn (string $state): string => $state ? 'Aktif' : 'Non-Aktif')
                     ->sortable(),
 
                 // Kolom tambahan dari form
                 TextColumn::make('is_booked')
                     ->label('Booked')
                     ->badge()
-                    ->color(fn(string $state): string => $state ? 'warning' : 'success')
-                    ->formatStateUsing(fn(string $state): string => $state ? 'Disewa' : 'Tersedia')
+                    ->color(fn (string $state): string => $state ? 'warning' : 'success')
+                    ->formatStateUsing(fn (string $state): string => $state ? 'Disewa' : 'Tersedia')
                     ->sortable(),
 
                 TextColumn::make('is_featured')
                     ->label('Unggulan')
                     ->badge()
-                    ->color(fn(string $state): string => $state ? 'warning' : 'gray')
-                    ->formatStateUsing(fn(string $state): string => $state ? 'Ya' : 'Tidak')
+                    ->color(fn (string $state): string => $state ? 'warning' : 'gray')
+                    ->formatStateUsing(fn (string $state): string => $state ? 'Ya' : 'Tidak')
                     ->sortable(),
             ])
             ->filters([

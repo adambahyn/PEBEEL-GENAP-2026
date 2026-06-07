@@ -6,8 +6,6 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\VerificationStatusMail;
 use Tests\TestCase;
 
 class EmailVerificationTest extends TestCase
@@ -43,7 +41,7 @@ class EmailVerificationTest extends TestCase
         ]);
 
         $response->assertRedirect('/email/verify');
-        
+
         $this->assertDatabaseHas('users', [
             'email' => 'johndoe@example.com',
             'alamat' => 'Jl. Merdeka No. 45',
@@ -51,7 +49,7 @@ class EmailVerificationTest extends TestCase
         ]);
 
         $user = User::where('email', 'johndoe@example.com')->first();
-        
+
         // Assert files are stored
         Storage::disk('public')->assertExists($user->ktp_file);
         Storage::disk('public')->assertExists($user->sim_file);
