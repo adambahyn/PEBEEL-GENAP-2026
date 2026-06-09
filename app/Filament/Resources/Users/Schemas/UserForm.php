@@ -20,7 +20,7 @@ class UserForm
                 ->required(),
             TextInput::make('password')
                 ->password()
-                ->dehydrated(fn ($state) => filled($state)),
+                ->dehydrated(fn($state) => filled($state)),
 
             Select::make('role')
                 ->options([
@@ -46,12 +46,18 @@ class UserForm
             FileUpload::make('ktp_file')
                 ->label('Foto KTP')
                 ->image()
-                ->directory('profiles/ktp'),
+                ->disk('public')
+                ->directory('profiles/ktp')
+                ->visibility('public')
+                ->imagePreviewHeight('250'),
 
             FileUpload::make('sim_file')
                 ->label('Foto SIM A')
                 ->image()
-                ->directory('profiles/sim'),
+                ->disk('public')
+                ->directory('profiles/sim')
+                ->visibility('public')
+                ->imagePreviewHeight('250')
         ]);
     }
 }
