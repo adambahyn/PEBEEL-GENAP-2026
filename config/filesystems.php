@@ -41,9 +41,16 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => (env('APP_ENV') === 'production' || str_starts_with(env('APP_URL', 'http://localhost'), 'https://'))
-                ? str_replace('http://', 'https://', rtrim(env('APP_URL', 'http://localhost'), '/').'/storage')
-                : rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
+            'url' => (function() {
+                $url = env('APP_URL', 'http://localhost');
+                if (!str_starts_with($url, 'http://') && !str_starts_with($url, 'https://')) {
+                    $url = ((env('APP_ENV') === 'production' || env('FORCE_HTTPS', false)) ? 'https://' : 'http://') . $url;
+                }
+                if (env('APP_ENV') === 'production') {
+                    $url = str_replace('http://', 'https://', $url);
+                }
+                return rtrim($url, '/') . '/storage';
+            })(),
             'visibility' => 'public',
             'throw' => false,
             'report' => false,
