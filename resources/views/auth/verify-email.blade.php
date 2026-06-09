@@ -177,7 +177,7 @@
 
                 <div class="verify-body">
                     <p>Terima kasih telah mendaftar! Dokumen KTP, SIM A, dan alamat Anda saat ini sedang diperiksa secara manual oleh Admin kami.</p>
-                    <p class="text-muted small">Proses verifikasi ini biasanya membutuhkan waktu beberapa menit. Kami akan mengirimkan email notifikasi ke <strong>{{ Auth::user()->email }}</strong> setelah akun Anda disetujui atau ditolak.</p>
+                    <p class="text-muted small">Proses verifikasi ini biasanya membutuhkan waktu beberapa menit. Anda dapat melihat status verifikasi Anda setelah akun Anda disetujui atau ditolak.</p>
                 </div>
 
                 <!-- REFRESH BUTTON -->
