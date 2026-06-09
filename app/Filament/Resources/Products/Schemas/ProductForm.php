@@ -114,7 +114,8 @@ class ProductForm
                             FileUpload::make('image')
                                 ->label('Gambar Utama')
                                 ->disk('public')
-                                ->directory('products'),
+                                ->directory('products')
+                                ->maxSize(2048),
                             FileUpload::make('images')
                                 ->label('Galeri Gambar')
                                 ->multiple()
@@ -122,7 +123,8 @@ class ProductForm
                                 ->appendFiles()
                                 ->image()
                                 ->disk('public')
-                                ->directory('products'),
+                                ->directory('products')
+                                ->maxSize(2048),
                             Checkbox::make('is_active')->label('Aktif'),
                             Checkbox::make('is_booked')->label('Booked / Disewa'),
                             Checkbox::make('is_featured')->label('Produk Unggulan'),
