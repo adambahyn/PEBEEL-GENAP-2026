@@ -18,7 +18,7 @@ class EmailVerificationTest extends TestCase
             'name' => '',
             'email' => 'invalid-email',
             'alamat' => '',
-            'password' => 'short',
+            'password' => '',
         ]);
 
         $response->assertSessionHasErrors(['name', 'email', 'alamat', 'ktp_file', 'sim_file', 'password']);
