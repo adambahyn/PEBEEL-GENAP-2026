@@ -156,7 +156,7 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN'),
+    'domain' => env('SESSION_DOMAIN') === 'null' ? null : env('SESSION_DOMAIN'),
 
     /*
     |--------------------------------------------------------------------------
@@ -167,9 +167,11 @@ return [
     | to the server if the browser has a HTTPS connection. This will keep
     | the cookie from being sent to you when it can't be done securely.
     |
+    | Defaults to true in production to prevent cookie rejection on HTTPS.
+    |
     */
 
-    'secure' => env('SESSION_SECURE_COOKIE'),
+    'secure' => env('SESSION_SECURE_COOKIE') === 'true' ? true : (env('SESSION_SECURE_COOKIE') === 'false' ? false : (env('APP_ENV') === 'production' ? true : false)),
 
     /*
     |--------------------------------------------------------------------------
