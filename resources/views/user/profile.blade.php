@@ -411,6 +411,32 @@
             .profile-tab-header {
                 padding: 15px 20px;
             }
+
+            #editProfileModal {
+                overflow-y: auto !important;
+            }
+
+            #editProfileModal .modal-dialog {
+                max-height: calc(100vh - 60px) !important;
+                margin-top: 30px !important;
+                margin-bottom: 30px !important;
+            }
+
+            #editProfileModal .modal-content {
+                max-height: 100% !important;
+                overflow: hidden !important;
+                display: flex !important;
+                flex-direction: column !important;
+            }
+
+            #editProfileModal .modal-body {
+                overflow-y: auto !important;
+                flex: 1 1 auto !important;
+            }
+
+            body.modal-open {
+                overflow: hidden !important;
+            }
         }
     </style>
 </head>
@@ -443,14 +469,14 @@
                     </div>
                     <div class="sidebar-profile-name">{{ $user->name }}</div>
                     <div class="sidebar-profile-email">{{ $user->email }}</div>
-                    
-                                @if(!empty($user->alamat) && !empty($user->ktp_file) && !empty($user->sim_file))
-                                    <span class="badge bg-success rounded-pill px-3 py-2"><i
-                                            class="bi bi-patch-check-fill me-1"></i> Akun Terverifikasi</span>
-                                @else
-                                    <span class="badge bg-secondary rounded-pill px-3 py-2"><i
-                                            class="bi bi-info-circle-fill me-1"></i> Belum Terverifikasi</span>
-                                @endif
+
+                    @if(!empty($user->alamat) && !empty($user->ktp_file) && !empty($user->sim_file))
+                        <span class="badge bg-success rounded-pill px-3 py-2"><i class="bi bi-patch-check-fill me-1"></i>
+                            Akun Terverifikasi</span>
+                    @else
+                        <span class="badge bg-secondary rounded-pill px-3 py-2"><i class="bi bi-info-circle-fill me-1"></i>
+                            Belum Terverifikasi</span>
+                    @endif
                 </div>
 
                 <!-- SIDEBAR MENU -->
@@ -499,7 +525,7 @@
 
                     <div class="profile-content-inner">
                         <div class="profile-row">
-                
+
 
                             <div class="profile-right-column">
                                 <div class="profile-info-row">
@@ -589,6 +615,51 @@
         </div>
     </div>
 
+
+    <!-- FOOTER SECTION -->
+    @include('layouts.footer')
+
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- MODAL TENTANG KAlas-->
+    <div class="modal fade" id="aboutModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Tentang Kami</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="fw-bold mb-3">Visi Kami</h6>
+                    <p>Menjadi platform penyewaan kendaraan nomor satu di Indonesia dengan memberikan layanan terbaik
+                        dan terpercaya.</p>
+
+                    <h6 class="fw-bold mb-3 mt-4">Misi Kami</h6>
+                    <ul>
+                        <li>Menyediakan kendaraan berkualitas tinggi dengan harga terjangkau</li>
+                        <li>Memberikan layanan pelanggan yang responsif dan profesional</li>
+                        <li>Memastikan pengalaman sewa yang aman dan nyaman</li>
+                        <li>Inovasi berkelanjutan dalam teknologi dan layanan</li>
+                    </ul>
+
+                    <h6 class="fw-bold mb-3 mt-4">Mengapa Memilih Kami?</h6>
+                    <ul>
+                        <li>✅ Armada kendaraan terlengkap dan terawat</li>
+                        <li>✅ Harga kompetitif dengan berbagai paket</li>
+                        <li>✅ Proses booking mudah dan cepat</li>
+                        <li>✅ Asuransi komprehensif tersedia</li>
+                        <li>✅ Customer support 24/7</li>
+                        <li>✅ Lokasi pickup di berbagai kota</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
@@ -665,51 +736,6 @@
             </div>
         </div>
     </div>
-
-    <!-- FOOTER SECTION -->
-    @include('layouts.footer')
-
-    <!-- MODAL TENTANG KAlas-->
-    <div class="modal fade" id="aboutModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title">Tentang Kami</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <h6 class="fw-bold mb-3">Visi Kami</h6>
-                    <p>Menjadi platform penyewaan kendaraan nomor satu di Indonesia dengan memberikan layanan terbaik
-                        dan terpercaya.</p>
-
-                    <h6 class="fw-bold mb-3 mt-4">Misi Kami</h6>
-                    <ul>
-                        <li>Menyediakan kendaraan berkualitas tinggi dengan harga terjangkau</li>
-                        <li>Memberikan layanan pelanggan yang responsif dan profesional</li>
-                        <li>Memastikan pengalaman sewa yang aman dan nyaman</li>
-                        <li>Inovasi berkelanjutan dalam teknologi dan layanan</li>
-                    </ul>
-
-                    <h6 class="fw-bold mb-3 mt-4">Mengapa Memilih Kami?</h6>
-                    <ul>
-                        <li>✅ Armada kendaraan terlengkap dan terawat</li>
-                        <li>✅ Harga kompetitif dengan berbagai paket</li>
-                        <li>✅ Proses booking mudah dan cepat</li>
-                        <li>✅ Asuransi komprehensif tersedia</li>
-                        <li>✅ Customer support 24/7</li>
-                        <li>✅ Lokasi pickup di berbagai kota</li>
-                    </ul>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SCRIPTS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 
 </html>
