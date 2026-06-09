@@ -46,7 +46,7 @@ class UserController extends Controller
             $user->photo = $request->file('photo')->store('profiles/photos', 'public');
         }
 
-        // 2. Handle Upload KTP
+        // 2. Handle Upload KTPP
         if ($request->hasFile('ktp_file')) {
             if ($user->ktp_file) {
                 Storage::disk('public')->delete($user->ktp_file);
