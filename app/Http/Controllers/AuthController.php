@@ -26,7 +26,7 @@ class AuthController extends Controller
             'alamat' => ['required', 'string'],
             'ktp_file' => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
             'sim_file' => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
-            'password' => ['required', 'string'],
+            'password' => ['required', 'string', 'min:8'],
         ]);
 
         $ktpPath = $request->file('ktp_file')->store('profiles/ktp', 'public');
